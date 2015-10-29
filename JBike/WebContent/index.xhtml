@@ -11,21 +11,18 @@
 	</h:head>
 	
 	<h:body>
-		<p:button value="Bookmark" icon="ui-icon-star">
-		    <f:param name="productId" value="10" />
-		</p:button>
-<!--
-<ui:composition template="">
-	<ui:define name="header">
-	    Add your header here or delete to use the default
-	</ui:define>
-	<ui:define name="content">
-	    Add your content here or delete to use the default
-	</ui:define>
-	<ui:define name="footer">
-	    Add your footer here or delete to use the default
-	</ui:define>
-</ui:composition>
--->
+		<ui:composition template="/WEB-INF/template/layout.xhtml">
+			<ui:define name="header">
+			    Add your header here or delete to use the default
+			</ui:define>
+			<ui:define name="content">
+				<p:button value="Bookmark" icon="ui-icon-star">
+				    <f:param name="productId" value="10" />
+				</p:button>
+			</ui:define>
+			<ui:define name="footer">
+			    Add your footer here or delete to use the default
+			</ui:define>
+		</ui:composition>
 	</h:body>
 </html>
