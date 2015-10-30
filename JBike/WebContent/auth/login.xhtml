@@ -5,7 +5,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="header">
@@ -60,12 +61,13 @@
 	</ui:define>
 	<ui:define name="content">
 		<h:form>
-			<h3>Login</h3>
-			<hr />
+			<div class="form-group">
+				<h:inputText value="#{loginController.email}" a:placeholder="Email" />
+			</div>
 			<table>
 				<tr>
 					<td>Email :</td>
-					<td><h:inputText size="20" value="#{loginController.email}" /></td>
+					<td><h:inputText size="20" value="#{loginController.email}" a:placeholder="Email" /></td>
 				</tr>
 				<tr>
 					<td>Password :</td>
