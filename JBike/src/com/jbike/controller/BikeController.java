@@ -9,22 +9,22 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-@ManagedBean(name="bikeController")
+@ManagedBean(name = "bikeController")
 @ApplicationScoped
 public class BikeController {
 	private List<Bike> bikes;
-	
+
 	private int id;
 	private String name;
-	
+
 	@PostConstruct
 	public void init() {
 		bikes = new ArrayList<Bike>();
 	}
-	
+
 	public String addBike() {
 		bikes.add(new Bike(id, name));
-		
+
 		return null;
 	}
 
