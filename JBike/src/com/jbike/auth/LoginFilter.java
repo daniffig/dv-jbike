@@ -27,8 +27,7 @@ public class LoginFilter implements Filter {
             ((HttpServletResponse)response).sendRedirect(contextPath + "/auth/login.xhtml");
         }
          
-        chain.doFilter(request, response);
-             
+        chain.doFilter(request, response);             
     }
  
     public void init(FilterConfig config) throws ServletException {
