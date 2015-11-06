@@ -1,6 +1,6 @@
 package com.jbike.view;
 
-import com.jbike.controller.BikeController;
+import com.jbike.controller.BikeBean;
 import com.jbike.model.*;
 
 import java.io.Serializable;
@@ -23,7 +23,7 @@ public class BikeView implements Serializable {
 	private List<Bike> bikes;
 	
 	@ManagedProperty("#{bikeController}")
-	private BikeController controller;
+	private BikeBean controller;
 	
 	@PostConstruct
 	public void init() {
@@ -38,11 +38,11 @@ public class BikeView implements Serializable {
 		this.bikes = bikes;
 	}
 
-	public BikeController getController() {
+	public BikeBean getController() {
 		return controller;
 	}
 
-	public void setController(BikeController controller) {
+	public void setController(BikeBean controller) {
 		this.controller = controller;
 	}	
 }

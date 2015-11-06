@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name = "bikeController")
 @ApplicationScoped
-public class BikeController {
+public class BikeBean {
 	private List<Bike> bikes;
 
 	private int id;
