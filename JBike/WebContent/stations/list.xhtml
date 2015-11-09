@@ -5,39 +5,64 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">     
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="title">JBike | Stations</ui:define>
 	<ui:define name="content">
+		<h1>Stations</h1>
 		<h:form>
-			<p:dataTable var="station" value="#{stationView.stations}">			 
-			    <p:column headerText="Id">
-			        <h:outputText value="#{station.id}" />
-			    </p:column>		 		 
-			    <p:column headerText="Name">
-			        <h:outputText value="#{station.name}" />
-			    </p:column>		 
-			    <p:column headerText="Address">
-			        <h:outputText value="#{station.address}" />
-			    </p:column>		 
-			    <p:column headerText="Coordinates">
-			        <h:outputText value="#{station.coordinates}" />
-			    </p:column>		 
-			    <p:column headerText="Bike Qty">
-			        <h:outputText value="#{station.name}" />
-			    </p:column>		 
-			    <p:column headerText="Parking spaces">
-			        <h:outputText value="#{station.parkingSpaces}" />
-			    </p:column>
-			    <p:column headerText="Available parking spaces">
-			        <h:outputText value="#{station.availableParkingSpaces}" />
-			    </p:column>
-			    <p:column headerText="State">
-			        <h:outputText value="#{station.stateId}" />
-			    </p:column>
+			<p:dataTable var="station" value="#{stationView.stations}"
+				editable="true" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom">
+
+				<p:column headerText="Id">
+					<h:outputText value="#{station.id}" />
+				</p:column>
+				<p:column headerText="Name">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText value="#{station.name}" />
+						</f:facet>
+						<f:facet name="input">
+							<p:inputText value="#{station.name}" style="width:100%"
+								label="Name" />
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Address">
+					<h:outputText value="#{station.address}" />
+				</p:column>
+				<p:column headerText="Coordinates">
+					<h:outputText value="#{station.coordinates}" />
+				</p:column>
+				<p:column headerText="Bike Qty">
+					<h:outputText value="#{station.name}" />
+				</p:column>
+				<p:column headerText="Parking spaces">
+					<h:outputText value="#{station.parkingSpaces}" />
+				</p:column>
+				<p:column headerText="Available parking spaces">
+					<h:outputText value="#{station.availableParkingSpaces}" />
+				</p:column>
+				<p:column headerText="State">
+					<h:outputText value="#{station.stateId}" />
+				</p:column>
+
+				<p:column>
+					<p:rowEditor />
+				</p:column>
 			</p:dataTable>
+			<p:dialog header="New Station" widgetVar="addStationDlg" modal="true"
+				height="100">
+				<p:inputText size="10" value="#{stationBean.name}" />
+				<h:commandButton value="Add Station"
+					action="#{stationBean.addStation}" />
+			</p:dialog>
 		</h:form>
+		<p:button outcome="new.xhtml" icon="ui-icon-plus" />
+		<hr />
 	</ui:define>
 </ui:composition>
 </html>
