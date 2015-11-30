@@ -1,7 +1,13 @@
 package com.jbike.model;
 
-public class Station {
+import java.io.Serializable;
 
+public class Station implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private String address;
