@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -13,9 +12,13 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.RowEditEvent;
-import org.primefaces.event.SelectEvent;
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
 
 import com.jbike.controller.StationBean;
+import com.jbike.helper.StationHelper;
 import com.jbike.model.Station;
 
 @ManagedBean(name = "stationView")
@@ -31,16 +34,40 @@ public class StationView implements Serializable {
 	private List<Station> filteredStations;
 	private Station selectedStation;
 
+	private MapModel advancedModel;
+	
+	private Marker marker;
+
 	@ManagedProperty("#{stationBean}")
 	private StationBean stationBean;
 
 	@PostConstruct
 	public void init() {
 		stations = stationBean.getStations();
+
+		advancedModel = new DefaultMapModel();
+		
+		// TODO Esto deberíamos hacerlo en un helper, algún toMarker para Station.
+		for (Station station : stations) {
+			advancedModel.addOverlay(StationHelper.toMarker(station));
+		}
+		
+		/*
+		LatLng plazaMoreno = new LatLng(-34.921380, -57.952869);
+		LatLng plazaSanMartin = new LatLng(-34.914685, -57.949361);
+		LatLng plazaItalia = new LatLng(-34.911204, -57.955010);
+		LatLng estacionTrenes = new LatLng(-34.904675, -57.949345);
+		LatLng terminalOmnibus = new LatLng(-34.905652, -57.954259);		
+		
+		advancedModel.addOverlay(new Marker(plazaMoreno, "Plaza Moreno", stations.get(0)));	
+		advancedModel.addOverlay(new Marker(plazaSanMartin, "Plaza San Martín"));
+		advancedModel.addOverlay(new Marker(plazaItalia, "Plaza Italia"));
+		advancedModel.addOverlay(new Marker(estacionTrenes, "Estación de Trenes"));
+		advancedModel.addOverlay(new Marker(terminalOmnibus, "Terminal de Ómnibus"));
+		*/
 	}
 
 	public void onRowSelect() throws IOException {
-		System.out.println("lalala");
 		FacesContext.getCurrentInstance().getExternalContext().redirect("/bikes/list.xhtml");
 	}
 
@@ -52,6 +79,10 @@ public class StationView implements Serializable {
 	public void onRowCancel(RowEditEvent event) {
 		FacesMessage msg = new FacesMessage("Edit cancelled " + ((Station) event.getObject()).getId());
 		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onMarkerSelect(OverlaySelectEvent event) {
+		this.setMarker((Marker) event.getOverlay());
 	}
 
 	public List<Station> getStations() {
@@ -84,5 +115,21 @@ public class StationView implements Serializable {
 
 	public void setSelectedStation(Station selectedStation) {
 		this.selectedStation = selectedStation;
+	}
+
+	public Marker getMarker() {
+		return marker;
+	}
+
+	public void setMarker(Marker marker) {
+		this.marker = marker;
+	}
+
+	public MapModel getAdvancedModel() {
+		return advancedModel;
+	}
+
+	public void setAdvancedModel(MapModel advancedModel) {
+		this.advancedModel = advancedModel;
 	}
 }

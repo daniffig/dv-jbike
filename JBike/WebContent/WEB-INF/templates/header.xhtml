@@ -21,10 +21,11 @@
 	      <ul class="nav navbar-nav">
 	        <li><h:link value="Map" outcome="/stations/map.xhtml" /></li>
 	        <li><h:link value="Stations" outcome="/stations/list.xhtml" /></li>
+	        <li><h:link value="My Requests" outcome="/requests/list.xhtml" /></li>
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administration <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	            <li><h:link value="Bikes" outcome="/bikes/list.xhtml" /></li>
+	            <li><h:link value="Bikes" outcome="/bikes/admin-list.xhtml" /></li>
 	            <li><a href="#">Bike states</a></li>
 	            <li role="separator" class="divider"></li>
 	            <li><a href="#">Penalizations</a></li>
@@ -40,7 +41,7 @@
 	      </ul>
 	      <ul class="nav navbar-nav navbar-right">
 	        <li><a href="#">Log in</a></li>
-	        <li><h:link value="Sign in" outcome="/users/signin.xhtml" /></li>
+	        <li><h:link value="Sign in" outcome="/users/sign-in.xhtml" /></li>
 	        <h:panelGroup rendered="#{loginBean.isLoggedIn()}">
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">daniffig@gmail.com <span class="caret"></span></a>

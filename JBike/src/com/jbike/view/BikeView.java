@@ -11,7 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-@ManagedBean(name="bikeView")
+@ManagedBean(name = "bikeView")
 @ViewScoped
 public class BikeView implements Serializable {
 
@@ -21,13 +21,14 @@ public class BikeView implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<Bike> bikes;
-	
-	@ManagedProperty("#{bikeController}")
-	private BikeBean controller;
-	
+	private List<Bike> filteredBikes;
+
+	@ManagedProperty("#{bikeBean}")
+	private BikeBean bikeBean;
+
 	@PostConstruct
 	public void init() {
-		bikes = controller.getBikes();
+		bikes = bikeBean.getBikes();
 	}
 
 	public List<Bike> getBikes() {
@@ -38,11 +39,19 @@ public class BikeView implements Serializable {
 		this.bikes = bikes;
 	}
 
-	public BikeBean getController() {
-		return controller;
+	public BikeBean getBikeBean() {
+		return bikeBean;
 	}
 
-	public void setController(BikeBean controller) {
-		this.controller = controller;
-	}	
+	public void setBikeBean(BikeBean bikeBean) {
+		this.bikeBean = bikeBean;
+	}
+
+	public List<Bike> getFilteredBikes() {
+		return filteredBikes;
+	}
+
+	public void setFilteredBikes(List<Bike> filteredBikes) {
+		this.filteredBikes = filteredBikes;
+	}
 }

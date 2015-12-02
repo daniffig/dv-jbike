@@ -5,38 +5,37 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">     
+	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="content">
 		<h:form>
-			<p:dataTable var="bike" value="#{bikeView.bikes}">
-			    <p:column headerText="Id">
-			        <h:outputText value="#{bike.id}" />
-			    </p:column>
-			 
-			    <p:column headerText="Year">
-			        <h:outputText value="#{bike.name}" />
-			    </p:column>
+			<p:dataTable var="bike" value="#{bikeView.bikes}"
+				emptyMessage="No bikes found with given criteria"
+				filteredValue="#{bikeView.filteredBikes}" widgetVar="bikesTable">
+				<p:column headerText="Name" filterBy="#{bike.name}">
+					<h:outputText value="#{bike.name}" />
+				</p:column>
+
+				<p:column headerText="State">
+					<h:outputText value="#{bike.stateId}" />
+				</p:column>
+
+				<p:column headerText="Status">
+					<h:outputText value="#{bike.statusId}" />
+				</p:column>
+
+				<p:column headerText="Current Station"
+					filterBy="#{bike.currentStationId}" filterValue="2">
+					<h:outputText value="#{bike.currentStationId}" />
+				</p:column>
 			</p:dataTable>
-			<h3>Add Bike</h3>
-			<hr />			
-			<table>
-			<tr>
-			      <td>Id :</td>
-			      <td><h:inputText size="10" value="#{bikeController.id}" /></td>
-			</tr>
-			<tr>
-			      <td>Name :</td>
-			      <td><h:inputText size="20" value="#{bikeController.name}" /></td>
-			</tr>
-			<tr>
-			      <td> </td>
-			      <td><h:commandButton value="Add Bike" 
-			         action="#{bikeController.addBike}" /></td>
-			</tr>
-			</table>	  
 		</h:form>
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+				bikesTable.filter();
+			});
+		</script>
 	</ui:define>
 </ui:composition>
 </html>

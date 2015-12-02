@@ -2,16 +2,24 @@ package com.jbike.controller;
 
 import com.jbike.model.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-@ManagedBean(name = "bikeController")
+@ManagedBean(name = "bikeBean")
 @ApplicationScoped
-public class BikeBean {
+public class BikeBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private List<Bike> bikes;
 
 	private int id;
@@ -20,11 +28,15 @@ public class BikeBean {
 	@PostConstruct
 	public void init() {
 		bikes = new ArrayList<Bike>();
+
+		Random random = new Random();
+
+		for (int i = 1; i <= 100; i++) {
+			bikes.add(new Bike(i, "Bike " + i, random.nextInt(3) + 1, random.nextInt(5) + 1, random.nextInt(5) + 1));
+		}
 	}
 
 	public String addBike() {
-		bikes.add(new Bike(id, name));
-
 		return null;
 	}
 

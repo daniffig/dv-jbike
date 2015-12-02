@@ -17,16 +17,16 @@ public class Station implements Serializable {
 	private int availableParkingSpaces;
 	private int stateId;
 	
-	public Station(int id, String name) {
+	public Station(int id, String name, String address, String coordinates, int stateId) {
 		this.id = id;
 		this.name = name;
 		
-		this.address = "a String";
-		this.coordinates = "a String";
+		this.address = address;
+		this.coordinates = coordinates;
 		this.bikeQty = id;
 		this.parkingSpaces = id;
 		this.availableParkingSpaces = 0;
-		this.stateId = 1;
+		this.stateId = stateId;
 	}
 	
 	public int getId() {
