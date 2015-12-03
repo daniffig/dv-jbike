@@ -32,7 +32,7 @@ public class BikeBean implements Serializable {
 		Random random = new Random();
 
 		for (int i = 1; i <= 100; i++) {
-			bikes.add(new Bike(i, "Bike " + i, random.nextInt(3) + 1, random.nextInt(5) + 1, random.nextInt(5) + 1));
+			bikes.add(new Bike(i, "Bike " + i, random.nextInt(3) + 1, BikeState.values()[random.nextInt(5)], random.nextInt(5) + 1));
 		}
 	}
 

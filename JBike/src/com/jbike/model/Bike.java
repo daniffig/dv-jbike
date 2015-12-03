@@ -5,15 +5,20 @@ public class Bike {
 	private int id;
 	private String name;
 	private int stateId;
-	private int statusId;
+	private BikeState status;
 	private int currentStationId;
-// Este comentario lo agregue yo para ver si anda bien git c: - acimadamore
-	public Bike(int id, String name, int stateId, int statusId, int currentStationId) {
+
+	public Bike(int id, String name, int stateId, BikeState status, int currentStationId) {
 		this.id = id;
 		this.name = name;
 		this.stateId = stateId;
-		this.statusId = statusId;
+		this.setStatus(status);
 		this.currentStationId = currentStationId;
+	}
+	
+	// TODO
+	public boolean canBeRequested() {
+		return true;
 	}
 
 	public int getId() {
@@ -40,12 +45,12 @@ public class Bike {
 		this.stateId = stateId;
 	}
 
-	public int getStatusId() {
-		return statusId;
+	public BikeState getStatus() {
+		return status;
 	}
 
-	public void setStatusId(int statusId) {
-		this.statusId = statusId;
+	public void setStatus(BikeState status) {
+		this.status = status;
 	}
 
 	public int getCurrentStationId() {
@@ -54,6 +59,10 @@ public class Bike {
 
 	public void setCurrentStationId(int currentStationId) {
 		this.currentStationId = currentStationId;
+	}
+
+	public Station getCurrentStation() {
+		return Station.stations.get(this.currentStationId);
 	}
 
 }

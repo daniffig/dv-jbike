@@ -33,8 +33,14 @@
 						<br />
 						<p:button outcome="/bikes/list.xhtml" value="Request a Bike"
 							icon="ui-icon-star">
-							<f:param name="currentStationId" value="#{stationView.marker.data.id}" />
+							<f:param name="currentStationId"
+								value="#{stationView.marker.data.id}" />
 						</p:button>
+						<h:commandButton outcome="/bikes/list.xhtml" value="lala">
+						
+							<f:setPropertyActionListener target="#{bikeView.currentStationId}"
+								value="#{stationView.marker.data.id}" />
+						</h:commandButton>
 					</p:outputPanel>
 				</p:gmapInfoWindow>
 			</p:gmap>

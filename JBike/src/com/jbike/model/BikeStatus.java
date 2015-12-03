@@ -1,5 +1,5 @@
 package com.jbike.model;
 
-public class BikeStatus {
+public enum BikeStatus {
 
 }

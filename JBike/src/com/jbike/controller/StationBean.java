@@ -41,6 +41,9 @@ public class StationBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		stations = new ArrayList<Station>(Station.stations.values());
+
+		/*
 		stations = new ArrayList<Station>();
 		
 		stations.add(new Station(1, "Plaza Moreno", "Calle 12 964, La Plata, Buenos Aires", "-34.920314, -57.953833", 1));
@@ -48,6 +51,7 @@ public class StationBean implements Serializable {
 		stations.add(new Station(3, "Plaza Italia", "Plaza Italia 129, La Plata, Buenos Aires", "-34.911381, -57.954861", 2));
 		stations.add(new Station(4, "Estación de trenes", "Avenida 1 558, La Plata, Buenos Aires", "-34.904771, -57.949443", 1));
 		stations.add(new Station(5, "Terminal de ómnibus", "Terminal de Ómnibus de La Plata, La Plata, Buenos Aires", "-34.905416, -57.954571", 1));
+		*/
 	}
 
 	public String addStation() {

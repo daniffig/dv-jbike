@@ -13,7 +13,7 @@
 			<p:dataTable var="bike" value="#{bikeView.bikes}"
 				emptyMessage="No bikes found with given criteria"
 				filteredValue="#{bikeView.filteredBikes}" widgetVar="bikesTable">
-				<p:column headerText="Name" filterBy="#{bike.name}">
+				<p:column headerText="Name">
 					<h:outputText value="#{bike.name}" />
 				</p:column>
 
@@ -22,18 +22,34 @@
 				</p:column>
 
 				<p:column headerText="Status">
-					<h:outputText value="#{bike.statusId}" />
+					<h:outputText value="#{bike.status}" />
 				</p:column>
 
 				<p:column headerText="Current Station"
-					filterBy="#{bike.currentStationId}" filterValue="2">
-					<h:outputText value="#{bike.currentStationId}" />
+					filterBy="#{bike.currentStationId}"
+					filterValue="#{bikeView.currentStationId}">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('bikesTable').filter()">
+							<f:selectItem itemLabel="Select One" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{Station.stations}" var='station'
+								itemLabel='#{station.name}' itemValue='#{station.id}' />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{bike.currentStation}" />
+				</p:column>
+				<p:column>
+					<p:commandLink outcome="/stations/map.xhtml" ajax="false"
+						rendered="#{bike.canBeRequested()}">
+						<h:outputText value="Request" />
+					</p:commandLink>
 				</p:column>
 			</p:dataTable>
 		</h:form>
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
-				bikesTable.filter();
+				alert("#{param['currentStationId']}");
+				PF('bikesTable').filter();
 			});
 		</script>
 	</ui:define>

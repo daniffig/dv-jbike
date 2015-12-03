@@ -22,6 +22,8 @@ public class BikeView implements Serializable {
 
 	private List<Bike> bikes;
 	private List<Bike> filteredBikes;
+	
+	private int currentStationId;
 
 	@ManagedProperty("#{bikeBean}")
 	private BikeBean bikeBean;
@@ -53,5 +55,13 @@ public class BikeView implements Serializable {
 
 	public void setFilteredBikes(List<Bike> filteredBikes) {
 		this.filteredBikes = filteredBikes;
+	}
+
+	public int getCurrentStationId() {
+		return currentStationId;
+	}
+
+	public void setCurrentStationId(int currentStationId) {
+		this.currentStationId = currentStationId;
 	}
 }
