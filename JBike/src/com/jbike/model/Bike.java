@@ -7,7 +7,7 @@ public class Bike {
 	private int stateId;
 	private int statusId;
 	private int currentStationId;
-
+// Este comentario lo agregue yo para ver si anda bien git c: - acimadamore
 	public Bike(int id, String name, int stateId, int statusId, int currentStationId) {
 		this.id = id;
 		this.name = name;
