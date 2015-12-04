@@ -25,22 +25,26 @@
 				<p:gmapInfoWindow id="infoWindow">
 					<p:outputPanel
 						style="text-align: center; display: block; margin: auto">
-						<h3>
-							<h:outputText value="#{stationView.marker.title}" />
-						</h3>
-						<p:graphicImage library="images" name="plaza-moreno.jpg"
-							height="150" />
+						<h4>
+							<h:outputText value="#{stationView.marker.title}"
+								style="font-weight:bold" />
+						</h4>
+
+
+						<p:panelGrid columns="2">
+
+							<h:outputText value="Available bikes" />
+							<h:outputText value="#{stationView.marker.data.availableBikes}" />
+
+							<h:outputText value="Available parking spaces" />
+							<h:outputText
+								value="#{stationView.marker.data.availableParkingSpaces}" />
+						</p:panelGrid>
 						<br />
-						<p:button outcome="/bikes/list.xhtml" value="Request a Bike"
-							icon="ui-icon-star">
+						<p:button outcome="/bikes/list.xhtml" value="View Bikes">
 							<f:param name="currentStationId"
 								value="#{stationView.marker.data.id}" />
 						</p:button>
-						<h:commandButton outcome="/bikes/list.xhtml" value="lala">
-						
-							<f:setPropertyActionListener target="#{bikeView.currentStationId}"
-								value="#{stationView.marker.data.id}" />
-						</h:commandButton>
 					</p:outputPanel>
 				</p:gmapInfoWindow>
 			</p:gmap>

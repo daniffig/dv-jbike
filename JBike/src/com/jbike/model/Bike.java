@@ -4,21 +4,19 @@ public class Bike {
 
 	private int id;
 	private String name;
-	private int stateId;
-	private BikeState status;
+	private BikeState state;
 	private int currentStationId;
 
-	public Bike(int id, String name, int stateId, BikeState status, int currentStationId) {
+	public Bike(int id, String name, BikeState state, int currentStationId) {
 		this.id = id;
 		this.name = name;
-		this.stateId = stateId;
-		this.setStatus(status);
+		this.setState(state);
 		this.currentStationId = currentStationId;
 	}
-	
+
 	// TODO
 	public boolean canBeRequested() {
-		return true;
+		return this.state.canBeRequested();
 	}
 
 	public int getId() {
@@ -37,22 +35,6 @@ public class Bike {
 		this.name = name;
 	}
 
-	public int getStateId() {
-		return stateId;
-	}
-
-	public void setStateId(int stateId) {
-		this.stateId = stateId;
-	}
-
-	public BikeState getStatus() {
-		return status;
-	}
-
-	public void setStatus(BikeState status) {
-		this.status = status;
-	}
-
 	public int getCurrentStationId() {
 		return currentStationId;
 	}
@@ -63,6 +45,14 @@ public class Bike {
 
 	public Station getCurrentStation() {
 		return Station.stations.get(this.currentStationId);
+	}
+
+	public BikeState getState() {
+		return state;
+	}
+
+	public void setState(BikeState state) {
+		this.state = state;
 	}
 
 }

@@ -4,12 +4,14 @@ import com.jbike.controller.BikeBean;
 import com.jbike.model.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
 
 @ManagedBean(name = "bikeView")
 @ViewScoped
@@ -63,5 +65,17 @@ public class BikeView implements Serializable {
 
 	public void setCurrentStationId(int currentStationId) {
 		this.currentStationId = currentStationId;
+	}
+
+	public List<SelectItem> getStateOptions() {
+		List<SelectItem> options = new ArrayList<SelectItem>();
+
+		options.add(new SelectItem("", "Select One"));
+
+		for (BikeState state : BikeState.values()) {
+			options.add(new SelectItem(state));
+		}
+
+		return options;
 	}
 }

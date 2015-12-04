@@ -13,7 +13,7 @@
 		<h1>Stations</h1>
 		<h:form>
 			<p:dataTable id="stationsTable" var="station"
-				value="#{stationView.stations}" widgetVar="stationsTable"
+				value="#{stationBean.stations}" widgetVar="stationsTable"
 				paginator="true" rows="10"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
@@ -28,29 +28,18 @@
 				<p:column headerText="Address" sortBy="#{station.address}">
 					<h:outputText value="#{station.address}" />
 				</p:column>
-				<p:column headerText="Coordinates">
-					<h:outputText value="#{station.coordinates}" />
-				</p:column>
-				<p:column headerText="Bike Qty">
-					<h:outputText value="#{station.name}" />
-				</p:column>
-				<p:column headerText="Parking spaces">
-					<h:outputText value="#{station.parkingSpaces}" />
+				<p:column headerText="Available bikes"
+					sortBy="#{station.availableBikes}">
+					<h:outputText value="#{station.availableBikes}" />
 				</p:column>
 				<p:column headerText="Available parking spaces"
 					sortBy="#{station.availableParkingSpaces}">
 					<h:outputText value="#{station.availableParkingSpaces}" />
 				</p:column>
-				<p:column headerText="State" filterBy="#{station.stateId}"
-					filterMatchMode="exact">
-					<f:facet name="filter">
-						<p:selectOneMenu onchange="PF('stationsTable').filter()">
-							<f:selectItem itemLabel="Select One" itemValue="#{null}"
-								noSelectionOption="true" />
-							<f:selectItems value="#{stationBean.states}" />
-						</p:selectOneMenu>
-					</f:facet>
-					<h:outputText value="#{station.stateId}" />
+				<p:column headerText="State" sortBy="#{station.state}"
+					filterBy="#{station.state}" filterMatchMode="exact"
+					filterOptions="#{stationView.stateOptions}">
+					<h:outputText value="#{station.state.toString()}" />
 				</p:column>
 			</p:dataTable>
 			<p:dialog header="New Station" widgetVar="addStationDlg" modal="true"

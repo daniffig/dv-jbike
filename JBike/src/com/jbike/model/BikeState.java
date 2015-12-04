@@ -2,9 +2,28 @@ package com.jbike.model;
 
 public enum BikeState {
 
-	EXCELLENT, GOOD, AVERAGE, BELOW_AVERAGE, POOR;
+	AVAILABLE("Available"), REQUESTED("Requested"), IN_USE("Rented"), REPORTED("Reported"), UNDER_MAINTENANCE(
+			"Under maintenance");
+
+	private String name;
+
+	BikeState(String name) {
+		this.setName(name);
+	}
 
 	public String toString() {
-		return this.name().charAt(0) + this.name().substring(1).toLowerCase();
+		return this.getName();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean canBeRequested() {
+		return this.equals(BikeState.AVAILABLE);
 	}
 }

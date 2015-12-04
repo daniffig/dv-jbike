@@ -8,7 +8,8 @@ import com.jbike.model.Station;
 public class StationHelper {
 
 	public static Marker toMarker(Station station) {
-		return new Marker(StationHelper.toLatLng(station.getCoordinates()), station.getName(), station);
+		return new Marker(StationHelper.toLatLng(station.getCoordinates()), station.toString(), station,
+				station.getState().getIcon(), "http://maps.google.com/mapfiles/ms/micons/msmarker.shadow.png");
 	}
 
 	public static LatLng toLatLng(String coordinates) {

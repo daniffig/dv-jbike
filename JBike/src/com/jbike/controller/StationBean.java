@@ -2,7 +2,6 @@ package com.jbike.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -30,28 +29,10 @@ public class StationBean implements Serializable {
 	private Station station;
 
 	private String name;
-	
-	private final static String[] states;
-	
-	static {
-		states = new String[2];
-		states[0] = "Available";
-		states[1] = "Under construction";
-	}
 
 	@PostConstruct
 	public void init() {
 		stations = new ArrayList<Station>(Station.stations.values());
-
-		/*
-		stations = new ArrayList<Station>();
-		
-		stations.add(new Station(1, "Plaza Moreno", "Calle 12 964, La Plata, Buenos Aires", "-34.920314, -57.953833", 1));
-		stations.add(new Station(2, "Plaza San Martín", "Avenida 7 902, La Plata, Buenos Aires", "-34.914732, -57.949658", 1));
-		stations.add(new Station(3, "Plaza Italia", "Plaza Italia 129, La Plata, Buenos Aires", "-34.911381, -57.954861", 2));
-		stations.add(new Station(4, "Estación de trenes", "Avenida 1 558, La Plata, Buenos Aires", "-34.904771, -57.949443", 1));
-		stations.add(new Station(5, "Terminal de ómnibus", "Terminal de Ómnibus de La Plata, La Plata, Buenos Aires", "-34.905416, -57.954571", 1));
-		*/
 	}
 
 	public String addStation() {
@@ -104,13 +85,9 @@ public class StationBean implements Serializable {
 			System.out.println("Sent message successfully....");
 		} catch (MessagingException mex) {
 			return "stations/list";
-			//mex.printStackTrace();
+			// mex.printStackTrace();
 		}
 
 		return "stations/list";
-	}
-
-	public List<String> getStates() {
-		return Arrays.asList(states);
 	}
 }
