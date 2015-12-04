@@ -8,7 +8,9 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
+	<ui:define name="title">JBike | Bikes</ui:define>
 	<ui:define name="content">
+		<h1>Bikes</h1>
 		<h:form>
 			<p:dataTable var="bike" value="#{bikeView.bikes}"
 				emptyMessage="No bikes found with given criteria"
@@ -29,10 +31,8 @@
 					<h:outputText value="#{bike.currentStation.name}" />
 				</p:column>
 				<p:column>
-					<p:button outcome="/stations/map.xhtml" value="Request"
-						disabled="#{!bike.canBeRequested()}">
-						<f:param name="bikeId" value="#{bike.id}" />
-					</p:button>
+					<p:commandButton actionListener="#{requestBean.requestBike(bike)}"
+						value="Request" disabled="#{!bike.canBeRequested()}" ajax="false" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

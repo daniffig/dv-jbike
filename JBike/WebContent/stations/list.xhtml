@@ -41,6 +41,12 @@
 					filterOptions="#{stationView.stateOptions}">
 					<h:outputText value="#{station.state.toString()}" />
 				</p:column>
+				<p:column>
+					<p:button outcome="/bikes/list.xhtml" value="View Bikes">
+						<f:param name="currentStationId"
+							value="#{station.id}" />
+					</p:button>
+				</p:column>
 			</p:dataTable>
 			<p:dialog header="New Station" widgetVar="addStationDlg" modal="true"
 				height="100">

@@ -5,15 +5,19 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pm="http://primefaces.org/mobile">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
-	<ui:define name="title">JBike | My Requests</ui:define>
 	<ui:define name="content">
-		<h1>My Requests</h1>
-		<h:form>
+		<h1>New Station</h1>
+		<h:form role="form">
+			<div class="form-group">
+				<p:outputLabel for="name" value="Name:" />
+				<p:inputText id="name" class="form-control" size="10" value="#{stationBean.name}"></p:inputText>
+			</div>
+			<p:commandButton value="Save" actionListener="#{stationBean.addStation}"/>
 		</h:form>
-		<hr />
 	</ui:define>
 </ui:composition>
 </html>

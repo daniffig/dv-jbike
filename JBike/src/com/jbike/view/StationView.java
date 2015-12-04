@@ -48,28 +48,10 @@ public class StationView implements Serializable {
 		stations = stationBean.getStations();
 
 		advancedModel = new DefaultMapModel();
-
-		// TODO Esto deberíamos hacerlo en un helper, algún toMarker para
-		// Station.
+		
 		for (Station station : stations) {
 			advancedModel.addOverlay(StationHelper.toMarker(station));
 		}
-
-		/*
-		 * LatLng plazaMoreno = new LatLng(-34.921380, -57.952869); LatLng
-		 * plazaSanMartin = new LatLng(-34.914685, -57.949361); LatLng
-		 * plazaItalia = new LatLng(-34.911204, -57.955010); LatLng
-		 * estacionTrenes = new LatLng(-34.904675, -57.949345); LatLng
-		 * terminalOmnibus = new LatLng(-34.905652, -57.954259);
-		 * 
-		 * advancedModel.addOverlay(new Marker(plazaMoreno, "Plaza Moreno",
-		 * stations.get(0))); advancedModel.addOverlay(new
-		 * Marker(plazaSanMartin, "Plaza San Martín"));
-		 * advancedModel.addOverlay(new Marker(plazaItalia, "Plaza Italia"));
-		 * advancedModel.addOverlay(new Marker(estacionTrenes,
-		 * "Estación de Trenes")); advancedModel.addOverlay(new
-		 * Marker(terminalOmnibus, "Terminal de Ómnibus"));
-		 */
 	}
 
 	public void onRowEdit(RowEditEvent event) {
