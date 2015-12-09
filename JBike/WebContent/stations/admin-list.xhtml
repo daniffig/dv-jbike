@@ -37,21 +37,21 @@
 				<p:column headerText="Coordinates">
 					<h:outputText value="#{station.coordinates}" />
 				</p:column>
-				<p:column headerText="Bike Qty">
-					<h:outputText value="#{station.name}" />
-				</p:column>
 				<p:column headerText="Parking spaces">
 					<h:outputText value="#{station.parkingSpaces}" />
+				</p:column>
+				<p:column headerText="Available bikes">
+					<h:outputText value="#{station.availableBikes}" />
 				</p:column>
 				<p:column headerText="Available parking spaces">
 					<h:outputText value="#{station.availableParkingSpaces}" />
 				</p:column>
 				<p:column headerText="State">
-					<h:outputText value="#{station.stateId}" />
+					<h:outputText value="#{station.state.name}" />
 				</p:column>
 
 				<p:column>
-					<p:rowEditor />
+					<p:commandButton actionListener="#{stationBean.editStation(station)}" icon="ui-icon-pencil" value="Edit" />
 				</p:column>
 			</p:dataTable>
 			<p:dialog header="New Station" widgetVar="addStationDlg" modal="true"
@@ -61,7 +61,7 @@
 					action="#{stationBean.addStation}" />
 			</p:dialog>
 		</h:form>
-		<p:button outcome="new.xhtml" icon="ui-icon-plus" />
+		<p:button outcome="new.xhtml" icon="ui-icon-plus" value="New Station" />
 		<hr />
 	</ui:define>
 </ui:composition>

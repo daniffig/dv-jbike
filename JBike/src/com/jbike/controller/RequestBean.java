@@ -7,10 +7,10 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-
+import javax.faces.bean.ManagedProperty;
 import com.jbike.model.Bike;
 import com.jbike.model.Request;
+import com.jbike.navigation.NavigationBean;
 
 @ManagedBean(name = "requestBean")
 @ApplicationScoped
@@ -21,7 +21,9 @@ public class RequestBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Request> requests;
-	private Request request;
+
+	@ManagedProperty("#{navigationBean}")
+	private NavigationBean navigationBean;
 
 	@PostConstruct
 	public void init() {
@@ -29,9 +31,25 @@ public class RequestBean implements Serializable {
 	}
 
 	public void requestBike(Bike bike) {
+		navigationBean.redirect("/requests/list");
+	}
 
-		FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-				.handleNavigation(FacesContext.getCurrentInstance(), null, "/requests/list.xhtml");
+	public void cancelRequest(Request request) {
+		if (request.cancel()) {
+			navigationBean.redirect("/requests/list");
+		}
+	}
+
+	public void approveRequest(Request request) {
+		if (request.approve()) {
+			navigationBean.redirect("/requests/admin-list");
+		}
+	}
+
+	public void rejectRequest(Request request) {
+		if (request.reject()) {
+			navigationBean.redirect("/requests/admin-list");
+		}
 	}
 
 	public List<Request> getRequests() {
@@ -42,11 +60,12 @@ public class RequestBean implements Serializable {
 		this.requests = requests;
 	}
 
-	public Request getRequest() {
-		return request;
+	public NavigationBean getNavigationBean() {
+		return navigationBean;
 	}
 
-	public void setRequest(Request request) {
-		this.request = request;
+	public void setNavigationBean(NavigationBean navigationBean) {
+		this.navigationBean = navigationBean;
 	}
+
 }

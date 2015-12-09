@@ -48,7 +48,6 @@ public class Station implements Serializable {
 	public Station(int id, String name, String address, String coordinates, int parkingSpaces, StationState state) {
 		this.id = id;
 		this.name = name;
-
 		this.address = address;
 		this.coordinates = coordinates;
 		this.parkingSpaces = parkingSpaces;
@@ -113,7 +112,15 @@ public class Station implements Serializable {
 
 	// TODO
 	public int getAvailableBikes() {
-		return 10;
+		int availableBikes = 0;
+
+		for (Bike bike : Bike.bikes.values()) {
+			if (this.equals(bike.getCurrentStation())) {
+				availableBikes++;
+			}
+		}
+
+		return availableBikes;
 	}
 
 	public int getAvailableParkingSpaces() {

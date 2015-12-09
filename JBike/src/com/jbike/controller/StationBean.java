@@ -8,6 +8,7 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -16,6 +17,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 import com.jbike.model.Station;
+import com.jbike.navigation.NavigationBean;
 
 @ManagedBean(name = "stationBean")
 @ApplicationScoped
@@ -26,9 +28,14 @@ public class StationBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private List<Station> stations;
+	
+	// Esto hay que pasarlo al StationView.
 	private Station station;
 
 	private String name;
+
+	@ManagedProperty("#{navigationBean}")
+	private NavigationBean navigationBean;
 
 	@PostConstruct
 	public void init() {
@@ -39,8 +46,10 @@ public class StationBean implements Serializable {
 		return "stations/list";
 	}
 
-	public String editStation(Station station) {
-		return null;
+	public void editStation(Station station) {
+		this.setStation(station);
+
+		navigationBean.redirect("/stations/new");
 	}
 
 	public List<Station> getStations() {
@@ -89,5 +98,13 @@ public class StationBean implements Serializable {
 		}
 
 		return "stations/list";
+	}
+
+	public NavigationBean getNavigationBean() {
+		return navigationBean;
+	}
+
+	public void setNavigationBean(NavigationBean navigationBean) {
+		this.navigationBean = navigationBean;
 	}
 }

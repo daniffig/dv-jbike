@@ -1,17 +1,38 @@
 package com.jbike.model;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 public class Bike {
 
 	private int id;
 	private String name;
 	private BikeState state;
-	private int currentStationId;
+	private Station currentStation;
 
-	public Bike(int id, String name, BikeState state, int currentStationId) {
+	public static final Map<Integer, Bike> bikes;
+
+	static {
+		bikes = new HashMap<Integer, Bike>();
+
+		Random random = new Random();
+
+		for (int i = 1; i <= 100; i++) {
+			bikes.put(i, new Bike(i, "Bike " + i, BikeState.values()[random.nextInt(BikeState.values().length)],
+					Station.stations.get(random.nextInt(Station.stations.size()) + 1)));
+		}
+	}
+
+	public Bike(int id, String name, BikeState state, Station currentStation) {
 		this.id = id;
 		this.name = name;
 		this.setState(state);
-		this.currentStationId = currentStationId;
+		this.currentStation = currentStation;
+	}
+
+	public String toString() {
+		return this.getName();
 	}
 
 	// TODO
@@ -35,24 +56,20 @@ public class Bike {
 		this.name = name;
 	}
 
-	public int getCurrentStationId() {
-		return currentStationId;
-	}
-
-	public void setCurrentStationId(int currentStationId) {
-		this.currentStationId = currentStationId;
-	}
-
-	public Station getCurrentStation() {
-		return Station.stations.get(this.currentStationId);
-	}
-
 	public BikeState getState() {
 		return state;
 	}
 
 	public void setState(BikeState state) {
 		this.state = state;
+	}
+
+	public Station getCurrentStation() {
+		return this.currentStation;
+	}
+
+	public void setCurrentStation(Station currentStation) {
+		this.currentStation = currentStation;
 	}
 
 }

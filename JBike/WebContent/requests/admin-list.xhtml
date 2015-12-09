@@ -8,9 +8,9 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
-	<ui:define name="title">JBike | My Requests</ui:define>
+	<ui:define name="title">JBike | Requests</ui:define>
 	<ui:define name="content">
-		<h1>My Requests</h1>
+		<h1>Requests</h1>
 		<h:form>
 			<p:dataTable id="requestsTable" var="req"
 				value="#{requestBean.requests}" widgetVar="requestsTable">
@@ -28,8 +28,12 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton value="Cancel" rendered="#{req.canBeCancelled()}"
-						actionListener="#{requestBean.cancelRequest(req)}" />
+					<p:commandButton icon="ui-icon-check"
+						rendered="#{req.canBeApproved()}"
+						actionListener="#{requestBean.approveRequest(req)}" />
+					<p:commandButton icon="ui-icon-close"
+						rendered="#{req.canBeRejected()}"
+						actionListener="#{requestBean.rejectRequest(req)}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

@@ -5,8 +5,6 @@ import com.jbike.model.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -27,14 +25,7 @@ public class BikeBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		bikes = new ArrayList<Bike>();
-
-		Random random = new Random();
-
-		for (int i = 1; i <= 100; i++) {
-			bikes.add(new Bike(i, "Bike " + i, BikeState.values()[random.nextInt(BikeState.values().length)],
-					random.nextInt(5) + 1));
-		}
+		bikes = new ArrayList<Bike>(Bike.bikes.values());
 	}
 
 	public String addBike() {
