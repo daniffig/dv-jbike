@@ -25,7 +25,7 @@
 				</p:column>
 
 				<p:column headerText="Current Station"
-					filterBy="#{bike.currentStationId}"
+					filterBy="#{bike.currentStation.id}"
 					filterValue="#{param['currentStationId']}"
 					filterOptions="#{stationView.stationOptions}">
 					<h:outputText value="#{bike.currentStation.name}" />
