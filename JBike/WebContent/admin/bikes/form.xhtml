@@ -10,20 +10,23 @@
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="content">
-		<h1>New Station</h1>
-		<h:form role="form" value="#{stationBean.station}">
+		<h1>New Bike</h1>
+		<h:form role="form">
 			<div class="form-group">
 				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
 					<p:outputLabel for="name" value="Name:" />
 					<p:inputText id="name" class="form-control" size="10"
-						value="#{stationBean.station.name}"></p:inputText>
-					<p:outputLabel for="address" value="Address:" />
-					<p:inputText id="address" class="form-control" size="10"
-						value="#{stationBean.station.address}"></p:inputText>
+						value="#{bikeView.bike.name}"></p:inputText>
+					<p:outputLabel for="currentStation" value="Current Station:" />
+					<h:selectOneMenu id="currentStation"
+						value="#{bikeView.bike.currentStation}">
+						<f:selectItems value="#{stationBean.stations}" var="station"
+							itemValue="#{station.id}"></f:selectItems>
+						<f:converter converterId="stationConverter" />
+					</h:selectOneMenu>
 				</h:panelGrid>
 			</div>
-			<p:commandButton value="Save"
-				actionListener="#{stationBean.addStation}" />
+			<p:commandButton value="Save" action="#{bikeView.save}" ajax="false" />
 		</h:form>
 	</ui:define>
 </ui:composition>

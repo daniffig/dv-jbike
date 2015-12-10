@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 @ManagedBean(name = "bikeView")
@@ -24,7 +25,9 @@ public class BikeView implements Serializable {
 
 	private List<Bike> bikes;
 	private List<Bike> filteredBikes;
-	
+
+	private Bike bike;
+
 	private int currentStationId;
 
 	@ManagedProperty("#{bikeBean}")
@@ -33,6 +36,28 @@ public class BikeView implements Serializable {
 	@PostConstruct
 	public void init() {
 		bikes = bikeBean.getBikes();
+
+		Bike bike = (Bike) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("bike");
+
+		if (bike != null) {
+			this.setBike(bike);
+		}
+	}
+
+	public String create() {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("bike", new Bike());
+
+		return "admin/bikes/form";
+	}
+
+	public String update(Bike bike) {
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("bike", bike);
+
+		return "admin/bikes/form";
+	}
+
+	public String save() {
+		return "admin/bikes/list";
 	}
 
 	public List<Bike> getBikes() {
@@ -77,5 +102,13 @@ public class BikeView implements Serializable {
 		}
 
 		return options;
+	}
+
+	public Bike getBike() {
+		return bike;
+	}
+
+	public void setBike(Bike bike) {
+		this.bike = bike;
 	}
 }

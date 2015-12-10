@@ -11,11 +11,11 @@ public class Station implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String name;
 	private String address;
 	private String coordinates;
-	private int parkingSpaces;
+	private Integer parkingSpaces;
 	private StationState state;
 
 	public static final Map<Integer, Station> stations;
@@ -45,7 +45,11 @@ public class Station implements Serializable {
 						StationState.values()[random.nextInt(StationState.values().length)]));
 	}
 
-	public Station(int id, String name, String address, String coordinates, int parkingSpaces, StationState state) {
+	public Station() {
+
+	}
+
+	public Station(Integer id, String name, String address, String coordinates, int parkingSpaces, StationState state) {
 		this.id = id;
 		this.name = name;
 		this.address = address;
@@ -57,12 +61,17 @@ public class Station implements Serializable {
 	public String toString() {
 		return String.format("%s (%s)", this.getName(), this.getState().toString());
 	}
+	
+	public boolean isNew()
+	{
+		return this.getId() == null;
+	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

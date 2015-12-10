@@ -4,11 +4,26 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
 	<navigation-rule>
-		<from-view-id>*</from-view-id>
+		<from-view-id>/admin/*</from-view-id>
 		<navigation-case>
-			<from-action>#{stationBean.addStation}</from-action>
-			<from-outcome>station/list</from-outcome>
-			<to-view-id>stations/list.xhtml</to-view-id>
+			<from-outcome>admin/bikes/form</from-outcome>
+			<to-view-id>/admin/bikes/form.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>admin/bikes/list</from-outcome>
+			<to-view-id>/admin/bikes/list.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>admin/stations/form</from-outcome>
+			<to-view-id>/admin/stations/form.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>admin/stations/list</from-outcome>
+			<to-view-id>/admin/stations/list.xhtml</to-view-id>
+			<redirect />
 		</navigation-case>
 	</navigation-rule>
 </faces-config>

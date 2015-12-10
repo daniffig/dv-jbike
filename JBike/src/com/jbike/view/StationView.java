@@ -22,6 +22,7 @@ import com.jbike.controller.StationBean;
 import com.jbike.helper.StationHelper;
 import com.jbike.model.Station;
 import com.jbike.model.StationState;
+import com.jbike.navigation.NavigationBean;
 
 @ManagedBean(name = "stationView")
 @ViewScoped
@@ -36,9 +37,14 @@ public class StationView implements Serializable {
 	private List<Station> filteredStations;
 	private Station selectedStation;
 
+	private Station station;
+
 	private MapModel advancedModel;
 
 	private Marker marker;
+
+	@ManagedProperty("#{navigationBean}")
+	private NavigationBean navigationBean;
 
 	@ManagedProperty("#{stationBean}")
 	private StationBean stationBean;
@@ -48,10 +54,38 @@ public class StationView implements Serializable {
 		stations = stationBean.getStations();
 
 		advancedModel = new DefaultMapModel();
-		
+
 		for (Station station : stations) {
 			advancedModel.addOverlay(StationHelper.toMarker(station));
+		}		
+		
+		Station station = (Station) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("station");
+		
+		if (station == null)
+		{
+			station = new Station();
 		}
+		
+		this.setStation(station);
+	}
+	
+	public String create() {
+		return "admin/stations/form";
+	}
+
+	public String update(Station station) {		
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("station", station);
+		
+		return "admin/stations/form";
+	}
+	
+	// TODO Validaciones!
+	public String save() {
+		if (this.getStation().isNew()) {
+			stationBean.getStations().add(this.getStation());
+		}		
+		
+		return "admin/stations/list";
 	}
 
 	public void onRowEdit(RowEditEvent event) {
@@ -138,5 +172,21 @@ public class StationView implements Serializable {
 		}
 
 		return options;
+	}
+
+	public NavigationBean getNavigationBean() {
+		return navigationBean;
+	}
+
+	public void setNavigationBean(NavigationBean navigationBean) {
+		this.navigationBean = navigationBean;
+	}
+
+	public Station getStation() {
+		return station;
+	}
+
+	public void setStation(Station station) {
+		this.station = station;
 	}
 }

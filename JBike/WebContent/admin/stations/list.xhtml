@@ -51,18 +51,13 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton actionListener="#{stationBean.editStation(station)}" icon="ui-icon-pencil" value="Edit" />
+					<p:commandButton action="#{stationView.update(station)}"
+						icon="ui-icon-pencil" value="Edit" ajax="false" />
 				</p:column>
 			</p:dataTable>
-			<p:dialog header="New Station" widgetVar="addStationDlg" modal="true"
-				height="100">
-				<p:inputText size="10" value="#{stationBean.name}" />
-				<h:commandButton value="Add Station"
-					action="#{stationBean.addStation}" />
-			</p:dialog>
+			<p:commandButton action="#{stationView.create}" icon="ui-icon-plus"
+				value="New Station" />
 		</h:form>
-		<p:button outcome="new.xhtml" icon="ui-icon-plus" value="New Station" />
-		<hr />
 	</ui:define>
 </ui:composition>
 </html>

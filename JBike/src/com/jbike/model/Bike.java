@@ -1,11 +1,16 @@
 package com.jbike.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Bike {
+public class Bike implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private BikeState state;
@@ -22,6 +27,10 @@ public class Bike {
 			bikes.put(i, new Bike(i, "Bike " + i, BikeState.values()[random.nextInt(BikeState.values().length)],
 					Station.stations.get(random.nextInt(Station.stations.size()) + 1)));
 		}
+	}
+
+	public Bike() {
+		
 	}
 
 	public Bike(int id, String name, BikeState state, Station currentStation) {
