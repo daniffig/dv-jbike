@@ -6,22 +6,23 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
+import com.jbike.model2.Bike;
 import com.jbike.model2.RentStation;
 
-public class RentStationDaoHibernate {
-	public EntityManager em;
+public class BikeDaoHibernate {
+public EntityManager em;
 	
-	public RentStationDaoHibernate(){
+	public BikeDaoHibernate(){
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jbike");
 		
 		this.em = emf.createEntityManager();
 	}
 	
-	public void save(RentStation rentStation){
+	public void save(Bike bike){
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
 		
-		em.persist(rentStation);
+		em.persist(bike);
 		
 		try
 		{
@@ -35,11 +36,11 @@ public class RentStationDaoHibernate {
 		}
 	}
 	
-	public void update(RentStation rentStation){
+	public void update(Bike bike){
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
 		
-		rentStation = em.merge(rentStation);
+		bike = em.merge(bike);
 		
 		try
 		{
@@ -53,11 +54,11 @@ public class RentStationDaoHibernate {
 		}
 	}
 	
-	public void delete(RentStation rentStation){
+	public void delete(Bike bike){
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
 		
-	    em.remove(rentStation);
+	    em.remove(bike);
 		
 		try
 		{
@@ -71,7 +72,7 @@ public class RentStationDaoHibernate {
 		}
 	}
 	
-	public RentStation findByPk(Integer id){
-		return em.find(RentStation.class, id);
+	public Bike findByPk(Integer id){
+		return em.find(Bike.class, id);
 	}
 }
