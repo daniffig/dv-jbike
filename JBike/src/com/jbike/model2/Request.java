@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,6 +17,9 @@ public class Request {
   private Long id;
 
   @ManyToOne
+  private User user;
+  
+  @ManyToOne
   private RequestType requestType;
 
   @ManyToOne
@@ -25,7 +29,6 @@ public class Request {
   private Bike bike;
   
   private Date date;
-
   
   public Request() {}
 
@@ -37,6 +40,16 @@ public class Request {
     this.id = id;
   }
 
+  public User getUser()
+  {
+    return this.user;
+  }
+
+  public void setRequestType(User user)
+  {
+    this.user = user;
+  }
+  
   public RequestType getRequestType()
   {
     return this.requestType;
