@@ -62,6 +62,10 @@ public class Station implements Serializable {
 		return String.format("%s (%s)", this.getName(), this.getState().toString());
 	}
 	
+	public boolean equals(Station station) {
+		return this.getId() == station.getId();
+	}
+	
 	public boolean isNew()
 	{
 		return this.getId() == null;

@@ -9,13 +9,16 @@
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="content">
-		<h:form>
-			<p:dataTable var="bike" value="#{bikeView.bikes}" rows="10">
+		<h:form id="bikesTableForm">
+			<p:dataTable id="bikesTable" widgetVar="bikesTable" var="bike"
+				value="#{bikeView.bikes}" rows="10"
+				filteredValue="#{bikeView.filteredBikes}"
+				emptyMessage="No bikes found with given criteria">
 				<p:column headerText="Id">
 					<h:outputText value="#{bike.id}" />
 				</p:column>
 
-				<p:column headerText="Name">
+				<p:column headerText="Name" filterBy="#{bike.name}">
 					<h:outputText value="#{bike.name}" />
 				</p:column>
 
@@ -28,11 +31,37 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton value="Edit" icon="ui-icon-pencil" action="#{bikeView.update(bike)}"></p:commandButton>
+					<p:commandButton value="Edit" icon="ui-icon-pencil"
+						actionListener="#{bikeView.edit(bike)}"
+						onclick="PF('bikeDialog').show();" ajax="true" update="bikeForm" />
 				</p:column>
 			</p:dataTable>
-			<p:commandButton value="New Bike" icon="ui-icon-plus" action="#{bikeView.create}"></p:commandButton>
 		</h:form>
+		<p:commandButton value="New Bike" icon="ui-icon-plus"
+			actionListener="#{bikeView.resetForm}"
+			onclick="PF('bikeDialog').show();" update="bikeForm" />
+		<p:dialog header="New Bike" widgetVar="bikeDialog" modal="true">
+			<h:form id="bikeForm">
+				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
+					<p:outputLabel for="name" value="Name:" />
+					<p:inputText id="name" class="form-control" size="10"
+						value="#{bikeView.bike.name}"></p:inputText>
+					<p:outputLabel for="currentStation" value="Current Station:" />
+					<h:selectOneMenu id="currentStation"
+						value="#{bikeView.bike.currentStation}"
+						converter="stationConverter">
+						<f:selectItems value="#{stationBean.stations}" />
+					</h:selectOneMenu>
+				</h:panelGrid>
+				<hr />
+				<p:commandButton value="Cancel" action="#{bikeView.resetForm}"
+					onclick="PF('bikeDialog').hide();" update="bikeForm"
+					immediate="true" />
+				<p:commandButton value="Save" action="#{bikeView.save}"
+					update=":bikesTableForm:bikesTable"
+					onclick="PF('bikeForm').hide();" />
+			</h:form>
+		</p:dialog>
 	</ui:define>
 </ui:composition>
 </html>

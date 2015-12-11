@@ -23,7 +23,6 @@ public class BikeView implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private List<Bike> bikes;
 	private List<Bike> filteredBikes;
 
 	private Bike bike;
@@ -35,13 +34,8 @@ public class BikeView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		bikes = bikeBean.getBikes();
-
-		Bike bike = (Bike) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("bike");
-
-		if (bike != null) {
-			this.setBike(bike);
-		}
+		//bikes = bikeBean.getBikes();
+		bike = new Bike();
 	}
 
 	public String create() {
@@ -56,17 +50,27 @@ public class BikeView implements Serializable {
 		return "admin/bikes/form";
 	}
 
-	public String save() {
-		return "admin/bikes/list";
+	public void edit(Bike bike) {
+		this.setBike(bike);
+	}
+
+	public void save() {
+		this.getBike().save();
+	}
+
+	public void resetForm() {
+		bike = new Bike();
 	}
 
 	public List<Bike> getBikes() {
-		return bikes;
+		return new ArrayList<Bike>(Bike.bikes.values());
+		//return bikes;
 	}
-
+/*
 	public void setBikes(List<Bike> bikes) {
 		this.bikes = bikes;
 	}
+*/	
 
 	public BikeBean getBikeBean() {
 		return bikeBean;

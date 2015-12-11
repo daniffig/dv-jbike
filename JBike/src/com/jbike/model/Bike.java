@@ -11,29 +11,29 @@ public class Bike implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Long id;
 	private String name;
 	private BikeState state;
 	private Station currentStation;
 
-	public static final Map<Integer, Bike> bikes;
+	public static final Map<Long, Bike> bikes;
 
 	static {
-		bikes = new HashMap<Integer, Bike>();
+		bikes = new HashMap<Long, Bike>();
 
 		Random random = new Random();
 
-		for (int i = 1; i <= 100; i++) {
+		for (Long i = 1L; i <= 100; i++) {
 			bikes.put(i, new Bike(i, "Bike " + i, BikeState.values()[random.nextInt(BikeState.values().length)],
 					Station.stations.get(random.nextInt(Station.stations.size()) + 1)));
 		}
 	}
 
 	public Bike() {
-		
+
 	}
 
-	public Bike(int id, String name, BikeState state, Station currentStation) {
+	public Bike(Long id, String name, BikeState state, Station currentStation) {
 		this.id = id;
 		this.name = name;
 		this.setState(state);
@@ -44,16 +44,34 @@ public class Bike implements Serializable {
 		return this.getName();
 	}
 
+	public boolean equals(Bike bike) {
+		return this.getId() == bike.getId();
+	}
+
+	public boolean save() {
+		if (this.isNew()) {
+			this.setId((long) Bike.bikes.size() + 1);
+			
+			Bike.bikes.put(this.getId(), this);
+		}
+
+		return true;
+	}
+
+	public boolean isNew() {
+		return this.getId() == null;
+	}
+
 	// TODO
 	public boolean canBeRequested() {
 		return this.state.canBeRequested();
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

@@ -22,7 +22,6 @@
 						value="#{bikeView.bike.currentStation}">
 						<f:selectItems value="#{stationBean.stations}" var="station"
 							itemValue="#{station.id}"></f:selectItems>
-						<f:converter converterId="stationConverter" />
 					</h:selectOneMenu>
 				</h:panelGrid>
 			</div>

@@ -7,7 +7,7 @@ import javax.faces.convert.FacesConverter;
 
 import com.jbike.model.Station;
 
-@FacesConverter("stationConverter")
+@FacesConverter(value = "stationConverter")
 public class StationConverter implements Converter {
 
 	@Override
@@ -17,7 +17,7 @@ public class StationConverter implements Converter {
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
-		return arg2.toString();
+		return ((Station) arg2).getId().toString();
 	}
 
 }
