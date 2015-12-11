@@ -3,6 +3,8 @@ package com.jbike.model2;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -19,8 +21,8 @@ public class Request {
   @ManyToOne
   private User user;
   
-  @ManyToOne
-  private RequestType requestType;
+  @Enumerated(EnumType.ORDINAL)
+  private RequestState state;
 
   @ManyToOne
   private RentStation rentStation;
@@ -50,14 +52,14 @@ public class Request {
     this.user = user;
   }
   
-  public RequestType getRequestType()
+  public RequestState getState()
   {
-    return this.requestType;
+    return this.state;
   }
 
-  public void setRequestType(RequestType requestType)
+  public void setRequestType(RequestState state)
   {
-    this.requestType = requestType;
+    this.state = state;
   }
 
   public RentStation getRentStation()

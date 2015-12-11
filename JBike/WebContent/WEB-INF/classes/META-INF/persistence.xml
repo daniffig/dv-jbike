@@ -2,15 +2,10 @@
   <persistence-unit name="jbike">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>com.jbike.model2.Bike</class>
-    <class>com.jbike.model2.BikeState</class>
-    <class>com.jbike.model2.BikeStateBike</class>
     <class>com.jbike.model2.Penalization</class>
-    <class>com.jbike.model2.PenalizationType</class>
     <class>com.jbike.model2.Profile</class>
     <class>com.jbike.model2.RentStation</class>
-    <class>com.jbike.model2.RentStationState</class>
     <class>com.jbike.model2.Request</class>
-    <class>com.jbike.model2.RequestType</class>
     <class>com.jbike.model2.User</class>
     <properties>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

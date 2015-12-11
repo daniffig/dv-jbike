@@ -19,16 +19,21 @@ public class Penalization {
   @ManyToOne
   private User user;
 
-  @ManyToOne
-  private PenalizationType penalizationType;
+  // TODO Add enum field "type"	
   
   @Column(nullable = false)
   private String description;
 
+  @Column(name="end_date")
   private Date endDate;
-
-
+  
   public Penalization() {}
+  
+  public Penalization(User user, Date endDate, String description){
+	  this.user = user;
+	  this.endDate = endDate;
+	  this.description = description;
+  }
 
   public Long getId() {
     return id;
@@ -46,16 +51,6 @@ public class Penalization {
   public void setUser(User user)
   {
     this.user = user;
-  }
-
-  public PenalizationType getPenalizationType()
-  {
-    return this.penalizationType;
-  }
-
-  public void setPenalizationType(PenalizationType penalizationType)
-  {
-    this.penalizationType = penalizationType;
   }
 
   public String getDescription() {

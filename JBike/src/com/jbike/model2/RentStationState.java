@@ -1,40 +1,42 @@
 package com.jbike.model2;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public enum RentStationState {
 
-@Entity
-@Table(name="rent_station_state")
-public class RentStationState {
+	IN_OPERATION("In operation", "http://maps.google.com/mapfiles/ms/micons/green-dot.png"), UNDER_CONSTRUCTION(
+			"Under construction", "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png"), OFFLINE("Offline",
+							"http://maps.google.com/mapfiles/ms/micons/red-dot.png");
 
-  @Id @GeneratedValue
-  private Long id;
+	private String name;
+	private String icon;
 
-  @Column(unique = true, nullable = false)
-  private String name;
-  
-  public RentStationState() {}
+	RentStationState(String name, String icon) {
+		this.setName(name);
+		this.setIcon(icon);
+	}
 
-  public Long getId() {
-    return id;
-  }
+	@Override
+	public String toString() {
+		return this.getName();
+	}
 
-  private void setId(Long id) {
-    this.id = id;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public String getIcon() {
+		return icon;
+	}
 
-  public String toString() {
-    return this.getName();
-  }
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+	
+	public boolean canReceiveRequests() {
+		return true;
+	}
+
 }

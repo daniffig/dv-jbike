@@ -26,18 +26,19 @@ public class Profile {
   @Column(unique = true, nullable = false)
   private Long dni;
 
-  @Column(nullable = false)
+  @Column(name="first_name", nullable = false)
   private String firstName;
 
-  @Column(nullable = false)
+  @Column(name="last_name", nullable = false)
   private String lastName;
 
   @Column(nullable = false)
   private String address;
 
+  @Column(name="birth_date")
   private Date birthDate;
 
-  @Enumerated(EnumType.STRING)
+  @Enumerated(EnumType.ORDINAL)
   private Sex sex;
 
   
