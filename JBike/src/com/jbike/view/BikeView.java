@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -34,7 +35,7 @@ public class BikeView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		//bikes = bikeBean.getBikes();
+		// bikes = bikeBean.getBikes();
 		bike = new Bike();
 	}
 
@@ -55,7 +56,14 @@ public class BikeView implements Serializable {
 	}
 
 	public void save() {
-		this.getBike().save();
+		if (this.getBike().save()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Bike successfully saved."));
+		} else {
+
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while saving the bike."));
+		}
 	}
 
 	public void resetForm() {
@@ -64,13 +72,11 @@ public class BikeView implements Serializable {
 
 	public List<Bike> getBikes() {
 		return new ArrayList<Bike>(Bike.bikes.values());
-		//return bikes;
+		// return bikes;
 	}
-/*
-	public void setBikes(List<Bike> bikes) {
-		this.bikes = bikes;
-	}
-*/	
+	/*
+	 * public void setBikes(List<Bike> bikes) { this.bikes = bikes; }
+	 */
 
 	public BikeBean getBikeBean() {
 		return bikeBean;

@@ -9,6 +9,9 @@
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="content">
+		<h1>Bikes</h1>
+		<p:messages id="messages" showDetail="true" autoUpdate="true"
+			closable="true" />
 		<h:form id="bikesTableForm">
 			<p:dataTable id="bikesTable" widgetVar="bikesTable" var="bike"
 				value="#{bikeView.bikes}" rows="10"
@@ -34,6 +37,9 @@
 					<p:commandButton value="Edit" icon="ui-icon-pencil"
 						actionListener="#{bikeView.edit(bike)}"
 						onclick="PF('bikeDialog').show();" ajax="true" update="bikeForm" />
+					<p:commandButton value="Delete" icon="ui-icon-close"
+						actionListener="#{bikeView.delete(bike)}" ajax="true"
+						update="bikeForm" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
