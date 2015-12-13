@@ -2,39 +2,66 @@ package com.jbike.test;
 
 import static org.junit.Assert.*;
 
-import javax.persistence.Query;
-
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import com.jbike.model2.RentStation;
+import com.jbike.model2.RentStationState;
 import com.jbike.persistence.RentStationDaoHibernate;
 
 public class RentStationTest {
-
-	@Test
-	public void testSave() {
-		RentStationDaoHibernate rsdao= new RentStationDaoHibernate();
+	
+	private RentStationDaoHibernate rsdao;
+	
+	RentStation plaza_moreno_rs;
+	RentStation plaza_italia_rs;
+	RentStation plaza_paso_rs;
+	RentStation plaza_malvinas_rs;
+	
+	@Before
+	public void setUp() throws Exception {
 		
-		RentStation rent_station_test = new RentStation("Plaza Moreno", 30);
-		rsdao.save(rent_station_test);
+		rsdao= new RentStationDaoHibernate();
 		
-		assertTrue(rsdao.em.contains(rent_station_test));	
+		plaza_moreno_rs   = new RentStation("Plaza Moreno", 30);
+		plaza_italia_rs   = new RentStation("Plaza Italia", 20);
+		plaza_paso_rs     = new RentStation("Plaza Paso", 10);
+		plaza_malvinas_rs = new RentStation("Plaza Malvinas", 20);
+		
+		rsdao.save(plaza_moreno_rs);
+		rsdao.save(plaza_italia_rs);
+		rsdao.save(plaza_paso_rs);
+		rsdao.save(plaza_malvinas_rs);
 	}
 	
+	@After
+	public void tearDown() throws Exception{
+		if(rsdao.exists(plaza_moreno_rs))
+		{
+			rsdao.delete(plaza_moreno_rs);
+		}
+		
+		if(rsdao.exists(plaza_italia_rs))
+		{
+			rsdao.delete(plaza_italia_rs);
+		}
+		
+		if(rsdao.exists(plaza_paso_rs))
+		{
+			rsdao.delete(plaza_paso_rs);
+		}
+		
+		if(rsdao.exists(plaza_malvinas_rs))
+		{
+			rsdao.delete(plaza_malvinas_rs);
+		}
+	}
+	
+
 	@Test
 	public void testUpdate() {
-		RentStationDaoHibernate rsdao= new RentStationDaoHibernate();
-		
-		RentStation rent_station_test = new RentStation("Plaza Moreno", 30);
-		rsdao.save(rent_station_test);
-		
-		assertTrue(rsdao.em.contains(rent_station_test));	
-		
-		Query q = rsdao.em.createQuery("SELECT rs FROM RentStation rs");
-		
-		q.setFirstResult(0);
-		
-		rent_station_test = (RentStation)q.getSingleResult();
+		RentStation rent_station_test = rsdao.findByName("Plaza Moreno");
 		
 		rent_station_test.setName("Plaza San Martin");
 		
@@ -45,17 +72,24 @@ public class RentStationTest {
 	
 	@Test
 	public void testDelete(){
-		RentStationDaoHibernate rsdao= new RentStationDaoHibernate();
+		rsdao.delete(plaza_moreno_rs);
 		
-		RentStation rent_station_test = new RentStation("Plaza Moreno", 30);
-		rsdao.save(rent_station_test);
-		
-		assertTrue(rsdao.em.contains(rent_station_test));	
-		
-		rsdao.delete(rent_station_test);
-		
-		assertFalse(rsdao.em.contains(rent_station_test));
+		assertFalse(rsdao.exists(plaza_moreno_rs));
 	}
-
+	
+	@Test
+	public void testGetAll(){	
+		assertTrue(rsdao.getAll().size() == 4);
+	}
+	
+	public void testGetInOperation(){
+		RentStation rent_station_test = rsdao.findByName("Plaza Moreno");
+		
+		rent_station_test.setState(RentStationState.OFFLINE);
+		
+		rsdao.update(rent_station_test);
+		
+		assertTrue(rsdao.getInOperation().size() == 3);
+	}
 
 }

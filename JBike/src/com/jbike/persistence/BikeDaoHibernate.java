@@ -7,18 +7,14 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 
 import com.jbike.model2.Bike;
-import com.jbike.model2.RentStation;
 
 public class BikeDaoHibernate {
-public EntityManager em;
 	
-	public BikeDaoHibernate(){
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("jbike");
-		
-		this.em = emf.createEntityManager();
-	}
+	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jbike");
 	
 	public void save(Bike bike){
+		EntityManager em = emf.createEntityManager();
+		
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
 		
@@ -37,6 +33,7 @@ public EntityManager em;
 	}
 	
 	public void update(Bike bike){
+		EntityManager em = emf.createEntityManager();
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
 		
@@ -55,6 +52,7 @@ public EntityManager em;
 	}
 	
 	public void delete(Bike bike){
+		EntityManager em = emf.createEntityManager();
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
 		
@@ -73,6 +71,7 @@ public EntityManager em;
 	}
 	
 	public Bike findByPk(Integer id){
+		EntityManager em = emf.createEntityManager();
 		return em.find(Bike.class, id);
 	}
 }
