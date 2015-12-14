@@ -9,82 +9,89 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
-@Table(name="movement")
+@Table(name = "movement")
 public class Movement {
 
-	@Id @GeneratedValue
+	@Id
+	@GeneratedValue
 	private Long id;
 
 	@ManyToOne
 	private User user;
-	  
+
 	@ManyToOne
 	private Station station;
 
 	@ManyToOne
 	private Bike bike;
-	 
-	@Column(name="created_at")
+
+	@Column(name = "created_at")
 	private Date createdAt;
-	
-	@Column(name="updated_at")
+
+	@Column(name = "updated_at")
 	private Date updatedAt;
-	  
-	public Movement() {}
+
+	public Movement() {
+		this.createdAt = new Date((new java.util.Date()).getTime());
+	}
+
+	public Movement(User user) {
+		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.user = user;
+	}
+
+	public Movement(User user, Bike bike) {
+		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.user = user;
+		this.bike = bike;
+	}
 
 	public Long getId() {
-	  return id;
+		return id;
 	}
 
 	private void setId(Long id) {
-	  this.id = id;
+		this.id = id;
 	}
 
-	public User getUser()
-	{
-	  return this.user;
-	}
-	
-	public void setUser(User user)
-	{
-	  this.user = user;
+	public User getUser() {
+		return this.user;
 	}
 
-	public Station getStation()
-	{
-	  return this.station;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public void setStation(Station station)
-	{
-	  this.station = station;
+	public Station getStation() {
+		return this.station;
 	}
 
-	public Bike getBike()
-	{
-	  return this.bike;
+	public void setStation(Station station) {
+		this.station = station;
 	}
 
-	public void setBike(Bike bike)
-	{
-	  this.bike = bike;
+	public Bike getBike() {
+		return this.bike;
 	}
-	  
+
+	public void setBike(Bike bike) {
+		this.bike = bike;
+	}
+
 	public Date getCreatedAt() {
-	  return this.createdAt;
+		return this.createdAt;
 	}
 
 	public void setCreatedAt(Date createdAt) {
-	  this.createdAt = createdAt;
+		this.createdAt = createdAt;
 	}
-	
+
 	public Date getUpdatedAt() {
-	  return this.updatedAt;
+		return this.updatedAt;
 	}
 
 	public void setUpdatedAt(Date updatedAt) {
-	  this.updatedAt = updatedAt;
+		this.updatedAt = updatedAt;
 	}
 }

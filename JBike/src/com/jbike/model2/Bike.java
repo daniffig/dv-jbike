@@ -1,6 +1,6 @@
 package com.jbike.model2;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,93 +10,95 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="bike")
+@Table(name = "bike")
 public class Bike {
 
-  @Id @GeneratedValue
-  private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-  @Column(name="created_at")
-  private Date createdAt;
+	@Column(name = "created_at")
+	private Date createdAt;
 
-  private String brand;
+	private String brand;
 
-  private String model;
+	private String model;
 
-  @ManyToOne
-  @JoinColumn(nullable=true)
-  private Station station;
+	@ManyToOne
+	@JoinColumn(nullable = true)
+	private Station station;
 
-  @OneToOne
-  @JoinColumn(nullable=true)
-  private User user;
+	@Enumerated(EnumType.ORDINAL)
+	private BikeState state;
 
-  @Enumerated(EnumType.ORDINAL)
-  private BikeState state;
-  
-  public Bike() {}
+	public Bike() {
+		this.state = BikeState.AVAILABLE;
+		this.createdAt = new Date((new java.util.Date()).getTime());
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Bike(String brand, String model) {
+		this.brand = brand;
+		this.model = model;
+		this.state = BikeState.AVAILABLE;
+		this.createdAt = new Date((new java.util.Date()).getTime());
+	}
 
-  private void setId(Long id) {
-    this.id = id;
-  }
+	public Bike(String brand, String model, Station station) {
+		this.brand = brand;
+		this.model = model;
+		this.station = station;
+		this.state = BikeState.AVAILABLE;
+		this.createdAt = new Date((new java.util.Date()).getTime());
+	}
 
-  public Date getCreatedAt() {
-    return createdAt;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
-  
-  public String getBrand() {
-	return brand;
-  }
+	private void setId(Long id) {
+		this.id = id;
+	}
 
-  public void setBrand(String brand) {
-	this.brand = brand;
-  }
+	public Date getCreatedAt() {
+		return createdAt;
+	}
 
-  public String getModel() {
-	return model;
-  }
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
 
-  public void setModel(String model) {
-	this.model = model;
-  }
+	public String getBrand() {
+		return brand;
+	}
 
-  public Station getStation() {
-    return station;
-  }
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
 
-  public void setStation(Station station) {
-    this.station = station;
-  }
+	public String getModel() {
+		return model;
+	}
 
-  public User getUser()
-  {
-    return this.user;
-  }
+	public void setModel(String model) {
+		this.model = model;
+	}
 
-  public void setUser(User user)
-  {
-    this.user = user;
-  }
+	public Station getStation() {
+		return station;
+	}
 
-  public BikeState getState() {
-    return state;
-  }
+	public void setStation(Station station) {
+		this.station = station;
+	}
 
-  public void setState(BikeState state) {
-    this.state = state;
-  }
+	public BikeState getState() {
+		return state;
+	}
+
+	public void setState(BikeState state) {
+		this.state = state;
+	}
 }
-
-

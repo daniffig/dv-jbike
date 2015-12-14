@@ -10,75 +10,75 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="penalization")
+@Table(name = "penalization")
 public class Penalization {
-  
-  @Id @GeneratedValue
-  private Long id;
 
-  @ManyToOne
-  private User user;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-  // TODO Add enum field "type"	
-  
-  @Column(nullable = false)
-  private String description;
+	@ManyToOne
+	private User user;
 
-  @Column(name="created_at")
-  private Date createdAt;
-  
-  @Column(name="end_date")
-  private Date endDate;
-  
-  public Penalization() {}
-  
-  public Penalization(User user, Date endDate, String description){
-	  this.user = user;
-	  this.endDate = endDate;
-	  this.description = description;
-	  
-	  this.createdAt = new Date((new java.util.Date()).getTime());
-  }
+	// TODO Add enum field "type"
 
-  public Long getId() {
-    return id;
-  }
+	@Column(nullable = false)
+	private String description;
 
-  private void setId(Long id) {
-    this.id = id;
-  }
+	@Column(name = "created_at")
+	private Date createdAt;
 
-  public User getUser()
-  {
-    return this.user;
-  }
+	@Column(name = "end_date")
+	private Date endDate;
 
-  public void setUser(User user)
-  {
-    this.user = user;
-  }
+	public Penalization() {
+	}
 
-  public String getDescription() {
-    return description;
-  }
+	public Penalization(User user, Date endDate, String description) {
+		this.user = user;
+		this.endDate = endDate;
+		this.description = description;
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+		this.createdAt = new Date((new java.util.Date()).getTime());
+	}
 
-  public Date getCreatedAt() {
-	return createdAt;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public void setCreatedAt(Date createdAt) {
-	this.createdAt = createdAt;
-  }
-  
-  public Date getEndDate() {
-    return endDate;
-  }
+	private void setId(Long id) {
+		this.id = id;
+	}
 
-  public void setEndDate(Date endDate) {
-    this.endDate = endDate;
-  }
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
 }

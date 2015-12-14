@@ -12,107 +12,107 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="rent_station")
+@Table(name = "rent_station")
 public class Station {
 
-  @Id @GeneratedValue
-  private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-  @Column(unique = true, nullable = false)
-  private String name;
+	@Column(unique = true, nullable = false)
+	private String name;
 
-  @Enumerated(EnumType.ORDINAL)
-  private StationState state;
-  
-  private Double latitude;
+	@Enumerated(EnumType.ORDINAL)
+	private StationState state;
 
-  private Double longitude;
-  
-  @Column(name="total_parking_spaces")
-  private Integer totalParkingSpaces;
+	private Double latitude;
 
-  @OneToMany(mappedBy="station")
-  private List<Bike> bikes;
-  
-  public Station() {}
+	private Double longitude;
 
-  public Station(String name) {
-    this.name = name;
-  }
+	@Column(name = "total_parking_spaces")
+	private Integer totalParkingSpaces;
 
-  public Station(String name, Integer totalParkingSpaces) {
-    this.name = name;
-    this.totalParkingSpaces = totalParkingSpaces;
-    this.state = StationState.IN_OPERATION;
-  }
+	@OneToMany(mappedBy = "station")
+	private List<Bike> bikes;
 
-  public Station(String name, Integer totalParkingSpaces, Double latitude, Double longitude) {
-    this.name               = name;
-    this.totalParkingSpaces = totalParkingSpaces;
-    this.latitude           = latitude;
-    this.longitude          = longitude;
-    this.state = StationState.IN_OPERATION;
-  }
+	public Station() {
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Station(String name) {
+		this.name = name;
+	}
 
-  private void setId(Long id) {
-    this.id = id;
-  }
+	public Station(String name, Integer totalParkingSpaces) {
+		this.name = name;
+		this.totalParkingSpaces = totalParkingSpaces;
+		this.state = StationState.IN_OPERATION;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public Station(String name, Integer totalParkingSpaces, Double latitude, Double longitude) {
+		this.name = name;
+		this.totalParkingSpaces = totalParkingSpaces;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.state = StationState.IN_OPERATION;
+	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public StationState getState()
-  {
-    return this.state;
-  }
+	private void setId(Long id) {
+		this.id = id;
+	}
 
-  public void setState(StationState state)
-  {
-    this.state = state;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public Double getLatitude() {
-    return latitude;
-  }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
-  }
+	public StationState getState() {
+		return this.state;
+	}
 
-  public Double getLongitude() {
-    return longitude;
-  }
+	public void setState(StationState state) {
+		this.state = state;
+	}
 
-  public void setLongitude(Double longitude) {
-    this.longitude = longitude;
-  }
+	public Double getLatitude() {
+		return latitude;
+	}
 
-  public Integer getTotalParkingSpaces() {
-    return totalParkingSpaces;
-  }
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
 
-  public void setTotalParkingSpaces(Integer totalParkingSpaces) {
-    this.totalParkingSpaces = totalParkingSpaces;
-  }
+	public Double getLongitude() {
+		return longitude;
+	}
 
-  public List<Bike> getBikes() {
-    return bikes;
-  }
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
 
-  public void setBikes(List<Bike> bikes) {
-    this.bikes = bikes;
-  }
+	public Integer getTotalParkingSpaces() {
+		return totalParkingSpaces;
+	}
 
-  public String toString() {
-    return this.getName();
-  }
+	public void setTotalParkingSpaces(Integer totalParkingSpaces) {
+		this.totalParkingSpaces = totalParkingSpaces;
+	}
+
+	public List<Bike> getBikes() {
+		return bikes;
+	}
+
+	public void setBikes(List<Bike> bikes) {
+		this.bikes = bikes;
+	}
+
+	public String toString() {
+		return this.getName();
+	}
 }
