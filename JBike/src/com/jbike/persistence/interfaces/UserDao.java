@@ -10,4 +10,7 @@ public interface UserDao {
 	public List<User> findAllActive();
 	
 	public List<User> findAllAdmins();
+	
+	//Agregar alguno con penalizaciones activas
+	//Agregar alguno por requests activos
 }
