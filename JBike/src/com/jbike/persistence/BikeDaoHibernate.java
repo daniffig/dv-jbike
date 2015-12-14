@@ -1,77 +1,33 @@
 package com.jbike.persistence;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
-import javax.persistence.Persistence;
+import java.util.List;
+
 
 import com.jbike.model2.Bike;
+import com.jbike.model2.BikeState;
+import com.jbike.persistence.interfaces.BikeDao;
 
-public class BikeDaoHibernate {
+public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao{
 	
-	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jbike");
-	
-	public void save(Bike bike){
-		EntityManager em = emf.createEntityManager();
-		
-		EntityTransaction etx = em.getTransaction();
-		etx.begin();
-		
-		em.persist(bike);
-		
-		try
-		{
-			etx.commit();
-		}
-		catch(NoResultException e)
-		{
-			if(etx.isActive()){
-				etx.rollback();
-			}
-		}
+	public BikeDaoHibernate(){
+		super(Bike.class);
 	}
-	
-	public void update(Bike bike){
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction etx = em.getTransaction();
-		etx.begin();
-		
-		bike = em.merge(bike);
-		
-		try
-		{
-			etx.commit();
-		}
-		catch(NoResultException e)
-		{
-			if(etx.isActive()){
-				etx.rollback();
-			}
-		}
+
+	@Override
+	public List<Bike> findAllByBrand(String brand) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public void delete(Bike bike){
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction etx = em.getTransaction();
-		etx.begin();
-		
-	    em.remove(bike);
-		
-		try
-		{
-			etx.commit();
-		}
-		catch(NoResultException e)
-		{
-			if(etx.isActive()){
-				etx.rollback();
-			}
-		}
+
+	@Override
+	public List<Bike> findAllByModel(String model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	public Bike findByPk(Integer id){
-		EntityManager em = emf.createEntityManager();
-		return em.find(Bike.class, id);
+
+	@Override
+	public List<Bike> findAllByState(BikeState state) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

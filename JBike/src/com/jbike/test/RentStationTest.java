@@ -37,31 +37,15 @@ public class RentStationTest {
 	
 	@After
 	public void tearDown() throws Exception{
-		if(rsdao.exists(plaza_moreno_rs))
-		{
-			rsdao.delete(plaza_moreno_rs);
-		}
-		
-		if(rsdao.exists(plaza_italia_rs))
-		{
-			rsdao.delete(plaza_italia_rs);
-		}
-		
-		if(rsdao.exists(plaza_paso_rs))
-		{
-			rsdao.delete(plaza_paso_rs);
-		}
-		
-		if(rsdao.exists(plaza_malvinas_rs))
-		{
-			rsdao.delete(plaza_malvinas_rs);
+		for(RentStation rs : rsdao.findAll()){
+			rsdao.delete(rs);
 		}
 	}
 	
 
 	@Test
 	public void testUpdate() {
-		RentStation rent_station_test = rsdao.findByName("Plaza Moreno");
+		RentStation rent_station_test = rsdao.findOneByName("Plaza Moreno");
 		
 		rent_station_test.setName("Plaza San Martin");
 		
@@ -74,22 +58,22 @@ public class RentStationTest {
 	public void testDelete(){
 		rsdao.delete(plaza_moreno_rs);
 		
-		assertFalse(rsdao.exists(plaza_moreno_rs));
+		assertNull(rsdao.findOneByName("Plaza Moreno"));
 	}
 	
 	@Test
-	public void testGetAll(){	
-		assertTrue(rsdao.getAll().size() == 4);
+	public void testFindAll(){	
+		assertTrue(rsdao.findAll().size() == 4);
 	}
 	
 	public void testGetInOperation(){
-		RentStation rent_station_test = rsdao.findByName("Plaza Moreno");
+		RentStation rent_station_test = rsdao.findOneByName("Plaza Moreno");
 		
 		rent_station_test.setState(RentStationState.OFFLINE);
 		
 		rsdao.update(rent_station_test);
 		
-		assertTrue(rsdao.getActive().size() == 3);
+		assertTrue(rsdao.findAllActive().size() == 3);
 	}
 
 }
