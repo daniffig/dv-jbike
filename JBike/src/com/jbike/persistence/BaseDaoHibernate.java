@@ -6,116 +6,107 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
+import javax.persistence.EntityExistsException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 public class BaseDaoHibernate<T> {
 	private Class<T> persistentClass;
-	
+
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jbike");
-	
-	public BaseDaoHibernate(Class<T> pc)
-	{
+
+	public BaseDaoHibernate(Class<T> pc) {
 		persistentClass = pc;
 	}
-	
-	protected EntityManager getEntityManager(){
+
+	protected EntityManager getEntityManager() {
 		return emf.createEntityManager();
 	}
-	
-	public void save(T obj){
+
+	public boolean save(T obj) {
 		EntityManager em = this.getEntityManager();
-		
+
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
-		
+
 		em.persist(obj);
-		
-		try
-		{
+
+		try {
 			etx.commit();
-		}
-		catch(NoResultException e)
-		{
-			if(etx.isActive()){
+		} catch (NoResultException | EntityExistsException e) {
+			if (etx.isActive()) {
 				etx.rollback();
 			}
+			return false;
 		}
 		em.close();
+
+		return true;
 	}
-	
-	public void update(T obj){
+
+	public void update(T obj) {
 		EntityManager em = this.getEntityManager();
-	
+
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
-		
+
 		obj = em.merge(obj);
-		
-		try
-		{
+
+		try {
 			etx.commit();
-		}
-		catch(NoResultException e)
-		{
-			if(etx.isActive()){
+		} catch (NoResultException e) {
+			if (etx.isActive()) {
 				etx.rollback();
 			}
 		}
-		
+
 		em.close();
 	}
-	
-	public void delete(T obj){
+
+	public void delete(T obj) {
 		EntityManager em = this.getEntityManager();
-		
+
 		EntityTransaction etx = em.getTransaction();
 		etx.begin();
-		
+
 		em.remove(em.contains(obj) ? obj : em.merge(obj));
-		
-		try
-		{
+
+		try {
 			etx.commit();
-		}
-		catch(NoResultException e)
-		{
-			if(etx.isActive()){
+		} catch (NoResultException e) {
+			if (etx.isActive()) {
 				etx.rollback();
 			}
 		}
-		
+
 		em.close();
 	}
-	
-	public T findByPk(Integer id){
+
+	public T findByPk(Integer id) {
 		EntityManager em = this.getEntityManager();
-		
+
 		T rs;
-		
-		try
-		{
-			rs =  (T) em.find(persistentClass, id);
-		}
-		catch(NoResultException e)
-		{
+
+		try {
+			rs = (T) em.find(persistentClass, id);
+		} catch (NoResultException e) {
 			rs = null;
 		}
-		
+
 		em.close();
-		
+
 		return rs;
 	}
-	
-	public List<T> findAll(){
+
+	public List<T> findAll() {
 		EntityManager em = this.getEntityManager();
-		
-		Query query = em.createQuery("SELECT e FROM "+ persistentClass.getSimpleName() +" e");
-	    
+
+		Query query = em.createQuery("SELECT e FROM " + persistentClass.getSimpleName() + " e");
+
 		List<T> lrs = (List<T>) query.getResultList();
-		
+
 		em.close();
-		
+
 		return lrs;
 	}
 }
