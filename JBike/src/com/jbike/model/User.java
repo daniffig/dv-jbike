@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class User {
 
-	private int id;
+	private Long id;
 	private String email;
 	private String password;
 	private boolean isActive;
@@ -15,22 +15,26 @@ public class User {
 	static {
 		users = new HashMap<Integer, User>();
 
-		users.put(1, new User(1, "lucio.digiacomo@slyt.gba.gov.ar", "password", true));
-		users.put(2, new User(1, "andres.cimadamore@slyt.gba.gov.ar", "password", true));
+		users.put(1, new User(1L, "lucio.digiacomo@slyt.gba.gov.ar", "password", true));
+		users.put(2, new User(1L, "andres.cimadamore@slyt.gba.gov.ar", "password", true));
 	}
 
-	public User(int id, String email, String password, boolean isActive) {
+	public User() {
+
+	}
+
+	public User(Long id, String email, String password, boolean isActive) {
 		this.id = id;
 		this.email = email;
 		this.password = password;
 		this.isActive = true;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
