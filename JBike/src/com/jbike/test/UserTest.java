@@ -7,11 +7,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.jbike.model2.User;
+import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.UserDaoHibernate;
 
 public class UserTest {
 
-	private UserDaoHibernate udao;
+	private UserDaoHibernate udao = FactoryDao.getUserDao();
 	
 	User u_andres;
 	User u_lucio;
@@ -20,8 +21,6 @@ public class UserTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		
-		udao= new UserDaoHibernate();
 		
 		u_andres = new User("andres.cimadamore@gmail.com");
 		u_lucio  = new User("lucio.digiacomo@gmail.com");

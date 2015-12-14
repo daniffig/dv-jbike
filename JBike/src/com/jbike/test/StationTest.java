@@ -8,11 +8,12 @@ import org.junit.Test;
 
 import com.jbike.model2.Station;
 import com.jbike.model2.StationState;
+import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.StationDaoHibernate;
 
 public class StationTest {
 	
-	private StationDaoHibernate rsdao;
+	private StationDaoHibernate rsdao = FactoryDao.getStationDao();
 	
 	Station plaza_moreno_rs;
 	Station plaza_italia_rs;
@@ -21,8 +22,6 @@ public class StationTest {
 	
 	@Before
 	public void setUp() throws Exception {
-		
-		rsdao= new StationDaoHibernate();
 		
 		plaza_moreno_rs   = new Station("Plaza Moreno", 30);
 		plaza_italia_rs   = new Station("Plaza Italia", 20);

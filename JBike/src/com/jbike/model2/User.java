@@ -47,6 +47,7 @@ public class User implements Serializable {
 	private List<Penalization> penalizations;
 
 	public User() {
+		this.active = true;
 	}
 
 	public User(String email) {
