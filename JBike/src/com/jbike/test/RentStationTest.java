@@ -89,7 +89,7 @@ public class RentStationTest {
 		
 		rsdao.update(rent_station_test);
 		
-		assertTrue(rsdao.getInOperation().size() == 3);
+		assertTrue(rsdao.getActive().size() == 3);
 	}
 
 }

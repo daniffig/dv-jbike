@@ -90,7 +90,7 @@ public class RentStationDaoHibernate {
 		return (List<RentStation>) query.getResultList();
 	}
 	
-	public List<RentStation> getInOperation(){
+	public List<RentStation> getActive(){
 		Query query = em.createQuery("SELECT rs FROM RentStation rs WHERE rs.state = :active_state");
 		query.setParameter("active_state", RentStationState.IN_OPERATION);
 		
