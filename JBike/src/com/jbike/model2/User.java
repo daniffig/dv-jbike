@@ -133,11 +133,11 @@ public class User {
 		this.profile = profile;
 	}
 
-	public List<Movement> getRequests() {
+	public List<Movement> getMovements() {
 		return movements;
 	}
 
-	public void setRequests(List<Movement> movements) {
+	public void setMovements(List<Movement> movements) {
 		this.movements = movements;
 	}
 
