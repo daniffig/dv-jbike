@@ -3,7 +3,10 @@ package com.jbike.model2;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -20,7 +23,11 @@ public class Bike {
   private Long id;
 
   private Date createdAt;
-  
+
+  private String brand;
+
+  private String model;
+
   @ManyToOne
   @JoinColumn(nullable=true)
   private RentStation rentStation;
@@ -29,8 +36,8 @@ public class Bike {
   @JoinColumn(nullable=true)
   private User user;
 
-  @OneToMany(mappedBy="bike")
-  private List<BikeStateBike> states;
+  @Enumerated(EnumType.ORDINAL)
+  private BikeState state;
   
   public Bike() {}
 
@@ -48,6 +55,22 @@ public class Bike {
 
   public void setCreatedAt(Date createdAt) {
     this.createdAt = createdAt;
+  }
+  
+  public String getBrand() {
+	return brand;
+  }
+
+  public void setBrand(String brand) {
+	this.brand = brand;
+  }
+
+  public String getModel() {
+	return model;
+  }
+
+  public void setModel(String model) {
+	this.model = model;
   }
 
   public RentStation getRentStation() {
@@ -68,12 +91,12 @@ public class Bike {
     this.user = user;
   }
 
-  public List<BikeStateBike> getStates() {
-    return states;
+  public BikeState getState() {
+    return state;
   }
 
-  public void setStates(List<BikeStateBike> states) {
-    this.states = states;
+  public void setState(BikeState state) {
+    this.state = state;
   }
 }
 

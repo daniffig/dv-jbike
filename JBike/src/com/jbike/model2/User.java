@@ -84,7 +84,7 @@ public class User {
     return active;
   }
 
-  private void setActive(Boolean active) {
+  public void setActive(Boolean active) {
     this.active = active;
   }
 
@@ -92,7 +92,7 @@ public class User {
     return isAdmin;
   }
 
-  private void setIsAdmin(Boolean isAdmin) {
+  public void setIsAdmin(Boolean isAdmin) {
     this.isAdmin = isAdmin;
   }
 

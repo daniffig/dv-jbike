@@ -1,6 +1,6 @@
 package com.jbike.model2;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,16 +19,26 @@ public class Penalization {
   @ManyToOne
   private User user;
 
-  @ManyToOne
-  private PenalizationType penalizationType;
+  // TODO Add enum field "type"	
   
   @Column(nullable = false)
   private String description;
 
+  @Column(name="created_at")
+  private Date createdAt;
+  
+  @Column(name="end_date")
   private Date endDate;
-
-
+  
   public Penalization() {}
+  
+  public Penalization(User user, Date endDate, String description){
+	  this.user = user;
+	  this.endDate = endDate;
+	  this.description = description;
+	  
+	  this.createdAt = new Date((new java.util.Date()).getTime());
+  }
 
   public Long getId() {
     return id;
@@ -48,16 +58,6 @@ public class Penalization {
     this.user = user;
   }
 
-  public PenalizationType getPenalizationType()
-  {
-    return this.penalizationType;
-  }
-
-  public void setPenalizationType(PenalizationType penalizationType)
-  {
-    this.penalizationType = penalizationType;
-  }
-
   public String getDescription() {
     return description;
   }
@@ -66,6 +66,14 @@ public class Penalization {
     this.description = description;
   }
 
+  public Date getCreatedAt() {
+	return createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt) {
+	this.createdAt = createdAt;
+  }
+  
   public Date getEndDate() {
     return endDate;
   }

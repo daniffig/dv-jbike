@@ -1,40 +1,29 @@
 package com.jbike.model2;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public enum BikeState {
 
-@Entity
-@Table(name="bike_state")
-public class BikeState {
+	AVAILABLE("Available"), REQUESTED("Requested"), IN_USE("Rented"), REPORTED("Reported"), UNDER_MAINTENANCE(
+			"Under maintenance");
 
-  @Id @GeneratedValue
-  private Long id;
+	private String name;
 
-  @Column(unique = true, nullable = false)
-  private String name;
-  
-  public BikeState() {}
+	BikeState(String name) {
+		this.setName(name);
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public String toString() {
+		return this.getName();
+	}
 
-  private void setId(Long id) {
-    this.id = id;
-  }
+	public String getName() {
+		return name;
+	}
 
-  public String getName() {
-    return name;
-  }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String toString() {
-    return this.getName();
-  }
+	public boolean canBeRequested() {
+		return this.equals(BikeState.AVAILABLE);
+	}
 }

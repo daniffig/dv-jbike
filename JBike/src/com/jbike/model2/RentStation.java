@@ -4,10 +4,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -20,7 +21,7 @@ public class RentStation {
   @Column(unique = true, nullable = false)
   private String name;
 
-  @ManyToOne
+  @Enumerated(EnumType.ORDINAL)
   private RentStationState state;
   
   private Double latitude;
@@ -42,6 +43,7 @@ public class RentStation {
   public RentStation(String name, Integer totalParkingSpaces) {
     this.name = name;
     this.totalParkingSpaces = totalParkingSpaces;
+    this.state = RentStationState.IN_OPERATION;
   }
 
   public RentStation(String name, Integer totalParkingSpaces, Double latitude, Double longitude) {
@@ -49,6 +51,7 @@ public class RentStation {
     this.totalParkingSpaces = totalParkingSpaces;
     this.latitude           = latitude;
     this.longitude          = longitude;
+    this.state = RentStationState.IN_OPERATION;
   }
 
   public Long getId() {
