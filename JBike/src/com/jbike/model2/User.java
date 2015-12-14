@@ -42,12 +42,20 @@ public class User {
   public User() {}
 
   public User(String email) {
-    this.email    = email;
-    this.active   = true;
-    
-    this.profile  = new Profile();
+	this.email    = email;
+	this.active   = true;
+	    
+	this.profile  = new Profile();
+  }
+	  
+  public User(String email, Profile profile){
+	  this.email  = email;
+	  this.profile = profile;
+	  
+	  this.active   = true;
   }
   
+
   //ToDo add md5 hashing to password
   public User(String email, String password)
   {
@@ -63,6 +71,23 @@ public class User {
       ...
     */
   }
+  
+  //ToDo add md5 hashing to password
+  public User(String email, String password, Profile profile)
+  {
+    this.email    = email;
+    this.password = password;
+    this.active   = true;
+    
+    this.profile  = profile;
+    /*
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      md.update(password.getBytes(Charset.forName("UTF-8")));
+      byte[] digested_password = md.digest();
+      ...
+    */
+  }
+
 
   public Long getId() {
     return id;
