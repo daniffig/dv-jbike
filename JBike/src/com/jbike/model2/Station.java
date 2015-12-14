@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="rent_station")
-public class RentStation {
+public class Station {
 
   @Id @GeneratedValue
   private Long id;
@@ -22,7 +22,7 @@ public class RentStation {
   private String name;
 
   @Enumerated(EnumType.ORDINAL)
-  private RentStationState state;
+  private StationState state;
   
   private Double latitude;
 
@@ -34,24 +34,24 @@ public class RentStation {
   @OneToMany(mappedBy="rentStation")
   private List<Bike> bikes;
   
-  public RentStation() {}
+  public Station() {}
 
-  public RentStation(String name) {
+  public Station(String name) {
     this.name = name;
   }
 
-  public RentStation(String name, Integer totalParkingSpaces) {
+  public Station(String name, Integer totalParkingSpaces) {
     this.name = name;
     this.totalParkingSpaces = totalParkingSpaces;
-    this.state = RentStationState.IN_OPERATION;
+    this.state = StationState.IN_OPERATION;
   }
 
-  public RentStation(String name, Integer totalParkingSpaces, Double latitude, Double longitude) {
+  public Station(String name, Integer totalParkingSpaces, Double latitude, Double longitude) {
     this.name               = name;
     this.totalParkingSpaces = totalParkingSpaces;
     this.latitude           = latitude;
     this.longitude          = longitude;
-    this.state = RentStationState.IN_OPERATION;
+    this.state = StationState.IN_OPERATION;
   }
 
   public Long getId() {
@@ -70,12 +70,12 @@ public class RentStation {
     this.name = name;
   }
 
-  public RentStationState getState()
+  public StationState getState()
   {
     return this.state;
   }
 
-  public void setState(RentStationState state)
+  public void setState(StationState state)
   {
     this.state = state;
   }

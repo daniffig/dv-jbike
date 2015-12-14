@@ -24,7 +24,7 @@ public class Request {
   private RequestState state;
 
   @ManyToOne
-  private RentStation rentStation;
+  private Station rentStation;
 
   @ManyToOne
   private Bike bike;
@@ -61,12 +61,12 @@ public class Request {
     this.state = state;
   }
 
-  public RentStation getRentStation()
+  public Station getRentStation()
   {
     return this.rentStation;
   }
 
-  public void setRentStation(RentStation rentStation)
+  public void setRentStation(Station rentStation)
   {
     this.rentStation = rentStation;
   }

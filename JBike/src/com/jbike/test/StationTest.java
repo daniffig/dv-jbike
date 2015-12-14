@@ -6,28 +6,28 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jbike.model2.RentStation;
-import com.jbike.model2.RentStationState;
-import com.jbike.persistence.RentStationDaoHibernate;
+import com.jbike.model2.Station;
+import com.jbike.model2.StationState;
+import com.jbike.persistence.StationDaoHibernate;
 
-public class RentStationTest {
+public class StationTest {
 	
-	private RentStationDaoHibernate rsdao;
+	private StationDaoHibernate rsdao;
 	
-	RentStation plaza_moreno_rs;
-	RentStation plaza_italia_rs;
-	RentStation plaza_paso_rs;
-	RentStation plaza_malvinas_rs;
+	Station plaza_moreno_rs;
+	Station plaza_italia_rs;
+	Station plaza_paso_rs;
+	Station plaza_malvinas_rs;
 	
 	@Before
 	public void setUp() throws Exception {
 		
-		rsdao= new RentStationDaoHibernate();
+		rsdao= new StationDaoHibernate();
 		
-		plaza_moreno_rs   = new RentStation("Plaza Moreno", 30);
-		plaza_italia_rs   = new RentStation("Plaza Italia", 20);
-		plaza_paso_rs     = new RentStation("Plaza Paso", 10);
-		plaza_malvinas_rs = new RentStation("Plaza Malvinas", 20);
+		plaza_moreno_rs   = new Station("Plaza Moreno", 30);
+		plaza_italia_rs   = new Station("Plaza Italia", 20);
+		plaza_paso_rs     = new Station("Plaza Paso", 10);
+		plaza_malvinas_rs = new Station("Plaza Malvinas", 20);
 		
 		rsdao.save(plaza_moreno_rs);
 		rsdao.save(plaza_italia_rs);
@@ -37,7 +37,7 @@ public class RentStationTest {
 	
 	@After
 	public void tearDown() throws Exception{
-		for(RentStation rs : rsdao.findAll()){
+		for(Station rs : rsdao.findAll()){
 			rsdao.delete(rs);
 		}
 	}
@@ -45,7 +45,7 @@ public class RentStationTest {
 
 	@Test
 	public void testUpdate() {
-		RentStation rent_station_test = rsdao.findOneByName("Plaza Moreno");
+		Station rent_station_test = rsdao.findOneByName("Plaza Moreno");
 		
 		rent_station_test.setName("Plaza San Martin");
 		
@@ -67,9 +67,9 @@ public class RentStationTest {
 	}
 	
 	public void testGetInOperation(){
-		RentStation rent_station_test = rsdao.findOneByName("Plaza Moreno");
+		Station rent_station_test = rsdao.findOneByName("Plaza Moreno");
 		
-		rent_station_test.setState(RentStationState.OFFLINE);
+		rent_station_test.setState(StationState.OFFLINE);
 		
 		rsdao.update(rent_station_test);
 		

@@ -1,6 +1,6 @@
 package com.jbike.model2;
 
-public enum RentStationState {
+public enum StationState {
 
 	IN_OPERATION("In operation", "http://maps.google.com/mapfiles/ms/micons/green-dot.png"), UNDER_CONSTRUCTION(
 			"Under construction", "http://maps.google.com/mapfiles/ms/micons/yellow-dot.png"), OFFLINE("Offline",
@@ -9,7 +9,7 @@ public enum RentStationState {
 	private String name;
 	private String icon;
 
-	RentStationState(String name, String icon) {
+	StationState(String name, String icon) {
 		this.setName(name);
 		this.setIcon(icon);
 	}
