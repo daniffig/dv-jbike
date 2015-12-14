@@ -1,6 +1,6 @@
 package com.jbike.model2;
 
-public enum Sex{
+public enum Gender{
 	
 	MALE,
 	FEMALE;

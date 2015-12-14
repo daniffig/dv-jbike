@@ -21,7 +21,7 @@ public class User {
   @Column(nullable = false)
   private String email;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private String password;
 
   @Column(name="is_active")
@@ -41,13 +41,21 @@ public class User {
 
   public User() {}
 
+  public User(String email) {
+    this.email    = email;
+    this.active   = true;
+    
+    this.profile  = new Profile();
+  }
+  
   //ToDo add md5 hashing to password
   public User(String email, String password)
   {
     this.email    = email;
     this.password = password;
     this.active   = true;
-
+    
+    this.profile  = new Profile();
     /*
       MessageDigest md = MessageDigest.getInstance("MD5");
       md.update(password.getBytes(Charset.forName("UTF-8")));

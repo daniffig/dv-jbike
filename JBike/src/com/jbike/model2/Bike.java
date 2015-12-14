@@ -2,6 +2,7 @@ package com.jbike.model2;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -19,6 +20,7 @@ public class Bike {
   @Id @GeneratedValue
   private Long id;
 
+  @Column(name="created_at")
   private Date createdAt;
 
   private String brand;
@@ -70,11 +72,11 @@ public class Bike {
 	this.model = model;
   }
 
-  public Station getRentStation() {
+  public Station getStation() {
     return station;
   }
 
-  public void setRentStation(Station station) {
+  public void setStation(Station station) {
     this.station = station;
   }
 

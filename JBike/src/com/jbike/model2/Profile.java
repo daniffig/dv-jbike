@@ -23,23 +23,23 @@ public class Profile {
   @PrimaryKeyJoinColumn
   private User user;
 
-  @Column(unique = true, nullable = false)
+  @Column(unique = true, nullable = true)
   private Long dni;
 
-  @Column(name="first_name", nullable = false)
+  @Column(name="first_name", nullable = true)
   private String firstName;
 
-  @Column(name="last_name", nullable = false)
+  @Column(name="last_name", nullable = true)
   private String lastName;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private String address;
 
   @Column(name="birth_date")
   private Date birthDate;
 
   @Enumerated(EnumType.ORDINAL)
-  private Sex sex;
+  private Gender gender;
 
   
   public Profile() {}
@@ -102,11 +102,11 @@ public class Profile {
     this.birthDate = birthDate;
   }
 
-  public Sex getSex() {
-    return sex;
+  public Gender getGender() {
+    return gender;
   }
 
-  public void setSex(Sex sex) {
-    this.sex = sex;
+  public void setGender(Gender gender) {
+    this.gender = gender;
   }
 }
