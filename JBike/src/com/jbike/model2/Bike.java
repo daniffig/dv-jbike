@@ -30,7 +30,7 @@ public class Bike {
 
   @ManyToOne
   @JoinColumn(nullable=true)
-  private RentStation rentStation;
+  private Station rentStation;
 
   @OneToOne
   @JoinColumn(nullable=true)
@@ -73,11 +73,11 @@ public class Bike {
 	this.model = model;
   }
 
-  public RentStation getRentStation() {
+  public Station getRentStation() {
     return rentStation;
   }
 
-  public void setRentStation(RentStation rentStation) {
+  public void setRentStation(Station rentStation) {
     this.rentStation = rentStation;
   }
 

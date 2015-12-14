@@ -9,7 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import com.jbike.model2.RentStation;
+import com.jbike.model2.Station;
 
 public class BaseDaoHibernate<T> {
 	private Class<T> persistentClass;
