@@ -12,149 +12,145 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="user")
+@Table(name = "user")
 public class User {
 
-  @Id @GeneratedValue
-  private Long id;
+	@Id
+	@GeneratedValue
+	private Long id;
 
-  @Column(nullable = false)
-  private String email;
+	@Column(nullable = false)
+	private String email;
 
-  @Column(nullable = true)
-  private String password;
+	@Column(nullable = true)
+	private String password;
 
-  @Column(name="is_active")
-  private Boolean active;
+	@Column(name = "is_active")
+	private Boolean active;
 
-  @Column(name="is_admin")
-  private Boolean isAdmin;
+	@Column(name = "is_admin")
+	private Boolean isAdmin;
 
-  @OneToOne(mappedBy = "user", cascade={CascadeType.ALL})
-  private Profile profile;
+	@OneToOne(mappedBy = "user", cascade = { CascadeType.ALL })
+	private Profile profile;
 
-  @OneToMany(mappedBy="user")
-  private List<Movement> movements;
+	@OneToMany(mappedBy = "user")
+	private List<Movement> movements;
 
-  @OneToMany(mappedBy="user")
-  private List<Penalization> penalizations;
+	@OneToMany(mappedBy = "user")
+	private List<Penalization> penalizations;
 
-  public User() {}
+	public User() {
+	}
 
-  public User(String email) {
-	this.email    = email;
-	this.active   = true;
-	    
-	this.profile  = new Profile();
-  }
-	  
-  public User(String email, Profile profile){
-	  this.email  = email;
-	  this.profile = profile;
-	  
-	  this.active   = true;
-  }
-  
+	public User(String email) {
+		this.email = email;
+		this.active = true;
 
-  //ToDo add md5 hashing to password
-  public User(String email, String password)
-  {
-    this.email    = email;
-    this.password = password;
-    this.active   = true;
-    
-    this.profile  = new Profile();
-    /*
-      MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(password.getBytes(Charset.forName("UTF-8")));
-      byte[] digested_password = md.digest();
-      ...
-    */
-  }
-  
-  //ToDo add md5 hashing to password
-  public User(String email, String password, Profile profile)
-  {
-    this.email    = email;
-    this.password = password;
-    this.active   = true;
-    
-    this.profile  = profile;
-    /*
-      MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(password.getBytes(Charset.forName("UTF-8")));
-      byte[] digested_password = md.digest();
-      ...
-    */
-  }
+		this.profile = new Profile();
+	}
 
+	public User(String email, Profile profile) {
+		this.email = email;
+		this.profile = profile;
 
-  public Long getId() {
-    return id;
-  }
+		this.active = true;
+	}
 
-  private void setId(Long id) {
-    this.id = id;
-  }
+	// ToDo add md5 hashing to password
+	public User(String email, String password) {
+		this.email = email;
+		this.password = password;
+		this.active = true;
 
-  public String getEmail() {
-    return email;
-  }
+		this.profile = new Profile();
+		/*
+		 * MessageDigest md = MessageDigest.getInstance("MD5");
+		 * md.update(password.getBytes(Charset.forName("UTF-8"))); byte[]
+		 * digested_password = md.digest(); ...
+		 */
+	}
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
+	// ToDo add md5 hashing to password
+	public User(String email, String password, Profile profile) {
+		this.email = email;
+		this.password = password;
+		this.active = true;
 
-  public String getPassword() {
-    return password;
-  }
+		this.profile = profile;
+		/*
+		 * MessageDigest md = MessageDigest.getInstance("MD5");
+		 * md.update(password.getBytes(Charset.forName("UTF-8"))); byte[]
+		 * digested_password = md.digest(); ...
+		 */
+	}
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public Boolean isActive() {
-    return active;
-  }
+	private void setId(Long id) {
+		this.id = id;
+	}
 
-  public void setActive(Boolean active) {
-    this.active = active;
-  }
+	public String getEmail() {
+		return email;
+	}
 
-  public Boolean isAdmin() {
-    return isAdmin;
-  }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-  public void setIsAdmin(Boolean isAdmin) {
-    this.isAdmin = isAdmin;
-  }
+	public String getPassword() {
+		return password;
+	}
 
-  public Profile getProfile() {
-    return profile;
-  }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-  public void setProfile(Profile profile) {
-    this.profile = profile;
-  }
+	public Boolean isActive() {
+		return active;
+	}
 
-  public List<Movement> getRequests() {
-    return movements;
-  }
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
 
-  public void setRequests(List<Movement> movements) {
-    this.movements = movements;
-  }
+	public Boolean isAdmin() {
+		return isAdmin;
+	}
 
-  public List<Penalization> getPenalizations() {
-    return penalizations;
-  }
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
 
-  public void setPenalizations(List<Penalization> penalizations) {
-    this.penalizations = penalizations;
-  }
+	public Profile getProfile() {
+		return profile;
+	}
 
-  public String toString() {
-    return this.getEmail();
-  }
-  
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
+	public List<Movement> getRequests() {
+		return movements;
+	}
+
+	public void setRequests(List<Movement> movements) {
+		this.movements = movements;
+	}
+
+	public List<Penalization> getPenalizations() {
+		return penalizations;
+	}
+
+	public void setPenalizations(List<Penalization> penalizations) {
+		this.penalizations = penalizations;
+	}
+
+	public String toString() {
+		return this.getEmail();
+	}
+
 }
