@@ -9,8 +9,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import com.jbike.model2.Station;
-
 public class BaseDaoHibernate<T> {
 	private Class<T> persistentClass;
 	
@@ -112,7 +110,7 @@ public class BaseDaoHibernate<T> {
 	public List<T> findAll(){
 		EntityManager em = this.getEntityManager();
 		
-		Query query = em.createQuery("SELECT rs FROM "+ persistentClass.getSimpleName() +" rs");
+		Query query = em.createQuery("SELECT e FROM "+ persistentClass.getSimpleName() +" e");
 	    
 		List<T> lrs = (List<T>) query.getResultList();
 		

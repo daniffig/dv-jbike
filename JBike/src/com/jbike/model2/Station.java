@@ -31,7 +31,7 @@ public class Station {
   @Column(name="total_parking_spaces")
   private Integer totalParkingSpaces;
 
-  @OneToMany(mappedBy="rentStation")
+  @OneToMany(mappedBy="station")
   private List<Bike> bikes;
   
   public Station() {}

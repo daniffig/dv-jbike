@@ -16,8 +16,11 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 
 	@Override
 	public User findOneByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = this.getEntityManager();
+		
+		Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email");
+		
+		return (User) query.getSingleResult();
 	}
 
 	@Override

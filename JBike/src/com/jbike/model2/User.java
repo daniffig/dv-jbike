@@ -34,7 +34,7 @@ public class User {
   private Profile profile;
 
   @OneToMany(mappedBy="user")
-  private List<Request> requests;
+  private List<Movement> movements;
 
   @OneToMany(mappedBy="user")
   private List<Penalization> penalizations;
@@ -104,12 +104,12 @@ public class User {
     this.profile = profile;
   }
 
-  public List<Request> getRequests() {
-    return requests;
+  public List<Movement> getRequests() {
+    return movements;
   }
 
-  public void setRequests(List<Request> requests) {
-    this.requests = requests;
+  public void setRequests(List<Movement> movements) {
+    this.movements = movements;
   }
 
   public List<Penalization> getPenalizations() {

@@ -1,9 +1,7 @@
 package com.jbike.model2;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,7 +27,7 @@ public class Bike {
 
   @ManyToOne
   @JoinColumn(nullable=true)
-  private Station rentStation;
+  private Station station;
 
   @OneToOne
   @JoinColumn(nullable=true)
@@ -74,11 +71,11 @@ public class Bike {
   }
 
   public Station getRentStation() {
-    return rentStation;
+    return station;
   }
 
-  public void setRentStation(Station rentStation) {
-    this.rentStation = rentStation;
+  public void setRentStation(Station station) {
+    this.station = station;
   }
 
   public User getUser()

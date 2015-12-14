@@ -19,21 +19,21 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 	public Station findOneByName(String name){
 		EntityManager em = this.getEntityManager();
 		
-		Station rs;
+		Station s;
 		
 		try
 		{
-			Query q = em.createQuery("SELECT rs FROM RentStation rs WHERE rs.name = :name");
+			Query q = em.createQuery("SELECT s FROM Station s WHERE s.name = :name");
 			q.setParameter("name", name);
-			rs = (Station)q.getSingleResult();
+			s = (Station)q.getSingleResult();
 		}
 		catch(NoResultException e)
 		{
-			rs = null;
+			s = null;
 		}
 		em.close();
 		
-		return rs;
+		return s;
 	}
 	
 	
@@ -46,7 +46,7 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 	public List<Station> findAllByState(StationState state) {
 		EntityManager em = this.getEntityManager();
 		
-		Query query = em.createQuery("SELECT rs FROM RentStation rs WHERE rs.state = :active_state");
+		Query query = em.createQuery("SELECT s FROM Station s WHERE s.state = :active_state");
 		query.setParameter("active_state", state);
 		
 		return (List<Station>) query.getResultList();
@@ -56,7 +56,7 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 	public List<Station> findAllInactive() {
 		EntityManager em = this.getEntityManager();
 		
-		Query query = em.createQuery("SELECT rs FROM RentStation rs WHERE rs.state != :active_state");
+		Query query = em.createQuery("SELECT s FROM Station s WHERE s.state != :active_state");
 		query.setParameter("active_state", StationState.IN_OPERATION);
 		
 		return (List<Station>) query.getResultList();
@@ -64,7 +64,10 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 
 	@Override
 	public List<Station> findAllWithAvailableParkingSpace() {
-		// TODO Auto-generated method stub
-		return null;
+		EntityManager em = this.getEntityManager();
+		
+		Query query = em.createQuery("SELECT s FROM Station s WHERE s.totalParkingSpaces > (SELECT COUNT(b.id) FROM Bike b WHERE b.station = s)");
+		
+		return (List<Station>) query.getResultList();
 	}
 }
