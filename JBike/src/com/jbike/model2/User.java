@@ -41,6 +41,7 @@ public class User {
 	private List<Penalization> penalizations;
 
 	public User() {
+		this.active = true;
 	}
 
 	public User(String email) {
