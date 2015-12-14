@@ -132,4 +132,8 @@ public class Station {
 	public String toString() {
 		return this.getName();
 	}
+	
+	public Integer getAvailableParkingSpaces(){
+		return this.totalParkingSpaces - this.bikes.size();
+	}
 }

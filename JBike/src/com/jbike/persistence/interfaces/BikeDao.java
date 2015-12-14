@@ -12,4 +12,5 @@ public interface BikeDao {
 	
 	public List<Bike> findAllByState(BikeState state);
 	
+	public List<Bike> findAllRented();
 }

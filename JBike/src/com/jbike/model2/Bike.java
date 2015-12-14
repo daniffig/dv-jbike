@@ -118,4 +118,8 @@ public class Bike {
 			return false;
 		return true;
 	}
+	
+	public boolean isRented(){
+		return (this.station == null);
+	}
 }
