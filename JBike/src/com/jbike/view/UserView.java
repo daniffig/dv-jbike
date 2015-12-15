@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,12 +13,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 import javax.xml.bind.DatatypeConverter;
 
 import org.primefaces.context.RequestContext;
 
-import com.jbike.model.Station;
 import com.jbike.model2.User;
 import com.jbike.persistence.UserDaoHibernate;
 
@@ -39,7 +35,15 @@ public class UserView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		this.setUser(new User());
+		Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
+		this.setUser((session.get("user") == null) ? new User() : (User) session.get("user"));
+
+		session.remove("user");
+	}
+
+	public String getFormTitle() {
+		return this.getUser().isNew() ? "New User" : String.format("Edit User (%s)", this.getUser());
 	}
 
 	// FIXME
@@ -73,17 +77,52 @@ public class UserView implements Serializable {
 		return "success";
 	}
 
-	// TODO Ver bien cómo aprovechar esto.
-	public void openSignInDialog() {
+	public Map<String, Object> getFormOptions() {
 		Map<String, Object> options = new HashMap<String, Object>();
+		options.put("closable", false);
+		options.put("draggable", false);
+		options.put("modal", true);
 		options.put("resizable", false);
-		RequestContext.getCurrentInstance().openDialog("/users/sign-in.xhtml", options, null);
+
+		return options;
 	}
 
-	public void viewProfile() {
-		Map<String, Object> options = new HashMap<String, Object>();
-		options.put("resizable", false);
-		RequestContext.getCurrentInstance().openDialog("/admin/users/profile", options, null);
+	public void openNewUserDialog() {
+		RequestContext.getCurrentInstance().openDialog("/admin/users/form", this.getFormOptions(), null);
+	}
+
+	public void openEditUserDialog(User user) {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
+
+		RequestContext.getCurrentInstance().openDialog("/admin/users/form", this.getFormOptions(), null);
+	}
+
+	public void cancel() {
+		RequestContext.getCurrentInstance().closeDialog(null);
+	}
+
+	public void save() {
+		UserDaoHibernate udh = new UserDaoHibernate();
+
+		if (this.getUser().isNew()) {
+			udh.save(this.getUser());
+		} else {
+			udh.update(user);
+		}
+
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Contact admin."));
+
+		RequestContext.getCurrentInstance().closeDialog(null);
+	}
+
+	public void delete(User user) {
+		UserDaoHibernate udh = new UserDaoHibernate();
+
+		udh.delete(user);
+
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully deleted."));
 	}
 
 	public User getUser() {

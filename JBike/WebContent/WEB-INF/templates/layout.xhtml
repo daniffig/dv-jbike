@@ -13,9 +13,6 @@
 </h:head>
 
 <h:body>
-	<ui:debug hotkey="x"
-		rendered="#{initParam['javax.faces.FACELETS_DEVELOPMENT']}" />
-
 	<div class="container">
 		<div id="header">
 			<ui:insert name="header">
@@ -36,7 +33,7 @@
 
 		<div id="footer">
 			<ui:insert name="footer">
-				<ui:include src="footer.xhtml"/>
+				<ui:include src="footer.xhtml" />
 			</ui:insert>
 		</div>
 	</div>

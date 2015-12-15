@@ -8,10 +8,10 @@
 		<h1>Users</h1>
 		<h:form id="usersTableForm">
 			<p:dataTable id="usersTable" widgetVar="usersTable" var="user"
-				value="#{userView.users}" rows="10"
+				value="#{userView.users}" rows="30"
 				filteredValue="#{userView.filteredUsers}"
 				emptyMessage="No users found with given criteria">
-				<p:column headerText="Id">
+				<p:column headerText="Id" sortBy="#{user.id}">
 					<h:outputText value="#{user.id}" />
 				</p:column>
 
@@ -45,15 +45,35 @@
 				</p:column>
 
 				<p:column>
-					<p:splitButton value="View Profile"
-						actionListener="#{userView.viewProfile}" icon="ui-icon-person">
-						<p:menuitem value="View History"
-							actionListener="#{userView.signIn}" icon="ui-icon-document" />
-						<p:menuitem value="Add Penalization"
-							actionListener="#{userView.signIn}" icon="ui-icon-alert" />
-					</p:splitButton>
+					<p:menuButton value="Options">
+						<p:menuitem value="View profile"
+							actionListener="#{userView.viewProfile}" icon="ui-icon-person" />
+						<p:menuitem value="View history"
+							actionListener="#{userView.viewHistory}" icon="ui-icon-document" />
+						<p:menuitem value="Add penalization"
+							actionListener="#{userView.addPenalization}" icon="ui-icon-alert" />
+						<p:menuitem value="Edit" actionListener="#{userView.openEditUserDialog(user)}"
+							icon="ui-icon-pencil" />
+						<p:menuitem value="Delete"
+							actionListener="#{userView.delete(user)}" icon="ui-icon-trash"
+							update=":usersTableForm">
+							<p:confirm header="Confirmation required"
+								message="Are you sure you want to delete #{user}?"
+								icon="ui-icon-alert" />
+						</p:menuitem>
+					</p:menuButton>
 				</p:column>
 			</p:dataTable>
+			<p:confirmDialog global="true" closable="true" draggable="true">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
 		</h:form>
+		<p:commandButton value="New User" icon="ui-icon-plus"
+			actionListener="#{userView.openNewUserDialog}">
+			<p:ajax event="dialogReturn" update=":usersTableForm" />
+		</p:commandButton>
 	</ui:define>
 </ui:composition>
