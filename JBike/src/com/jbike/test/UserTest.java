@@ -35,14 +35,56 @@ public class UserTest {
 		udao.save(u_matias);
 	}
 	
-	@After
-	public void tearDown() throws Exception{
-		udao.deleteAll();
+	@Test
+	public void findOneByEmailTest(){
+		assertNull(udao.findOneByEmail("inexistentmail@something.com"));
+		
+		assertEquals(udao.findOneByEmail("andres.cimadamore@gmail.com"), u_andres);
+		
+		u_andres.setEmail("cimadamore.andres@gmail.com");
+		udao.update(u_andres);
+		
+		assertNull(udao.findOneByEmail("andres.cimadamore@gmail.com"));
+		
+		assertEquals(udao.findOneByEmail("cimadamore.andres@gmail.com"), u_andres);
 	}
 
-	@Test
-	public void test() {
-		assertTrue(true);
+	@Test 
+	public void findAllActiveTest(){
+		u_andres.setActive(false);
+		u_lucio.setActive(false);
+		
+		udao.update(u_andres);
+		udao.update(u_lucio);
+		
+		assertTrue(udao.findAllActive().size() == 2);
+		
+		u_andres.setActive(true);
+		u_lucio.setActive(true);
+		
+		udao.update(u_andres);
+		udao.update(u_lucio);
+		
+		assertTrue(udao.findAllActive().size() == 4);
+	}
+
+	@Test 
+	public void findAllAdminTest(){
+		u_andres.setIsAdmin(true);
+		u_lucio.setIsAdmin(true);
+		
+		udao.update(u_andres);
+		udao.update(u_lucio);
+		
+		assertTrue(udao.findAllAdmin().size() == 2);
+		
+		u_andres.setIsAdmin(false);
+		u_lucio.setIsAdmin(false);
+		
+		udao.update(u_andres);
+		udao.update(u_lucio);
+		
+		assertTrue(udao.findAllAdmin().isEmpty());
 	}
 
 }
