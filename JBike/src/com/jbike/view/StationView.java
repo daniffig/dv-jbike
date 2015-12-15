@@ -2,18 +2,18 @@ package com.jbike.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-import org.primefaces.event.RowEditEvent;
-import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
@@ -51,6 +51,12 @@ public class StationView implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
+		this.setStation((session.get("station") == null) ? new Station() : (Station) session.get("station"));
+
+		session.remove("station");
+		
 		stations = stationBean.getStations();
 
 		advancedModel = new DefaultMapModel();
@@ -88,18 +94,25 @@ public class StationView implements Serializable {
 		return "admin/stations/list";
 	}
 
-	public void onRowEdit(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Station edited " + ((Station) event.getObject()).getId());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+	// FIXME Esto lo podríamos hacer global
+	public Map<String, Object> getFormOptions() {
+		Map<String, Object> options = new HashMap<String, Object>();
+		options.put("closable", false);
+		options.put("draggable", false);
+		options.put("modal", true);
+		options.put("resizable", false);
+
+		return options;
 	}
 
-	public void onRowCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Edit cancelled " + ((Station) event.getObject()).getId());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+	public void openNewStationDialog() {
+		RequestContext.getCurrentInstance().openDialog("/admin/stations/form", this.getFormOptions(), null);
 	}
 
-	public void onMarkerSelect(OverlaySelectEvent event) {
-		this.setMarker((Marker) event.getOverlay());
+	public void openEditStationDialog(Station station) {
+		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("station", station);
+
+		RequestContext.getCurrentInstance().openDialog("/admin/stations/form", this.getFormOptions(), null);
 	}
 
 	public List<Station> getStations() {

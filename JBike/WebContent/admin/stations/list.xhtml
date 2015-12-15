@@ -1,17 +1,13 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
-<ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="title">JBike | Stations</ui:define>
 	<ui:define name="content">
 		<h1>Stations</h1>
-		<h:form>
+		<h:form id="stationsTableForm">
 			<p:dataTable var="station" value="#{stationView.stations}"
 				editable="true" paginator="true" rows="10"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -21,21 +17,10 @@
 					<h:outputText value="#{station.id}" />
 				</p:column>
 				<p:column headerText="Name">
-					<p:cellEditor>
-						<f:facet name="output">
-							<h:outputText value="#{station.name}" />
-						</f:facet>
-						<f:facet name="input">
-							<p:inputText value="#{station.name}" style="width:100%"
-								label="Name" />
-						</f:facet>
-					</p:cellEditor>
+					<h:outputText value="#{station.name}" />
 				</p:column>
 				<p:column headerText="Address">
 					<h:outputText value="#{station.address}" />
-				</p:column>
-				<p:column headerText="Coordinates">
-					<h:outputText value="#{station.coordinates}" />
 				</p:column>
 				<p:column headerText="Parking spaces">
 					<h:outputText value="#{station.parkingSpaces}" />
@@ -51,13 +36,17 @@
 				</p:column>
 
 				<p:column>
-					<p:commandButton action="#{stationView.update(station)}"
-						icon="ui-icon-pencil" value="Edit" ajax="false" />
+					<p:menuButton value="Options">
+						<p:menuitem value="Edit"
+							actionListener="#{stationView.openEditStationDialog(station)}"
+							icon="ui-icon-pencil" />
+					</p:menuButton>
 				</p:column>
 			</p:dataTable>
-			<p:commandButton action="#{stationView.create}" icon="ui-icon-plus"
-				value="New Station" />
 		</h:form>
+		<p:commandButton value="New Station" icon="ui-icon-plus"
+			actionListener="#{stationView.openNewStationDialog}">
+			<p:ajax event="dialogReturn" update=":stationsTableForm" />
+		</p:commandButton>
 	</ui:define>
 </ui:composition>
-</html>

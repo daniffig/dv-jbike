@@ -77,6 +77,7 @@ public class UserView implements Serializable {
 		return "success";
 	}
 
+	// FIXME Esto lo podríamos hacer global
 	public Map<String, Object> getFormOptions() {
 		Map<String, Object> options = new HashMap<String, Object>();
 		options.put("closable", false);

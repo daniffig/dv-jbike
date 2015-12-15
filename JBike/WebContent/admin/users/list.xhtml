@@ -4,6 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="title">JBike | Users</ui:define>
 	<ui:define name="content">
 		<h1>Users</h1>
 		<h:form id="usersTableForm">
@@ -52,7 +53,8 @@
 							actionListener="#{userView.viewHistory}" icon="ui-icon-document" />
 						<p:menuitem value="Add penalization"
 							actionListener="#{userView.addPenalization}" icon="ui-icon-alert" />
-						<p:menuitem value="Edit" actionListener="#{userView.openEditUserDialog(user)}"
+						<p:menuitem value="Edit"
+							actionListener="#{userView.openEditUserDialog(user)}"
 							icon="ui-icon-pencil" />
 						<p:menuitem value="Delete"
 							actionListener="#{userView.delete(user)}" icon="ui-icon-trash"
