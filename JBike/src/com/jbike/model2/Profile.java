@@ -109,6 +109,10 @@ public class Profile {
   public void setGender(Gender gender) {
     this.gender = gender;
   }
+  
+  public boolean isNew(){
+	return (this.id==null);
+  }
 
   @Override
   public boolean equals(Object obj) {

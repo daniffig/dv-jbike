@@ -94,6 +94,10 @@ public class Movement {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	
+	public boolean isNew(){
+		return (this.id==null);
+	}
 
 	@Override
 	public boolean equals(Object obj) {

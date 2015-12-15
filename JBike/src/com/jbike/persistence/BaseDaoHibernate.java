@@ -5,10 +5,16 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
-import javax.persistence.NoResultException;
-import javax.persistence.EntityExistsException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.QueryTimeoutException;
+import javax.persistence.RollbackException;
+import javax.persistence.TransactionRequiredException;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
+import javax.persistence.EntityExistsException;
+
+import javax.transaction.SystemException;
 
 public class BaseDaoHibernate<T> {
 	private Class<T> persistentClass;
@@ -22,6 +28,7 @@ public class BaseDaoHibernate<T> {
 	protected EntityManager getEntityManager() {
 		return emf.createEntityManager();
 	}
+	
 
 	public boolean save(T obj) {
 		EntityManager em = this.getEntityManager();
@@ -44,7 +51,7 @@ public class BaseDaoHibernate<T> {
 		return true;
 	}
 
-	public void update(T obj) {
+	public boolean update(T obj) {
 		EntityManager em = this.getEntityManager();
 
 		EntityTransaction etx = em.getTransaction();
@@ -58,9 +65,13 @@ public class BaseDaoHibernate<T> {
 			if (etx.isActive()) {
 				etx.rollback();
 			}
+			
+			return false;
 		}
 
 		em.close();
+		
+		return true;
 	}
 
 	public void delete(T obj) {
@@ -108,5 +119,22 @@ public class BaseDaoHibernate<T> {
 		em.close();
 
 		return lrs;
+	}
+	
+	public void deleteAll(){
+		EntityManager em = this.getEntityManager();
+		EntityTransaction etx = em.getTransaction();	
+			etx.begin();
+
+			Query q = em.createQuery("DELETE FROM " + persistentClass.getSimpleName());
+
+			q.executeUpdate();
+	    try{	
+			etx.commit();
+		} catch (IllegalStateException | PersistenceException e) {
+			if(etx.isActive()){
+				etx.rollback();
+			}
+		}	
 	}
 }

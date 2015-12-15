@@ -155,6 +155,10 @@ public class User implements Serializable {
 	public void setPenalizations(List<Penalization> penalizations) {
 		this.penalizations = penalizations;
 	}
+	
+	public boolean isNew(){
+		return (this.id==null);
+	}
 
 	@Override
 	public boolean equals(Object obj) {

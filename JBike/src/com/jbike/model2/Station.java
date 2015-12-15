@@ -111,6 +111,10 @@ public class Station {
 	public void setBikes(List<Bike> bikes) {
 		this.bikes = bikes;
 	}
+	
+	public boolean isNew(){
+		return (this.id==null);
+	}
 
 	@Override
 	public boolean equals(Object obj) {

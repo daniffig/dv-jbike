@@ -36,9 +36,7 @@ public class StationTest {
 	
 	@After
 	public void tearDown() throws Exception{
-		for(Station rs : rsdao.findAll()){
-			rsdao.delete(rs);
-		}
+		rsdao.deleteAll();
 	}
 	
 

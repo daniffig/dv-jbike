@@ -81,6 +81,10 @@ public class Penalization {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+	
+	public boolean isNew(){
+		return (this.id==null);
+	}
 
 	@Override
 	public boolean equals(Object obj) {

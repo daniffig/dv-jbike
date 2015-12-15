@@ -22,6 +22,8 @@ public class UserTest {
 	@Before
 	public void setUp() throws Exception {
 		
+		udao.deleteAll();
+		
 		u_andres = new User("andres.cimadamore@gmail.com");
 		u_lucio  = new User("lucio.digiacomo@gmail.com");
 		u_jorge  = new User("jorge.rosso@gmail.com");
@@ -35,6 +37,7 @@ public class UserTest {
 	
 	@After
 	public void tearDown() throws Exception{
+		udao.deleteAll();
 	}
 
 	@Test
