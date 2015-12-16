@@ -9,7 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -19,8 +18,7 @@ public class Profile {
   @Id @GeneratedValue
   private Long id;
 
-  @OneToOne
-  @PrimaryKeyJoinColumn
+  @OneToOne(mappedBy = "profile")
   private User user;
 
   @Column(unique = true, nullable = true)
@@ -43,6 +41,12 @@ public class Profile {
 
   
   public Profile() {}
+  
+  public Profile(Long dni, String firstName, String lastName){
+	  this.dni = dni;
+	  this.firstName = firstName;
+	  this.lastName = lastName;
+  }
 
   public Long getId() {
     return id;

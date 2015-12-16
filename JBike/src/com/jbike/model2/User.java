@@ -37,7 +37,7 @@ public class User implements Serializable {
 	@Column(name = "is_admin")
 	private Boolean isAdmin;
 
-	@OneToOne(mappedBy = "user", cascade = { CascadeType.ALL })
+	@OneToOne(cascade = { CascadeType.ALL })
 	private Profile profile;
 
 	@OneToMany(mappedBy = "user")

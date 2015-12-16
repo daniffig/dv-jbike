@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.jbike.model2.Profile;
 import com.jbike.model2.User;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.UserDaoHibernate;
@@ -24,7 +25,7 @@ public class UserTest {
 		
 		udao.deleteAll();
 		
-		u_andres = new User("andres.cimadamore@gmail.com");
+		u_andres = new User("andres.cimadamore@gmail.com", new Profile(36181728L, "Andres", "Cimadamore"));
 		u_lucio  = new User("lucio.digiacomo@gmail.com");
 		u_jorge  = new User("jorge.rosso@gmail.com");
 		u_matias = new User("matias.arrech@gmail.com");
