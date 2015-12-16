@@ -36,7 +36,7 @@ public class UserTest {
 	}
 	
 	@Test
-	public void findOneByEmailTest(){
+	public void testFindOneByEmail(){
 		assertNull(udao.findOneByEmail("inexistentmail@something.com"));
 		
 		assertEquals(udao.findOneByEmail("andres.cimadamore@gmail.com"), u_andres);
@@ -50,7 +50,7 @@ public class UserTest {
 	}
 
 	@Test 
-	public void findAllActiveTest(){
+	public void testFindAllActive(){
 		u_andres.setActive(false);
 		u_lucio.setActive(false);
 		
@@ -69,7 +69,7 @@ public class UserTest {
 	}
 
 	@Test 
-	public void findAllAdminTest(){
+	public void testFindAllAdmin(){
 		u_andres.setIsAdmin(true);
 		u_lucio.setIsAdmin(true);
 		
