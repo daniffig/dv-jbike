@@ -8,8 +8,6 @@ import javax.persistence.Query;
 
 import com.jbike.model2.Bike;
 import com.jbike.model2.BikeState;
-import com.jbike.model2.Station;
-import com.jbike.model2.User;
 import com.jbike.persistence.interfaces.BikeDao;
 
 public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao{

@@ -40,8 +40,8 @@ public class Bike {
 	private String code;
 
 	@ManyToOne
-	@JoinColumn(nullable = true)
-	private Station station;
+	@JoinColumn(name="current_station_id",nullable = true)
+	private Station currentStation;
 
 	@Enumerated(EnumType.ORDINAL)
 	private BikeState state;
@@ -61,7 +61,7 @@ public class Bike {
 	public Bike(String code, String name, Station station) {
 		this.code = code;
 		this.name = name;
-		this.station = station;
+		this.currentStation = station;
 		this.state = BikeState.AVAILABLE;
 		this.createdAt = new Date((new java.util.Date()).getTime());
 	}
@@ -123,11 +123,11 @@ public class Bike {
 	}
 
 	public Station getCurrentStation() {
-		return station;
+		return currentStation;
 	}
 
 	public void setCurrentStation(Station station) {
-		this.station = station;
+		this.currentStation = station;
 	}
 
 	public BikeState getState() {
@@ -160,6 +160,6 @@ public class Bike {
 	}
 	
 	public boolean isRented(){
-		return (this.station == null);
+		return (this.currentStation == null);
 	}
 }

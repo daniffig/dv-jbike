@@ -33,10 +33,10 @@ public class BikeTest {
 		Station s_plaza_moreno = new Station("Plaza Moreno");
 		sdao.save(s_plaza_moreno);
 		
-		bike_1 = new Bike("Fire Bird", "Bin19175", s_plaza_moreno);
-		bike_2 = new Bike("Kawasaki", "Kst310", s_plaza_moreno);
-		bike_3 = new Bike("Kawasaki", "Kht101", s_plaza_moreno);
-		bike_4 = new Bike("Venzo", "Raptor", s_plaza_moreno);
+		bike_1 = new Bike("fire_bird_1", "Fire Bird Bin19175", s_plaza_moreno);
+		bike_2 = new Bike("kawasaki_1", "Kawasaki Kst310", s_plaza_moreno);
+		bike_3 = new Bike("kawasaki_2", "kawasaki Kht101", s_plaza_moreno);
+		bike_4 = new Bike("venzo_1", "Venzo Raptor", s_plaza_moreno);
 		
 		bdao.save(bike_1);
 		bdao.save(bike_2);
