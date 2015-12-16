@@ -2,6 +2,7 @@ package com.jbike.view;
 
 import com.jbike.controller.BikeBean;
 import com.jbike.model.*;
+import com.jbike.session.UserSession;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,12 +27,24 @@ public class BikeView implements Serializable {
 
 	private List<Bike> filteredBikes;
 
+	@ManagedProperty(value = "#{userSession.selectedBike}")
 	private Bike bike;
 
 	private int currentStationId;
 
 	@ManagedProperty("#{bikeBean}")
 	private BikeBean bikeBean;
+	
+	@ManagedProperty(value = "#{userSession}")
+	private UserSession userSession;
+
+	public UserSession getUserSession() {
+		return userSession;
+	}
+
+	public void setUserSession(UserSession userSession) {
+		this.userSession = userSession;
+	}
 
 	@PostConstruct
 	public void init() {

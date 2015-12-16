@@ -6,8 +6,6 @@
 	xmlns:p="http://primefaces.org/ui">
 	<ui:define name="content">
 		<h1>Bikes</h1>
-		<p:messages id="messages" showDetail="true" autoUpdate="true"
-			closable="true" />
 		<h:form id="bikesTableForm">
 			<p:dataTable id="bikesTable" widgetVar="bikesTable" var="bike"
 				value="#{bikeView.bikes}" rows="10"

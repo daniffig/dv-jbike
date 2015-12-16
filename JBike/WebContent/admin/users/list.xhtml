@@ -53,8 +53,7 @@
 							actionListener="#{userView.viewHistory}" icon="ui-icon-document" />
 						<p:menuitem value="Add penalization"
 							actionListener="#{userView.addPenalization}" icon="ui-icon-alert" />
-						<p:menuitem value="Edit"
-							actionListener="#{userView.openEditUserDialog(user)}"
+						<p:menuitem value="Edit" action="#{userView.viewForm(user)}"
 							icon="ui-icon-pencil" />
 						<p:menuitem value="Delete"
 							actionListener="#{userView.delete(user)}" icon="ui-icon-trash"
@@ -74,8 +73,6 @@
 			</p:confirmDialog>
 		</h:form>
 		<p:commandButton value="New User" icon="ui-icon-plus"
-			actionListener="#{userView.openNewUserDialog}">
-			<p:ajax event="dialogReturn" update=":usersTableForm" />
-		</p:commandButton>
+			action="#{userView.viewForm(null)}" />
 	</ui:define>
 </ui:composition>

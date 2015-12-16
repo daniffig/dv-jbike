@@ -58,30 +58,4 @@
 	</nav>
 	<p:messages id="messages" showDetail="true" autoUpdate="true"
 		closable="true" />
-
-	<p:dialog header="Log in" widgetVar="logInDialog">
-		<h:form role="form">
-			<div class="form-group">
-				<h:panelGrid>
-					<p:inputText id="email" class="form-control" size="10"
-						value="#{userView.user.email}"
-						requiredMessage="Please enter your email address."
-						validatorMessage="Invalidad email format">
-						<f:validateRegex
-							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-					</p:inputText>
-					<p:watermark for="email" value="Email" />
-					<p:message for="email" />
-					<p:inputText id="password" class="form-control" size="10"
-						value="#{userView.user.password}"
-						requiredMessage="Please enter your email address."
-						validatorMessage="Invalidad email format">
-						<f:validateRegex
-							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-					</p:inputText>
-				</h:panelGrid>
-			</div>
-			<p:commandButton value="Log in" actionListener="#{userView.logIn}" />
-		</h:form>
-	</p:dialog>
 </ui:composition>

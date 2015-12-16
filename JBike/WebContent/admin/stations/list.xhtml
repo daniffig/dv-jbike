@@ -37,16 +37,15 @@
 
 				<p:column>
 					<p:menuButton value="Options">
-						<p:menuitem value="Edit"
-							actionListener="#{stationView.openEditStationDialog(station)}"
-							icon="ui-icon-pencil" />
+						<p:menuitem value="Edit" action="#{stationView.viewForm(station)}"
+							icon="ui-icon-pencil">
+						</p:menuitem>
 					</p:menuButton>
 				</p:column>
 			</p:dataTable>
 		</h:form>
-		<p:commandButton value="New Station" icon="ui-icon-plus"
-			actionListener="#{stationView.openNewStationDialog}">
-			<p:ajax event="dialogReturn" update=":stationsTableForm" />
+		<p:commandButton value="New Station"
+			action="#{stationView.viewForm(null)}" icon="ui-icon-plus">
 		</p:commandButton>
 	</ui:define>
 </ui:composition>

@@ -4,21 +4,19 @@ import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.bind.DatatypeConverter;
 
-import org.primefaces.context.RequestContext;
-
 import com.jbike.model2.User;
 import com.jbike.persistence.UserDaoHibernate;
+import com.jbike.session.UserSession;
 
 @ManagedBean(name = "userView")
 @ViewScoped
@@ -31,15 +29,33 @@ public class UserView implements Serializable {
 
 	private List<User> filteredUsers;
 
+	@ManagedProperty(value = "#{userSession.selectedUser}")
 	private User user;
+
+	@ManagedProperty(value = "#{userSession}")
+	private UserSession userSession;
 
 	@PostConstruct
 	public void init() {
-		Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+	}
 
-		this.setUser((session.get("user") == null) ? new User() : (User) session.get("user"));
+	public UserSession getUserSession() {
+		return userSession;
+	}
 
-		session.remove("user");
+	public void setUserSession(UserSession userSession) {
+		this.userSession = userSession;
+	}
+
+	public String viewForm(User user) {
+		if (user == null) {
+			user = new User();
+		}
+
+		this.getUserSession().setSelectedUser(user);
+
+		return "/admin/users/form.xhtml?faces-redirect=true";
 	}
 
 	public String getFormTitle() {
@@ -77,44 +93,26 @@ public class UserView implements Serializable {
 		return "success";
 	}
 
-	// FIXME Esto lo podríamos hacer global
-	public Map<String, Object> getFormOptions() {
-		Map<String, Object> options = new HashMap<String, Object>();
-		options.put("closable", false);
-		options.put("draggable", false);
-		options.put("modal", true);
-		options.put("resizable", false);
-
-		return options;
-	}
-
-	public void openNewUserDialog() {
-		RequestContext.getCurrentInstance().openDialog("/admin/users/form", this.getFormOptions(), null);
-	}
-
-	public void openEditUserDialog(User user) {
-		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("user", user);
-
-		RequestContext.getCurrentInstance().openDialog("/admin/users/form", this.getFormOptions(), null);
-	}
-
-	public void cancel() {
-		RequestContext.getCurrentInstance().closeDialog(null);
-	}
-
-	public void save() {
+	public String save() {
 		UserDaoHibernate udh = new UserDaoHibernate();
 
 		if (this.getUser().isNew()) {
 			udh.save(this.getUser());
+
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully created."));
 		} else {
 			udh.update(user);
+
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully updated."));
 		}
 
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "Contact admin."));
+		return this.backToList();
+	}
 
-		RequestContext.getCurrentInstance().closeDialog(null);
+	public String backToList() {
+		return "/admin/users/list.xhtml?faces-redirect=true";
 	}
 
 	public void delete(User user) {

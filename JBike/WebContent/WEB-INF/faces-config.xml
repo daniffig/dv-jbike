@@ -3,33 +3,4 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
-	<navigation-rule>
-		<from-view-id>/admin/*</from-view-id>
-		<navigation-case>
-			<from-outcome>admin/bikes/form</from-outcome>
-			<to-view-id>/admin/bikes/form.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>admin/bikes/list</from-outcome>
-			<to-view-id>/admin/bikes/list.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>admin/stations/form</from-outcome>
-			<to-view-id>/admin/stations/form.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>admin/stations/list</from-outcome>
-			<to-view-id>/admin/stations/list.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-	</navigation-rule>
-
-	<application>
-		<action-listener>org.primefaces.application.DialogActionListener</action-listener>
-		<navigation-handler>org.primefaces.application.DialogNavigationHandler</navigation-handler>
-		<view-handler>org.primefaces.application.DialogViewHandler</view-handler>
-	</application>
 </faces-config>
