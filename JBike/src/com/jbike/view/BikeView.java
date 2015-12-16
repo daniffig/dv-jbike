@@ -1,11 +1,6 @@
 package com.jbike.view;
 
-import com.jbike.controller.BikeBean;
-import com.jbike.model.*;
-import com.jbike.session.UserSession;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -14,7 +9,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
+
+import com.jbike.controller.BikeBean;
+import com.jbike.model2.Bike;
+import com.jbike.session.UserSession;
 
 @ManagedBean(name = "bikeView")
 @ViewScoped
@@ -34,7 +32,7 @@ public class BikeView implements Serializable {
 
 	@ManagedProperty("#{bikeBean}")
 	private BikeBean bikeBean;
-	
+
 	@ManagedProperty(value = "#{userSession}")
 	private UserSession userSession;
 
@@ -48,48 +46,36 @@ public class BikeView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		// bikes = bikeBean.getBikes();
-		bike = new Bike();
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 	}
-
-	public String create() {
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("bike", new Bike());
-
-		return "admin/bikes/form";
-	}
-
-	public String update(Bike bike) {
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().put("bike", bike);
-
-		return "admin/bikes/form";
-	}
-
-	public void edit(Bike bike) {
-		this.setBike(bike);
-	}
-
-	public void save() {
-		if (this.getBike().save()) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Bike successfully saved."));
-		} else {
-
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-					"An error occurred while saving the bike."));
+	
+	public String viewForm(Bike bike) {
+		if (bike == null) {
+			bike = new Bike();
 		}
-	}
-
-	public void resetForm() {
-		bike = new Bike();
+		
+		this.getUserSession().setSelectedBike(bike);
+			
+		return "/admin/bikes/form.xhtml?faces-redirect=true";
 	}
 
 	public List<Bike> getBikes() {
-		return new ArrayList<Bike>(Bike.bikes.values());
-		// return bikes;
+		return this.getBikeBean().getBikes();
 	}
-	/*
-	 * public void setBikes(List<Bike> bikes) { this.bikes = bikes; }
-	 */
+
+	public String save() {
+		String message = this.getBike().isNew() ? "Bike successfully created." : "Bike successfully updated.";
+
+		if (this.getBikeBean().saveBike(this.getBike())) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while saving the bike."));
+		}
+
+		return "/admin/bikes/list.xhtml?faces-redirect=true";
+	}
 
 	public BikeBean getBikeBean() {
 		return bikeBean;
@@ -113,18 +99,6 @@ public class BikeView implements Serializable {
 
 	public void setCurrentStationId(int currentStationId) {
 		this.currentStationId = currentStationId;
-	}
-
-	public List<SelectItem> getStateOptions() {
-		List<SelectItem> options = new ArrayList<SelectItem>();
-
-		options.add(new SelectItem("", "Select One"));
-
-		for (BikeState state : BikeState.values()) {
-			options.add(new SelectItem(state));
-		}
-
-		return options;
 	}
 
 	public Bike getBike() {

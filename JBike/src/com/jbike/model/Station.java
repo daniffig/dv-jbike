@@ -126,12 +126,13 @@ public class Station implements Serializable {
 	// TODO
 	public int getAvailableBikes() {
 		int availableBikes = 0;
-
+/*
 		for (Bike bike : Bike.bikes.values()) {
 			if (this.equals(bike.getCurrentStation())) {
 				availableBikes++;
 			}
 		}
+		*/
 
 		return availableBikes;
 	}

@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jbike.model.BikeState;
+import com.jbike.model2.BikeState;
 import com.jbike.model2.Bike;
 import com.jbike.model2.Station;
 import com.jbike.model2.StationState;

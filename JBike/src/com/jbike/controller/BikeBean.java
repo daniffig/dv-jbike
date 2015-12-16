@@ -1,58 +1,58 @@
 package com.jbike.controller;
 
-import com.jbike.model.*;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.model.SelectItem;
+
+import com.jbike.model2.Bike;
+import com.jbike.model2.BikeState;
+import com.jbike.persistence.BikeDaoHibernate;
+import com.jbike.persistence.FactoryDao;
 
 @ManagedBean(name = "bikeBean")
 @ApplicationScoped
-public class BikeBean implements Serializable {
+public class BikeBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private List<Bike> bikes;
-
-	private int id;
-	private String name;
+	private BikeDaoHibernate bikeDAO;
 
 	@PostConstruct
 	public void init() {
-		bikes = new ArrayList<Bike>(Bike.bikes.values());
+		this.setBikeDAO(FactoryDao.getBikeDao());
 	}
 
-	public String addBike() {
-		return null;
+	public boolean saveBike(Bike bike) {
+		if (bike.isNew()) {
+			return this.getBikeDAO().save(bike);
+		} else {
+			return this.getBikeDAO().update(bike);
+		}
 	}
 
 	public List<Bike> getBikes() {
-		return bikes;
+		return this.getBikeDAO().findAll();
 	}
 
-	public void setBikes(List<Bike> bikes) {
-		this.bikes = bikes;
+	public List<SelectItem> getStateOptions() {
+		List<SelectItem> options = new ArrayList<SelectItem>();
+
+		options.add(new SelectItem("", "Select One"));
+
+		for (BikeState state : BikeState.values()) {
+			options.add(new SelectItem(state));
+		}
+
+		return options;
 	}
 
-	public int getId() {
-		return id;
+	public BikeDaoHibernate getBikeDAO() {
+		return bikeDAO;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void setBikeDAO(BikeDaoHibernate bikeDAO) {
+		this.bikeDAO = bikeDAO;
 	}
 }

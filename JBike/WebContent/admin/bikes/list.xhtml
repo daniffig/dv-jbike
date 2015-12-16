@@ -41,31 +41,7 @@
 				</p:column>
 			</p:dataTable>
 		</h:form>
-		<p:commandButton value="New Bike" icon="ui-icon-plus"
-			actionListener="#{bikeView.resetForm}"
-			onclick="PF('bikeDialog').show();" update="bikeForm" />
-		<p:dialog header="Bike Form" widgetVar="bikeDialog"
-			modal="true" dynamic="true">
-			<h:form id="bikeForm">
-				<h:panelGrid columns="2" id="matchGrid" cellpadding="5">
-					<p:outputLabel for="name" value="Name:" />
-					<p:inputText id="name" class="form-control" size="10"
-						value="#{bikeView.bike.name}"></p:inputText>
-					<p:outputLabel for="currentStation" value="Current Station:" />
-					<h:selectOneMenu id="currentStation"
-						value="#{bikeView.bike.currentStation}"
-						converter="stationConverter">
-						<f:selectItems value="#{stationBean.stations}" />
-					</h:selectOneMenu>
-				</h:panelGrid>
-				<hr />
-				<p:commandButton value="Cancel" action="#{bikeView.resetForm}"
-					onclick="PF('bikeDialog').hide();" update="bikeForm"
-					immediate="true" />
-				<p:commandButton value="Save" action="#{bikeView.save}"
-					update=":bikesTableForm:bikesTable"
-					onclick="PF('bikeForm').hide();" />
-			</h:form>
-		</p:dialog>
+		<p:commandButton value="New Bike" 
+			action="#{bikeView.viewForm(null)}"icon="ui-icon-plus"/>
 	</ui:define>
 </ui:composition>
