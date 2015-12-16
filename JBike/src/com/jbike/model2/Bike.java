@@ -22,10 +22,22 @@ public class Bike {
 
 	@Column(name = "created_at")
 	private Date createdAt;
+	
+	@Column(name = "updated_at")
+	private Date updatedAt;
+	
+	@ManyToOne
+    @JoinColumn(name="created_by")
+	private User createdBy;
+	
+	@ManyToOne
+    @JoinColumn(name="updated_by")
+	private User updatedBy;
 
-	private String brand;
-
-	private String model;
+	private String name;
+	
+	@Column(unique = true)
+	private String code;
 
 	@ManyToOne
 	@JoinColumn(nullable = true)
@@ -39,16 +51,16 @@ public class Bike {
 		this.createdAt = new Date((new java.util.Date()).getTime());
 	}
 
-	public Bike(String brand, String model) {
-		this.brand = brand;
-		this.model = model;
+	public Bike(String code, String name) {
+		this.code  = code;
+		this.name  = name;
 		this.state = BikeState.AVAILABLE;
 		this.createdAt = new Date((new java.util.Date()).getTime());
 	}
 
-	public Bike(String brand, String model, Station station) {
-		this.brand = brand;
-		this.model = model;
+	public Bike(String code, String name, Station station) {
+		this.code = code;
+		this.name = name;
 		this.station = station;
 		this.state = BikeState.AVAILABLE;
 		this.createdAt = new Date((new java.util.Date()).getTime());
@@ -69,28 +81,52 @@ public class Bike {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
-	public String getBrand() {
-		return brand;
+	
+	public Date getUpdatedAt() {
+		return updatedAt;
 	}
 
-	public void setBrand(String brand) {
-		this.brand = brand;
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+	
+	public User getUpdatedBy() {
+		return updatedBy;
 	}
 
-	public String getModel() {
-		return model;
+	public void setUpdatedBy(User updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	
+	public User getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setModel(String model) {
-		this.model = model;
+	public void setCreatedBy(User createdBy) {
+		this.createdBy = createdBy;
 	}
 
-	public Station getStation() {
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Station getCurrentStation() {
 		return station;
 	}
 
-	public void setStation(Station station) {
+	public void setCurrentStation(Station station) {
 		this.station = station;
 	}
 

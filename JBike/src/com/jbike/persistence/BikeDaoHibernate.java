@@ -3,10 +3,12 @@ package com.jbike.persistence;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.jbike.model2.Bike;
 import com.jbike.model2.BikeState;
+import com.jbike.model2.Station;
 import com.jbike.model2.User;
 import com.jbike.persistence.interfaces.BikeDao;
 
@@ -17,21 +19,32 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao{
 	}
 
 	@Override
-	public List<Bike> findAllByBrand(String brand) {
+	public Bike findOneByCode(String code){
 		EntityManager em = this.getEntityManager();
 		
-		Query query = em.createQuery("SELECT b FROM Bike b WHERE b.brand = :brand");
-		query.setParameter("brand", brand);
+		Bike b;
 		
-		return (List<Bike>) query.getResultList();
+		try
+		{
+			Query q = em.createQuery("SELECT b FROM Bike b WHERE b.code = :code");
+			q.setParameter("code", code);
+			b = (Bike)q.getSingleResult();
+		}
+		catch(NoResultException e)
+		{
+			b = null;
+		}
+		em.close();
+		
+		return b;
 	}
 
 	@Override
-	public List<Bike> findAllByModel(String model) {
+	public List<Bike> findAllByName(String name) {
 		EntityManager em = this.getEntityManager();
 		
-		Query query = em.createQuery("SELECT b FROM Bike b WHERE b.model = :model");
-		query.setParameter("model", model);
+		Query query = em.createQuery("SELECT b FROM Bike b WHERE b.name = :name");
+		query.setParameter("name", name);
 		
 		return (List<Bike>) query.getResultList();
 	}
