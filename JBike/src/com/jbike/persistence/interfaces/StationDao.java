@@ -5,7 +5,7 @@ import java.util.List;
 import com.jbike.model2.Station;
 import com.jbike.model2.StationState;
 
-public interface StationDao {
+public interface StationDao  extends BaseDao<Station>{
 	public Station findOneByName(String name);
 	
 	public List<Station> findAllByState(StationState state);

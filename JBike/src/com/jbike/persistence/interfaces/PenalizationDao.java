@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.jbike.model2.Penalization;
 
-public interface PenalizationDao{
+public interface PenalizationDao extends BaseDao<Penalization>{
 
 	public List<Penalization> findAllCurrentlyActive();
 	

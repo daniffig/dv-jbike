@@ -16,7 +16,6 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao{
 		super(Bike.class);
 	}
 
-	@Override
 	public Bike findOneByCode(String code){
 		EntityManager em = this.getEntityManager();
 		
@@ -37,7 +36,6 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao{
 		return b;
 	}
 
-	@Override
 	public List<Bike> findAllByName(String name) {
 		EntityManager em = this.getEntityManager();
 		
@@ -47,7 +45,6 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao{
 		return (List<Bike>) query.getResultList();
 	}
 
-	@Override
 	public List<Bike> findAllByState(BikeState state) {
 		EntityManager em = this.getEntityManager();
 		

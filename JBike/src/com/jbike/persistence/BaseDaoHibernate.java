@@ -16,7 +16,9 @@ import javax.persistence.EntityExistsException;
 
 import javax.transaction.SystemException;
 
-public class BaseDaoHibernate<T> {
+import com.jbike.persistence.interfaces.BaseDao;
+
+public class BaseDaoHibernate<T> implements BaseDao<T> {
 	private Class<T> persistentClass;
 
 	private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("jbike");

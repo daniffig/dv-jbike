@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.jbike.model2.User;
 
-public interface UserDao {
+public interface UserDao  extends BaseDao<User>{
 	public User findOneByEmail(String email);
 	
 	public List<User> findAllActive();
