@@ -18,8 +18,8 @@ import org.primefaces.model.map.Marker;
 
 import com.jbike.controller.StationBean;
 import com.jbike.helper.StationHelper;
-import com.jbike.model2.Station;
-import com.jbike.model2.StationState;
+import com.jbike.model.Station;
+import com.jbike.model.StationState;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "stationView")

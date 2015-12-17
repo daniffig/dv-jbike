@@ -1,9 +1,9 @@
 package com.jbike.persistence.interfaces;
 
-import com.jbike.model2.Movement;
-
 import java.util.Date;
 import java.util.List;
+
+import com.jbike.model.Movement;
 
 public interface MovementDao extends BaseDao<Movement>{
 

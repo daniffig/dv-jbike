@@ -3,7 +3,7 @@ package com.jbike.persistence.interfaces;
 import java.util.Date;
 import java.util.List;
 
-import com.jbike.model2.Penalization;
+import com.jbike.model.Penalization;
 
 public interface PenalizationDao extends BaseDao<Penalization>{
 

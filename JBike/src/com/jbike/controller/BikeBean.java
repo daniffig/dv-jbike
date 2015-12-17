@@ -8,8 +8,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
 
-import com.jbike.model2.Bike;
-import com.jbike.model2.BikeState;
+import com.jbike.model.Bike;
+import com.jbike.model.BikeState;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.interfaces.BikeDao;
 

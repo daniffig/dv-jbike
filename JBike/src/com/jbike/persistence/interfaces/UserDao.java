@@ -2,7 +2,7 @@ package com.jbike.persistence.interfaces;
 
 import java.util.List;
 
-import com.jbike.model2.User;
+import com.jbike.model.User;
 
 public interface UserDao  extends BaseDao<User>{
 	public User findOneByEmail(String email);

@@ -8,11 +8,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jbike.model2.Station;
-import com.jbike.model2.Bike;
-import com.jbike.model2.BikeState;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.StationDaoHibernate;
+import com.jbike.model.Bike;
+import com.jbike.model.BikeState;
+import com.jbike.model.Station;
 import com.jbike.persistence.BikeDaoHibernate;
 
 public class BikeTest {

@@ -6,8 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import com.jbike.model2.Station;
-import com.jbike.model2.User;
+import com.jbike.model.Station;
+import com.jbike.model.User;
 import com.jbike.persistence.interfaces.UserDao;
 
 public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{

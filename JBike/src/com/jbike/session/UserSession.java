@@ -3,9 +3,9 @@ package com.jbike.session;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import com.jbike.model2.Bike;
-import com.jbike.model2.Station;
-import com.jbike.model2.User;
+import com.jbike.model.Bike;
+import com.jbike.model.Station;
+import com.jbike.model.User;
 
 @ManagedBean(name = "userSession")
 @SessionScoped

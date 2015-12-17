@@ -1,4 +1,4 @@
-package com.jbike.model2;
+package com.jbike.model;
 
 import java.sql.Date;
 

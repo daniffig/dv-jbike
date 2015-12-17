@@ -6,8 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import com.jbike.model2.Station;
-import com.jbike.model2.StationState;
+import com.jbike.model.Station;
+import com.jbike.model.StationState;
 import com.jbike.persistence.interfaces.StationDao;
 
 public class StationDaoHibernate extends BaseDaoHibernate<Station> implements StationDao{

@@ -6,7 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.jbike.model2.Penalization;
+import com.jbike.model.Penalization;
 import com.jbike.persistence.interfaces.PenalizationDao;
 
 public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> implements PenalizationDao{

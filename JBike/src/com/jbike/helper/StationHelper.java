@@ -3,7 +3,7 @@ package com.jbike.helper;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.Marker;
 
-import com.jbike.model2.Station;
+import com.jbike.model.Station;
 
 public class StationHelper {
 

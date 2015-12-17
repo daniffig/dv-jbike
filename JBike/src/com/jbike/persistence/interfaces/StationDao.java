@@ -2,8 +2,8 @@ package com.jbike.persistence.interfaces;
 
 import java.util.List;
 
-import com.jbike.model2.Station;
-import com.jbike.model2.StationState;
+import com.jbike.model.Station;
+import com.jbike.model.StationState;
 
 public interface StationDao  extends BaseDao<Station>{
 	public Station findOneByName(String name);

@@ -6,8 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.jbike.model2.Profile;
-import com.jbike.model2.User;
+import com.jbike.model.Profile;
+import com.jbike.model.User;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.UserDaoHibernate;
 

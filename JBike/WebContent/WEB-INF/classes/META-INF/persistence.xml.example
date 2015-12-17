@@ -1,12 +1,12 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
   <persistence-unit name="jbike">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <class>com.jbike.model2.Bike</class>
-    <class>com.jbike.model2.Penalization</class>
-    <class>com.jbike.model2.Profile</class>
-    <class>com.jbike.model2.RentStation</class>
-    <class>com.jbike.model2.Movement</class>
-    <class>com.jbike.model2.User</class>
+    <class>com.jbike.model.Bike</class>
+    <class>com.jbike.model.Penalization</class>
+    <class>com.jbike.model.Profile</class>
+    <class>com.jbike.model.RentStation</class>
+    <class>com.jbike.model.Movement</class>
+    <class>com.jbike.model.User</class>
     <properties>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
       <property name="hibernate.connection.password" value="desa"/>

@@ -14,7 +14,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.xml.bind.DatatypeConverter;
 
-import com.jbike.model2.User;
+import com.jbike.model.User;
 import com.jbike.persistence.UserDaoHibernate;
 import com.jbike.session.UserSession;
 

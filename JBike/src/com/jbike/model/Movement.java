@@ -1,4 +1,4 @@
-package com.jbike.model2;
+package com.jbike.model;
 
 import java.sql.Date;
 
@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "penalization")
-public class Penalization {
+@Table(name = "movement")
+public class Movement {
 
 	@Id
 	@GeneratedValue
@@ -20,26 +20,31 @@ public class Penalization {
 	@ManyToOne
 	private User user;
 
-	// TODO Add enum field "type"
+	@ManyToOne
+	private Station station;
 
-	@Column(nullable = false)
-	private String description;
+	@ManyToOne
+	private Bike bike;
 
 	@Column(name = "created_at")
 	private Date createdAt;
 
-	@Column(name = "end_date")
-	private Date endDate;
+	@Column(name = "updated_at")
+	private Date updatedAt;
 
-	public Penalization() {
+	public Movement() {
+		this.createdAt = new Date((new java.util.Date()).getTime());
 	}
 
-	public Penalization(User user, Date endDate, String description) {
-		this.user = user;
-		this.endDate = endDate;
-		this.description = description;
-
+	public Movement(User user) {
 		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.user = user;
+	}
+
+	public Movement(User user, Bike bike) {
+		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.user = user;
+		this.bike = bike;
 	}
 
 	public Long getId() {
@@ -58,28 +63,36 @@ public class Penalization {
 		this.user = user;
 	}
 
-	public String getDescription() {
-		return description;
+	public Station getStation() {
+		return this.station;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setStation(Station station) {
+		this.station = station;
+	}
+
+	public Bike getBike() {
+		return this.bike;
+	}
+
+	public void setBike(Bike bike) {
+		this.bike = bike;
 	}
 
 	public Date getCreatedAt() {
-		return createdAt;
+		return this.createdAt;
 	}
 
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getEndDate() {
-		return endDate;
+	public Date getUpdatedAt() {
+		return this.updatedAt;
 	}
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	
 	public boolean isNew(){
@@ -94,7 +107,7 @@ public class Penalization {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Penalization other = (Penalization) obj;
+		Movement other = (Movement) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

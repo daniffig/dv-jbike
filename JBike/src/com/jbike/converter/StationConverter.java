@@ -5,7 +5,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import com.jbike.model2.Station;
+import com.jbike.model.Station;
 
 @FacesConverter(value = "stationConverter")
 public class StationConverter implements Converter {

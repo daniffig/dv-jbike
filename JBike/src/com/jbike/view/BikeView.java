@@ -11,7 +11,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.jbike.controller.BikeBean;
-import com.jbike.model2.Bike;
+import com.jbike.model.Bike;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "bikeView")

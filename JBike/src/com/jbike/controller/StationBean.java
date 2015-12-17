@@ -15,8 +15,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.jbike.model2.Station;
-import com.jbike.model2.StationState;
+import com.jbike.model.Station;
+import com.jbike.model.StationState;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.interfaces.StationDao;
 
