@@ -21,6 +21,8 @@ public class Station {
 
 	@Column(unique = true, nullable = false)
 	private String name;
+	
+	private String address;
 
 	@Enumerated(EnumType.ORDINAL)
 	private StationState state;
@@ -32,7 +34,7 @@ public class Station {
 	@Column(name = "total_parking_spaces")
 	private Integer totalParkingSpaces;
 
-	@OneToMany(mappedBy = "station")
+	@OneToMany(mappedBy = "currentStation")
 	private List<Bike> bikes;
 
 	public Station() {
@@ -70,6 +72,14 @@ public class Station {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public StationState getState() {

@@ -57,7 +57,7 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao{
 	public List<Bike> findAllRented(){
 		EntityManager em = this.getEntityManager();
 		
-		Query query = em.createQuery("SELECT b FROM Bike b WHERE b.station IS NULL");
+		Query query = em.createQuery("SELECT b FROM Bike b WHERE b.currentStation IS NULL");
 		
 		return (List<Bike>) query.getResultList();
 	}
