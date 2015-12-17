@@ -9,14 +9,26 @@
 
 <ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="content">
-		<h3>#{userView.getFormTitle()}</h3>
+		<h1>#{bikeView.getFormTitle()}</h1>
 		<h:form role="form">
-			<h:panelGrid columns="2" id="matchGrid" cellpadding="5" width="100%">
-				<p:outputLabel for="email" value="Email:" />
-				<p:inputText id="email" class="form-control" size="10"
-					value="#{userView.user.email}"></p:inputText>
+			<h:panelGrid columns="2">
+				<p:outputLabel for="code" value="Code" />
+				<p:inputText id="code" class="form-control" size="10"
+					value="#{bikeView.bike.code}" />
+				<p:outputLabel for="name" value="Name" />
+				<p:inputText id="name" class="form-control" size="10"
+					value="#{bikeView.bike.name}" />
+				<p:outputLabel for="state" value="State" />
+				<p:selectOneMenu id="state" value="#{bikeView.bike.state}">
+					<f:selectItems value="#{bikeBean.stateOptions}" />
+				</p:selectOneMenu>
+				<p:outputLabel for="currentStation" value="Current station" />
+				<p:selectOneMenu id="currentStation"
+					value="#{bikeView.bike.currentStation}"
+					converter="stationConverter">
+					<f:selectItems value="#{stationBean.stations}" />
+				</p:selectOneMenu>
 			</h:panelGrid>
-			<hr />
 			<p:commandButton value="Back to list" action="#{userView.backToList}" />
 			<p:commandButton value="Save" action="#{userView.save}" />
 		</h:form>

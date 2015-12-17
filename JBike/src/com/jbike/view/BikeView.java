@@ -48,14 +48,18 @@ public class BikeView implements Serializable {
 	public void init() {
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 	}
-	
+
+	public String getFormTitle() {
+		return this.getBike().isNew() ? "New Bike" : String.format("Edit Bike (%s)", this.getBike());
+	}
+
 	public String viewForm(Bike bike) {
 		if (bike == null) {
 			bike = new Bike();
 		}
-		
+
 		this.getUserSession().setSelectedBike(bike);
-			
+
 		return "/admin/bikes/form.xhtml?faces-redirect=true";
 	}
 

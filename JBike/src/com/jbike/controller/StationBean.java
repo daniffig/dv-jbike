@@ -1,6 +1,5 @@
 package com.jbike.controller;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -8,7 +7,7 @@ import java.util.Properties;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
+import javax.faces.model.SelectItem;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -16,64 +15,45 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
-import com.jbike.model.Station;
-import com.jbike.navigation.NavigationBean;
+import com.jbike.model2.Station;
+import com.jbike.model2.StationState;
+import com.jbike.persistence.FactoryDao;
+import com.jbike.persistence.interfaces.StationDao;
 
 @ManagedBean(name = "stationBean")
 @ApplicationScoped
-public class StationBean implements Serializable {
+public class StationBean {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private List<Station> stations;
-	
-	// Esto hay que pasarlo al StationView.
-	private Station station;
-
-	private String name;
-
-	@ManagedProperty("#{navigationBean}")
-	private NavigationBean navigationBean;
+	private StationDao stationDAO;
 
 	@PostConstruct
 	public void init() {
-		stations = new ArrayList<Station>(Station.stations.values());
+		this.setStationDAO(FactoryDao.getStationDao());
 	}
-
-	public String addStation() {
-		return "stations/list";
-	}
-
-	public void editStation(Station station) {
-		this.setStation(station);
-
-		navigationBean.redirect("/stations/new");
+	
+	public boolean saveStation(Station station) {
+		if (station.isNew()) {
+			return this.getStationDAO().save(station);
+		}
+		else {
+			return this.getStationDAO().update(station);
+		}
 	}
 
 	public List<Station> getStations() {
-		return stations;
+		return this.getStationDAO().findAll();
 	}
 
-	public void setStations(List<Station> stations) {
-		this.stations = stations;
-	}
+	public List<SelectItem> getStateOptions() {
+		List<SelectItem> options = new ArrayList<SelectItem>();
 
-	public Station getStation() {
-		return station;
-	}
+		options.add(new SelectItem("", "Select One"));
 
-	public void setStation(Station station) {
-		this.station = station;
-	}
+		for (StationState state : StationState.values()) {
+			options.add(new SelectItem(state));
+		}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+		return options;
 	}
 
 	public String sendMail() {
@@ -100,11 +80,11 @@ public class StationBean implements Serializable {
 		return "stations/list";
 	}
 
-	public NavigationBean getNavigationBean() {
-		return navigationBean;
+	public StationDao getStationDAO() {
+		return stationDAO;
 	}
 
-	public void setNavigationBean(NavigationBean navigationBean) {
-		this.navigationBean = navigationBean;
+	public void setStationDAO(StationDao stationDAO) {
+		this.stationDAO = stationDAO;
 	}
 }

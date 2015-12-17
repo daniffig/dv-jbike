@@ -10,14 +10,14 @@ import javax.faces.model.SelectItem;
 
 import com.jbike.model2.Bike;
 import com.jbike.model2.BikeState;
-import com.jbike.persistence.BikeDaoHibernate;
 import com.jbike.persistence.FactoryDao;
+import com.jbike.persistence.interfaces.BikeDao;
 
 @ManagedBean(name = "bikeBean")
 @ApplicationScoped
 public class BikeBean {
 
-	private BikeDaoHibernate bikeDAO;
+	private BikeDao bikeDAO;
 
 	@PostConstruct
 	public void init() {
@@ -48,11 +48,11 @@ public class BikeBean {
 		return options;
 	}
 
-	public BikeDaoHibernate getBikeDAO() {
+	public BikeDao getBikeDAO() {
 		return bikeDAO;
 	}
 
-	public void setBikeDAO(BikeDaoHibernate bikeDAO) {
+	public void setBikeDAO(BikeDao bikeDAO) {
 		this.bikeDAO = bikeDAO;
 	}
 }

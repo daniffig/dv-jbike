@@ -4,7 +4,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import com.jbike.model2.Bike;
-import com.jbike.model.Station;
+import com.jbike.model2.Station;
 import com.jbike.model2.User;
 
 @ManagedBean(name = "userSession")

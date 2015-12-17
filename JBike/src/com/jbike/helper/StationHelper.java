@@ -3,18 +3,12 @@ package com.jbike.helper;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.Marker;
 
-import com.jbike.model.Station;
+import com.jbike.model2.Station;
 
 public class StationHelper {
 
 	public static Marker toMarker(Station station) {
-		return new Marker(StationHelper.toLatLng(station.getCoordinates()), station.toString(), station,
+		return new Marker(new LatLng(station.getLatitude(), station.getLongitude()), station.toString(), station,
 				station.getState().getIcon(), "http://maps.google.com/mapfiles/ms/micons/msmarker.shadow.png");
-	}
-
-	public static LatLng toLatLng(String coordinates) {
-		String[] latLng = coordinates.split(",");
-
-		return new LatLng(Double.parseDouble(latLng[0]), Double.parseDouble(latLng[1]));
 	}
 }

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
 import org.primefaces.model.map.DefaultMapModel;
@@ -16,8 +18,8 @@ import org.primefaces.model.map.Marker;
 
 import com.jbike.controller.StationBean;
 import com.jbike.helper.StationHelper;
-import com.jbike.model.Station;
-import com.jbike.model.StationState;
+import com.jbike.model2.Station;
+import com.jbike.model2.StationState;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "stationView")
@@ -62,7 +64,11 @@ public class StationView implements Serializable {
 		advancedModel = new DefaultMapModel();
 
 		for (Station station : stations) {
-			advancedModel.addOverlay(StationHelper.toMarker(station));
+			Marker marker = StationHelper.toMarker(station);
+			
+			if (marker != null) {
+				advancedModel.addOverlay(StationHelper.toMarker(station));
+			}
 		}
 	}
 
@@ -78,11 +84,23 @@ public class StationView implements Serializable {
 
 	// TODO Validaciones!
 	public String save() {
-		if (this.getStation().isNew()) {
-			stationBean.getStations().add(this.getStation());
+		String message = this.getStation().isNew() ? "Station successfully created." : "Station successfully updated.";
+		
+		/*
+		this.getStation().setLatitude(-34.920314);
+		this.getStation().setLongitude(-57.95383);
+		*/
+		this.getStation().setState(StationState.IN_OPERATION);
+
+		if (this.getStationBean().saveStation(this.getStation())) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while saving the station."));
 		}
 
-		return this.backToList();
+		return "/admin/stations/list.xhtml?faces-redirect=true";
 	}
 
 	public String backToList() {

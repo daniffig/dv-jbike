@@ -16,20 +16,11 @@
 				<p:column headerText="Id">
 					<h:outputText value="#{station.id}" />
 				</p:column>
-				<p:column headerText="Name">
-					<h:outputText value="#{station.name}" />
-				</p:column>
-				<p:column headerText="Address">
+				<p:column headerText="Address" filterBy="#{station.address}">
 					<h:outputText value="#{station.address}" />
 				</p:column>
-				<p:column headerText="Parking spaces">
-					<h:outputText value="#{station.parkingSpaces}" />
-				</p:column>
-				<p:column headerText="Available bikes">
-					<h:outputText value="#{station.availableBikes}" />
-				</p:column>
-				<p:column headerText="Available parking spaces">
-					<h:outputText value="#{station.availableParkingSpaces}" />
+				<p:column headerText="Total Parking spaces">
+					<h:outputText value="#{station.totalParkingSpaces}" />
 				</p:column>
 				<p:column headerText="State">
 					<h:outputText value="#{station.state.name}" />
