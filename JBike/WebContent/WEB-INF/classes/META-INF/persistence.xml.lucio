@@ -4,8 +4,8 @@
     <class>com.jbike.model.Bike</class>
     <class>com.jbike.model.Penalization</class>
     <class>com.jbike.model.Profile</class>
-    <class>com.jbike.model.RentStation</class>
-    <class>com.jbike.model.Request</class>
+    <class>com.jbike.model.Station</class>
+    <class>com.jbike.model.Movement</class>
     <class>com.jbike.model.User</class>
     <properties>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

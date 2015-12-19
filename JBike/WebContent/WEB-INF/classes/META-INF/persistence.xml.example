@@ -4,7 +4,7 @@
     <class>com.jbike.model.Bike</class>
     <class>com.jbike.model.Penalization</class>
     <class>com.jbike.model.Profile</class>
-    <class>com.jbike.model.RentStation</class>
+    <class>com.jbike.model.Station</class>
     <class>com.jbike.model.Movement</class>
     <class>com.jbike.model.User</class>
     <properties>
