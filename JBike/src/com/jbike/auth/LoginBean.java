@@ -6,16 +6,15 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import com.jbike.model.User;
 import com.jbike.navigation.NavigationBean;
+import com.jbike.persistence.FactoryDao;
 
 @ManagedBean(name="loginBean")
 @SessionScoped
 public class LoginBean {
 	
-    private static final String[] users = {"anna:qazwsx","kate:123456"};
-
-	private String email;
-	private String password;
+	private User user;		
 	
 	private boolean loggedIn; 
 	
@@ -38,7 +37,8 @@ public class LoginBean {
      * @return
      */
     public String doLogin() {
-        // Get every user from our sample database :)
+       /*
+    	// Get every user from our sample database :)
         for (String user: users) {
             String dbUsername = user.split(":")[0];
             String dbPassword = user.split(":")[1];
@@ -48,6 +48,13 @@ public class LoginBean {
                 loggedIn = true;
                 return navigationBean.redirectToWelcome();
             }
+        }
+        */
+    	this.user = FactoryDao.getUserDao().authenticate(this.user.getEmail(), this.user.getPassword());
+    	
+    	if (this.user != null) {
+            loggedIn = true;
+            return navigationBean.redirectToWelcome();
         }
          
         // Set login ERROR
@@ -65,7 +72,8 @@ public class LoginBean {
      */
     public String doLogout() {
         // Set the paremeter indicating that user is logged in to false
-        loggedIn = false;
+        this.loggedIn = false;
+        this.user     = null;
          
         // Set logout message
         FacesMessage msg = new FacesMessage("Logout success!", "INFO MSG");
@@ -74,7 +82,7 @@ public class LoginBean {
          
         return navigationBean.toLogin();
     }
-	
+	/*
 	public String getEmail() {
 		return email;
 	}
@@ -86,10 +94,19 @@ public class LoginBean {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}*/
+	public User getUser() {
+		return user;
 	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+    
 	public boolean isLoggedIn() {
 		return loggedIn;
 	}
+
 	public void setLoggedIn(boolean loggedIn) {
 		this.loggedIn = loggedIn;
 	} 

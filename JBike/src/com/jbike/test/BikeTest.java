@@ -24,7 +24,7 @@ public class BikeTest {
 	private Bike bike_2;
 	private Bike bike_3;
 	private Bike bike_4;
-	
+		
 	@Before
 	public void setUp() throws Exception {
 		bdao.deleteAll();
@@ -70,7 +70,7 @@ public class BikeTest {
 		
 		assertTrue(bdao.findAllByModel("").isEmpty());
 	}
-*/
+
 	@Test
 	public void testFindAllByState() {
 		assertEquals(bdao.findAllByState(BikeState.AVAILABLE).size(), 4);
@@ -107,5 +107,12 @@ public class BikeTest {
 		
 		assertTrue(bdao.findAllRented().size() == 1);
 		assertTrue(bdao.findAllRented().contains(bike_1));
+	}
+*/
+	@Test
+	public void testFindByPk(){
+		Bike b = bdao.findByPk(1L);
+		assertNotNull(b);
+		assertTrue(b.getCode() == "AT45");
 	}
 }
