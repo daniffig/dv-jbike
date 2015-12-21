@@ -65,6 +65,10 @@ public class Bike {
 		this.state = BikeState.AVAILABLE;
 		this.createdAt = new Date((new java.util.Date()).getTime());
 	}
+	
+	public String toString() {
+		return this.getName();
+	}
 
 	public Long getId() {
 		return id;

@@ -1,6 +1,7 @@
 package com.jbike.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -36,10 +37,12 @@ public class BikeBean {
 		return this.getBikeDAO().findAll();
 	}
 
+	public List<BikeState> getStates() {
+		return Arrays.asList(BikeState.values());
+	}
+
 	public List<SelectItem> getStateOptions() {
 		List<SelectItem> options = new ArrayList<SelectItem>();
-
-		options.add(new SelectItem("", "Select One"));
 
 		for (BikeState state : BikeState.values()) {
 			options.add(new SelectItem(state));

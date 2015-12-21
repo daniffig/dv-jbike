@@ -4,43 +4,60 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="title">JBike | Bikes</ui:define>
 	<ui:define name="content">
 		<h1>Bikes</h1>
 		<h:form id="bikesTableForm">
 			<p:dataTable id="bikesTable" widgetVar="bikesTable" var="bike"
-				value="#{bikeView.bikes}" rows="10"
+				value="#{bikeView.bikes}" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
 				filteredValue="#{bikeView.filteredBikes}"
 				emptyMessage="No bikes found with given criteria">
-				<p:column headerText="Id">
+
+				<p:column headerText="Id" filterBy="#{bike.id}"
+					filterMatchMode="exact" sortBy="#{bike.id}">
 					<h:outputText value="#{bike.id}" />
 				</p:column>
-
-				<p:column headerText="Name" filterBy="#{bike.name}">
+				<p:column headerText="Name" filterBy="#{bike.name}"
+					filterMatchMode="contains" sortBy="#{bike.name}">
 					<h:outputText value="#{bike.name}" />
 				</p:column>
-
-				<p:column headerText="State">
+				<p:column headerText="State" filterBy="#{bike.state}">
+					<f:facet name="filter">
+						<h:selectOneMenu onchange="PF('bikesTable').filter()">
+							<f:selectItem itemLabel="All" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{bikeBean.stateOptions}" />
+						</h:selectOneMenu>
+					</f:facet>
 					<h:outputText value="#{bike.state}" />
 				</p:column>
-
-				<p:column headerText="Current Station">
-					<h:outputText value="#{bike.currentStation}" />
+				<p:column headerText="Current Station"
+					filterBy="#{bike.currentStation}" filterMatchMode="exact">
+					<f:facet name="filter">
+						<h:selectOneMenu onchange="PF('bikesTable').filter()">
+							<f:selectItem itemLabel="All" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{stationBean.stations}" />
+						</h:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{bike.currentStation.name}" />
 				</p:column>
 
 				<p:column>
-					<p:splitButton value="View history" icon="ui-icon-pencil"
-						actionListener="#{bikeView.edit(bike)}"
-						onclick="PF('bikeDialog').show();" update="bikeForm">
-						<p:menuitem value="Edit" icon="ui-icon-pencil"
-							actionListener="#{bikeView.edit(bike)}"
-							onclick="PF('bikeDialog').show();" update="bikeForm" />
-						<p:menuitem value="Delete" icon="ui-icon-close"
-							actionListener="#{bikeView.delete(bike)}" ajax="true"
-							update="bikeForm" />
-					</p:splitButton>
+					<p:menuButton value="Options">
+						<p:menuitem value="View history"
+							action="#{bikeView.viewHistory(bike)}" icon="ui-icon-document" />
+						<p:menuitem value="Edit" action="#{bikeView.viewForm(bike)}"
+							icon="ui-icon-pencil" />
+						<p:menuitem value="Delete" action="#{bikeView.delete(bike)}"
+							icon="ui-icon-trash" />
+					</p:menuButton>
 				</p:column>
 			</p:dataTable>
 		</h:form>
+		<hr />
 		<p:commandButton value="New Bike" action="#{bikeView.viewForm(null)}"
 			icon="ui-icon-plus" />
 	</ui:define>

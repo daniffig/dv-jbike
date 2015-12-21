@@ -30,12 +30,11 @@ public class StationBean {
 	public void init() {
 		this.setStationDAO(FactoryDao.getStationDao());
 	}
-	
+
 	public boolean saveStation(Station station) {
 		if (station.isNew()) {
 			return this.getStationDAO().save(station);
-		}
-		else {
+		} else {
 			return this.getStationDAO().update(station);
 		}
 	}
@@ -46,8 +45,6 @@ public class StationBean {
 
 	public List<SelectItem> getStateOptions() {
 		List<SelectItem> options = new ArrayList<SelectItem>();
-
-		options.add(new SelectItem("", "Select One"));
 
 		for (StationState state : StationState.values()) {
 			options.add(new SelectItem(state));

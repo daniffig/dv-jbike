@@ -7,15 +7,16 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import com.jbike.controller.BikeBean;
 import com.jbike.model.Bike;
+import com.jbike.model.BikeState;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "bikeView")
-@ViewScoped
+@RequestScoped
 public class BikeView implements Serializable {
 
 	/**
@@ -56,6 +57,8 @@ public class BikeView implements Serializable {
 	public String viewForm(Bike bike) {
 		if (bike == null) {
 			bike = new Bike();
+			
+			bike.setState(BikeState.AVAILABLE);
 		}
 
 		this.getUserSession().setSelectedBike(bike);
@@ -78,6 +81,10 @@ public class BikeView implements Serializable {
 					"An error occurred while saving the bike."));
 		}
 
+		return "/admin/bikes/list.xhtml?faces-redirect=true";
+	}
+
+	public String backToList() {
 		return "/admin/bikes/list.xhtml?faces-redirect=true";
 	}
 

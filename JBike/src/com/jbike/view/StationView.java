@@ -1,16 +1,14 @@
 package com.jbike.view;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
 
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
@@ -19,11 +17,10 @@ import org.primefaces.model.map.Marker;
 import com.jbike.controller.StationBean;
 import com.jbike.helper.StationHelper;
 import com.jbike.model.Station;
-import com.jbike.model.StationState;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "stationView")
-@ViewScoped
+@RequestScoped
 public class StationView implements Serializable {
 
 	/**
@@ -58,18 +55,22 @@ public class StationView implements Serializable {
 	@PostConstruct
 	public void init() {
 		emptyModel = new DefaultMapModel();
-		
+
 		stations = stationBean.getStations();
 
 		advancedModel = new DefaultMapModel();
 
 		for (Station station : stations) {
 			Marker marker = StationHelper.toMarker(station);
-			
+
 			if (marker != null) {
 				advancedModel.addOverlay(StationHelper.toMarker(station));
 			}
 		}
+	}
+
+	public String getFormTitle() {
+		return this.getStation().isNew() ? "New Station" : String.format("Edit Station (%s)", this.getStation());
 	}
 
 	public String viewForm(Station station) {
@@ -85,12 +86,6 @@ public class StationView implements Serializable {
 	// TODO Validaciones!
 	public String save() {
 		String message = this.getStation().isNew() ? "Station successfully created." : "Station successfully updated.";
-		
-		/*
-		this.getStation().setLatitude(-34.920314);
-		this.getStation().setLongitude(-57.95383);
-		*/
-		this.getStation().setState(StationState.IN_OPERATION);
 
 		if (this.getStationBean().saveStation(this.getStation())) {
 			FacesContext.getCurrentInstance().addMessage(null,
@@ -147,52 +142,12 @@ public class StationView implements Serializable {
 		this.advancedModel = advancedModel;
 	}
 
-	public List<SelectItem> getStationOptions() {
-		List<SelectItem> options = new ArrayList<SelectItem>();
-
-		options.add(new SelectItem("", "Select One"));
-
-		for (Station station : stations) {
-			options.add(new SelectItem(station.getId(), station.getName()));
-		}
-
-		return options;
-	}
-
-	public List<SelectItem> getStateOptions() {
-		List<SelectItem> options = new ArrayList<SelectItem>();
-
-		options.add(new SelectItem("", "Select One"));
-
-		for (StationState state : StationState.values()) {
-			options.add(new SelectItem(state));
-		}
-
-		return options;
-	}
-
 	public Station getStation() {
 		return station;
 	}
 
 	public void setStation(Station station) {
 		this.station = station;
-	}
-	
-	public Double getLat() {
-		return lat;
-	}
-
-	public void setLat(Double lat) {
-		this.lat = lat;
-	}
-
-	public Double getLng() {
-		return lng;
-	}
-
-	public void setLng(Double lng) {
-		this.lng = lng;
 	}
 
 	public MapModel getEmptyModel() {
@@ -203,7 +158,5 @@ public class StationView implements Serializable {
 		this.emptyModel = emptyModel;
 	}
 
-	private Double lat;
-	private Double lng;
 	private MapModel emptyModel;
 }
