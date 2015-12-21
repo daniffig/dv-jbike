@@ -37,7 +37,7 @@ public class UserView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		//FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 	}
 
 	public UserSession getUserSession() {

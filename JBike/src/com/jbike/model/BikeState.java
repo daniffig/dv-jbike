@@ -2,7 +2,7 @@ package com.jbike.model;
 
 public enum BikeState {
 
-	AVAILABLE("Available"), REQUESTED("Requested"), IN_USE("Rented"), REPORTED("Reported"), UNDER_MAINTENANCE(
+	AVAILABLE("Available"), REQUESTED("Requested"), IN_USE("In use"), REPORTED("Reported"), UNDER_MAINTENANCE(
 			"Under maintenance");
 
 	private String name;

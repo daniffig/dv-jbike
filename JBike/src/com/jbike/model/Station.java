@@ -62,6 +62,7 @@ public class Station {
 		return id;
 	}
 
+	@SuppressWarnings("unused")
 	private void setId(Long id) {
 		this.id = id;
 	}
@@ -145,6 +146,10 @@ public class Station {
 
 	public String toString() {
 		return this.getName();
+	}
+	
+	public Integer getAvailableBikes() {
+		return this.getBikes().size();
 	}
 	
 	public Integer getAvailableParkingSpaces(){
