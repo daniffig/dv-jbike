@@ -47,7 +47,7 @@ public class BikeView implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		//FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 	}
 
 	public String getFormTitle() {
@@ -57,8 +57,6 @@ public class BikeView implements Serializable {
 	public String viewForm(Bike bike) {
 		if (bike == null) {
 			bike = new Bike();
-			
-			bike.setState(BikeState.AVAILABLE);
 		}
 
 		this.getUserSession().setSelectedBike(bike);

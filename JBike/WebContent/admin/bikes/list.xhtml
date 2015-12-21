@@ -28,7 +28,7 @@
 						<h:selectOneMenu onchange="PF('bikesTable').filter()">
 							<f:selectItem itemLabel="All" itemValue="#{null}"
 								noSelectionOption="true" />
-							<f:selectItems value="#{bikeBean.stateOptions}" />
+							<f:selectItems value="#{bikeBean.states}" />
 						</h:selectOneMenu>
 					</f:facet>
 					<h:outputText value="#{bike.state}" />
