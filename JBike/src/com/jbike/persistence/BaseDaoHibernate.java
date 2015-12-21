@@ -95,7 +95,7 @@ public class BaseDaoHibernate<T> implements BaseDao<T> {
 		em.close();
 	}
 
-	public T findByPk(Integer id) {
+	public T findByPk(Long id) {
 		EntityManager em = this.getEntityManager();
 
 		T rs;

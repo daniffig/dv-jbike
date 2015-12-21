@@ -9,7 +9,7 @@ public interface BaseDao<T> {
 	
 	public void delete(T obj);
 	
-	public T findByPk(Integer id);
+	public T findByPk(Long id);
 	
 	public List<T> findAll();
 	

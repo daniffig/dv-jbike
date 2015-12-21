@@ -20,10 +20,10 @@
 					<p:message for="email" />
 					<p:inputText id="password" class="form-control" size="10"
 						value="#{userView.user.password}"
-						requiredMessage="Please enter your email address."
-						validatorMessage="Invalidad email format">
+						requiredMessage="Please enter your password."
+						validatorMessage="Invalidad password format">
 						<f:validateRegex
-							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+							pattern="^[\w]+$" />
 					</p:inputText>
 				</h:panelGrid>
 			</div>
