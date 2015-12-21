@@ -8,6 +8,7 @@
     <class>com.jbike.model.Movement</class>
     <class>com.jbike.model.User</class>
     <properties>
+      <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
       <property name="hibernate.connection.password" value="desa"/>
       <property name="hibernate.connection.url" value="jdbc:mysql://vm_desa:3306/jbike"/>
