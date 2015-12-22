@@ -155,7 +155,11 @@ public class User implements Serializable {
 	public void setPenalizations(List<Penalization> penalizations) {
 		this.penalizations = penalizations;
 	}
-	
+	/*
+	public boolean isPenalized(){
+		
+	}
+	*/
 	public boolean isNew(){
 		return (this.id==null);
 	}

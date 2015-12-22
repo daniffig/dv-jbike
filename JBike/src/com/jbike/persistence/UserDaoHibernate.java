@@ -17,6 +17,29 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 	}
 
 	@Override
+	public User authenticate(String email, String password){
+		EntityManager em = this.getEntityManager();
+		
+		User u;
+		try
+		{
+			Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.active = TRUE");
+			query.setParameter("email", email);
+			//query.setParameter("password", password);
+			
+			u = (User)query.getSingleResult();
+		}
+		catch(NoResultException e)
+		{
+			u = null;
+		}
+		em.close();
+		
+		return u;
+	}
+	
+	
+	@Override
 	public User findOneByEmail(String email) {
 		EntityManager em = this.getEntityManager();
 		
