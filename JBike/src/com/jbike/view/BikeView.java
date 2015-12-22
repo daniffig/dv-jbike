@@ -8,7 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import com.jbike.controller.BikeBean;
 import com.jbike.model.Bike;
@@ -81,10 +80,10 @@ public class BikeView implements Serializable {
 		String message = this.getBike().isNew() ? "Bike successfully created." : "Bike successfully updated.";
 
 		if (this.getBikeBean().saveBike(this.getBike())) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
 					"An error occurred while saving the bike."));
 		}
 

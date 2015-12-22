@@ -54,6 +54,10 @@ public class StationView implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		if (this.getUserSession().getMessageQueue().size() > 0) {
+			
+		}
+		
 		emptyModel = new DefaultMapModel();
 
 		stations = stationBean.getStations();

@@ -1,5 +1,10 @@
 package com.jbike.session;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -14,6 +19,13 @@ public class UserSession {
 	private Bike selectedBike;
 	private Station selectedStation;
 	private User selectedUser;
+	
+	private Queue<FacesMessage> messageQueue;
+	
+	@PostConstruct
+	public void init() {
+		this.setMessageQueue(new LinkedList<FacesMessage>());
+	}
 
 	public Bike getSelectedBike() {
 		return selectedBike;
@@ -37,5 +49,13 @@ public class UserSession {
 
 	public void setSelectedUser(User selectedUser) {
 		this.selectedUser = selectedUser;
+	}
+
+	public Queue<FacesMessage> getMessageQueue() {
+		return messageQueue;
+	}
+
+	public void setMessageQueue(Queue<FacesMessage> linkedList) {
+		this.messageQueue = linkedList;
 	}
 }
