@@ -23,15 +23,17 @@
 					filterMatchMode="contains" sortBy="#{bike.name}">
 					<h:outputText value="#{bike.name}" />
 				</p:column>
-				<p:column headerText="State" filterBy="#{bike.state}">
+				<p:column headerText="State" filterBy="#{bike.state}"
+					filterMatchMode="exact" sortBy="#{bike.state.name}">
 					<f:facet name="filter">
 						<h:selectOneMenu onchange="PF('bikesTable').filter()">
 							<f:selectItem itemLabel="All" itemValue="#{null}"
 								noSelectionOption="true" />
-							<f:selectItems value="#{bikeBean.states}" />
+							<f:selectItems value="#{bikeBean.states}" var="state"
+								itemLabel="#{state.name}" itemValue="#{state}" />
 						</h:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{bike.state}" />
+					<h:outputText value="#{bike.state.name}" />
 				</p:column>
 				<p:column headerText="Current Station"
 					filterBy="#{bike.currentStation}" filterMatchMode="exact">

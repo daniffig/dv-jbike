@@ -1,6 +1,8 @@
 package com.jbike.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,8 +24,12 @@ import com.jbike.persistence.interfaces.StationDao;
 
 @ManagedBean(name = "stationBean")
 @ApplicationScoped
-public class StationBean {
+public class StationBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4151514557546149378L;
 	private StationDao stationDAO;
 
 	@PostConstruct
@@ -41,6 +47,10 @@ public class StationBean {
 
 	public List<Station> getStations() {
 		return this.getStationDAO().findAll();
+	}
+
+	public List<StationState> getStates() {
+		return Arrays.asList(StationState.values());
 	}
 
 	public List<SelectItem> getStateOptions() {

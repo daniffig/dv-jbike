@@ -19,12 +19,20 @@ public class StationConverter implements Converter {
 
 	@Override
 	public Object getAsObject(FacesContext arg0, UIComponent arg1, String arg2) {
+		if (arg2 == null) {
+			return null;
+		}
+
 		return stationBean.getStationDAO().findByPk(Long.valueOf(arg2));
 	}
 
 	@Override
 	public String getAsString(FacesContext arg0, UIComponent arg1, Object arg2) {
-		return ((Station) arg2).getId().toString();
+		if (arg2 instanceof Station) {
+			return ((Station) arg2).getId().toString();
+		}
+
+		return "";
 	}
 
 	public StationBean getStationBean() {

@@ -7,9 +7,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
@@ -20,14 +21,13 @@ import com.jbike.model.Station;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "stationView")
-@RequestScoped
+@ViewScoped
 public class StationView implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 5027241248158849238L;
 	private List<Station> stations;
 	private List<Station> filteredStations;
 
@@ -35,7 +35,7 @@ public class StationView implements Serializable {
 	private Station station;
 
 	private MapModel advancedModel;
-
+	private MapModel emptyModel;
 	private Marker marker;
 
 	@ManagedProperty("#{stationBean}")
@@ -67,7 +67,11 @@ public class StationView implements Serializable {
 				advancedModel.addOverlay(StationHelper.toMarker(station));
 			}
 		}
-	}
+	}    
+	
+    public void onMarkerSelect(OverlaySelectEvent event) {
+        marker = (Marker) event.getOverlay();
+    }
 
 	public String getFormTitle() {
 		return this.getStation().isNew() ? "New Station" : String.format("Edit Station (%s)", this.getStation());
@@ -81,6 +85,12 @@ public class StationView implements Serializable {
 		this.getUserSession().setSelectedStation(station);
 
 		return "/admin/stations/form.xhtml?faces-redirect=true";
+	}
+	
+	public String viewBikes(Station station) {
+		this.getUserSession().setSelectedStation(station);
+		
+		return "bikes/list";
 	}
 
 	// TODO Validaciones!
@@ -157,6 +167,4 @@ public class StationView implements Serializable {
 	public void setEmptyModel(MapModel emptyModel) {
 		this.emptyModel = emptyModel;
 	}
-
-	private MapModel emptyModel;
 }

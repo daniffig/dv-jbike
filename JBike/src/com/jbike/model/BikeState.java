@@ -11,10 +11,6 @@ public enum BikeState {
 		this.setName(name);
 	}
 
-	public String toString() {
-		return this.getName();
-	}
-
 	public String getName() {
 		return name;
 	}

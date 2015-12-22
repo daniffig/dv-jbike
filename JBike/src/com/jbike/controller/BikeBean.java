@@ -1,5 +1,6 @@
 package com.jbike.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,8 +17,12 @@ import com.jbike.persistence.interfaces.BikeDao;
 
 @ManagedBean(name = "bikeBean")
 @ApplicationScoped
-public class BikeBean {
+public class BikeBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8891899362486959859L;
 	private BikeDao bikeDAO;
 
 	@PostConstruct

@@ -30,9 +30,7 @@
 								style="font-weight:bold" />
 						</h4>
 
-
 						<p:panelGrid columns="2">
-
 							<h:outputText value="Available bikes" />
 							<h:outputText value="#{stationView.marker.data.availableBikes}" />
 
@@ -41,10 +39,9 @@
 								value="#{stationView.marker.data.availableParkingSpaces}" />
 						</p:panelGrid>
 						<br />
-						<p:button outcome="/bikes/list.xhtml" value="View Bikes">
-							<f:param name="currentStationId"
-								value="#{stationView.marker.data.id}" />
-						</p:button>
+						<p:commandButton value="View Bikes"
+							action="#{stationView.viewBikes(stationView.marker.data)}"
+							rendered="#{stationView.marker.data.canReceiveRequests()}" />
 					</p:outputPanel>
 				</p:gmapInfoWindow>
 			</p:gmap>

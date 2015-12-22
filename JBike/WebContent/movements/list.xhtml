@@ -1,0 +1,37 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="title">JBike | Stations</ui:define>
+	<ui:define name="content">
+		<h1>My Requests</h1>
+		<h:form>
+			<p:dataTable var="movement"
+				value="#{userSession.selectedUser.movements}">
+
+				<p:column headerText="Bike">
+					<h:outputText value="#{movement.bike}" />
+				</p:column>
+				<p:column headerText="Created at">
+					<h:outputText value="#{movement.createdAt}" />
+				</p:column>
+				<p:column headerText="Destination Station">
+					<h:outputText />
+				</p:column>
+				<p:column headerText="Status">
+					<h:outputText />
+				</p:column>
+				<p:column headerText="Updated at">
+					<h:outputText />
+				</p:column>
+
+				<p:column>
+					<p:menuButton value="Options"></p:menuButton>
+				</p:column>
+			</p:dataTable>
+		</h:form>
+		<hr />
+	</ui:define>
+</ui:composition>

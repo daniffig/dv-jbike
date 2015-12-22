@@ -22,25 +22,25 @@ public class Bike {
 
 	@Column(name = "created_at")
 	private Date createdAt;
-	
+
 	@Column(name = "updated_at")
 	private Date updatedAt;
-	
+
 	@ManyToOne
-    @JoinColumn(name="created_by")
+	@JoinColumn(name = "created_by")
 	private User createdBy;
-	
+
 	@ManyToOne
-    @JoinColumn(name="updated_by")
+	@JoinColumn(name = "updated_by")
 	private User updatedBy;
 
 	private String name;
-	
+
 	@Column(unique = true)
 	private String code;
 
 	@ManyToOne
-	@JoinColumn(name="current_station_id",nullable = true)
+	@JoinColumn(name = "current_station_id", nullable = true)
 	private Station currentStation;
 
 	@Enumerated(EnumType.ORDINAL)
@@ -52,8 +52,8 @@ public class Bike {
 	}
 
 	public Bike(String code, String name) {
-		this.code  = code;
-		this.name  = name;
+		this.code = code;
+		this.name = name;
 		this.state = BikeState.AVAILABLE;
 		this.createdAt = new Date((new java.util.Date()).getTime());
 	}
@@ -65,7 +65,7 @@ public class Bike {
 		this.state = BikeState.AVAILABLE;
 		this.createdAt = new Date((new java.util.Date()).getTime());
 	}
-	
+
 	public String toString() {
 		return this.getName();
 	}
@@ -74,6 +74,7 @@ public class Bike {
 		return id;
 	}
 
+	@SuppressWarnings("unused")
 	private void setId(Long id) {
 		this.id = id;
 	}
@@ -85,7 +86,7 @@ public class Bike {
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-	
+
 	public Date getUpdatedAt() {
 		return updatedAt;
 	}
@@ -93,7 +94,7 @@ public class Bike {
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
+
 	public User getUpdatedBy() {
 		return updatedBy;
 	}
@@ -101,7 +102,7 @@ public class Bike {
 	public void setUpdatedBy(User updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-	
+
 	public User getCreatedBy() {
 		return createdBy;
 	}
@@ -117,7 +118,7 @@ public class Bike {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getCode() {
 		return code;
 	}
@@ -141,11 +142,11 @@ public class Bike {
 	public void setState(BikeState state) {
 		this.state = state;
 	}
-	
-	public boolean isNew(){
-		return (this.id==null);
+
+	public boolean isNew() {
+		return (this.id == null);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -162,8 +163,12 @@ public class Bike {
 			return false;
 		return true;
 	}
-	
-	public boolean isRented(){
+
+	public boolean isRented() {
 		return (this.currentStation == null);
+	}
+
+	public boolean canBeRequested() {
+		return this.getState().canBeRequested() && !this.isRented();
 	}
 }

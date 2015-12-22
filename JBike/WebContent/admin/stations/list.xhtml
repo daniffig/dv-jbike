@@ -23,7 +23,8 @@
 					filterMatchMode="contains" sortBy="#{station.address}">
 					<h:outputText value="#{station.address}" />
 				</p:column>
-				<p:column headerText="Total Parking spaces" sortBy="#{station.totalParkingSpaces}">
+				<p:column headerText="Total Parking spaces"
+					sortBy="#{station.totalParkingSpaces}">
 					<h:outputText value="#{station.totalParkingSpaces}" />
 				</p:column>
 				<p:column headerText="State" filterBy="#{station.state}">
@@ -31,14 +32,18 @@
 						<h:selectOneMenu onchange="PF('stationsTable').filter()">
 							<f:selectItem itemLabel="All" itemValue="#{null}"
 								noSelectionOption="true" />
-							<f:selectItems value="#{stationBean.stateOptions}" />
+							<f:selectItems value="#{stationBean.states}" var="state"
+								itemLabel="#{state.name}" itemValue="#{state}" />
 						</h:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{station.state}" />
+					<h:outputText value="#{station.state.name}" />
 				</p:column>
 
 				<p:column>
 					<p:menuButton value="Options">
+						<p:menuitem value="View Bikes" action="#{stationView.viewBikes(station)}"
+							icon="ui-icon-document">
+						</p:menuitem>
 						<p:menuitem value="Edit" action="#{stationView.viewForm(station)}"
 							icon="ui-icon-pencil">
 						</p:menuitem>

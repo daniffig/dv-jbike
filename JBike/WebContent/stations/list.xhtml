@@ -22,22 +22,27 @@
 				<p:column headerText="Address" sortBy="#{station.address}">
 					<h:outputText value="#{station.address}" />
 				</p:column>
-				<p:column headerText="Available bikes" sortBy="#{station.availableBikes}">
+				<p:column headerText="Available bikes"
+					sortBy="#{station.availableBikes}">
 					<h:outputText value="#{station.availableBikes}" />
 				</p:column>
-				<p:column headerText="State" filterBy="#{station.state}">
+				<p:column headerText="State" sortBy="#{station.state}"
+					filterBy="#{station.state}">
 					<f:facet name="filter">
 						<h:selectOneMenu onchange="PF('stationsTable').filter()">
 							<f:selectItem itemLabel="All" itemValue="#{null}"
 								noSelectionOption="true" />
-							<f:selectItems value="#{stationBean.stateOptions}" />
+							<f:selectItems value="#{stationBean.states}" var="state"
+								itemLabel="#{state.name}" itemValue="#{state}" />
 						</h:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{station.state}" />
+					<h:outputText value="#{station.state.name}" />
 				</p:column>
+				
 				<p:column>
-					<p:button value="View Bikes"
-						action="#{stationBean.viewBikes(station)}" icon="ui-icon-document" />
+					<p:commandButton value="View Bikes"
+						action="#{stationView.viewBikes(station)}" icon="ui-icon-document"
+						rendered="#{station.canReceiveRequests()}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

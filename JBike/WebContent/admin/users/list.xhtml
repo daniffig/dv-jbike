@@ -12,16 +12,17 @@
 				value="#{userView.users}" rows="30"
 				filteredValue="#{userView.filteredUsers}"
 				emptyMessage="No users found with given criteria">
-				<p:column headerText="Id" sortBy="#{user.id}">
+
+				<p:column headerText="Id" sortBy="#{user.id}"
+					filterMatchMode="exact">
 					<h:outputText value="#{user.id}" />
 				</p:column>
-
 				<p:column headerText="Email" filterBy="#{user.email}"
 					filterMatchMode="contains">
 					<h:outputText value="#{user.email}" />
 				</p:column>
-
-				<p:column headerText="Is active" filterBy="#{user.isActive()}">
+				<p:column headerText="Is active" filterBy="#{user.isActive()}"
+					filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneButton onchange="PF('usersTable').filter()">
 							<f:converter converterId="javax.faces.Boolean" />
@@ -32,8 +33,8 @@
 					</f:facet>
 					<h:outputText value="#{user.isActive() ? 'Yes': 'No'}" />
 				</p:column>
-
-				<p:column headerText="Is admin" filterBy="#{user.isAdmin()}">
+				<p:column headerText="Is admin" filterBy="#{user.isAdmin()}"
+					filterMatchMode="exact">
 					<f:facet name="filter">
 						<p:selectOneButton onchange="PF('usersTable').filter()">
 							<f:converter converterId="javax.faces.Boolean" />

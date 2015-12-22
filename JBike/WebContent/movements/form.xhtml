@@ -1,0 +1,24 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h1>Request Bike</h1>
+		<h:form role="form">
+			<h:panelGrid width="100%">
+				<p:outputLabel for="bike" value="Bike" />
+				<h:outputText id="bike" value="#{userSession.selectedBike}" />
+				<p:outputLabel for="destinationStation" value="Destination station" />
+				<h:selectOneMenu id="destinationStation"
+					converter="#{stationConverter}">
+					<f:selectItems value="#{stationBean.stations}"></f:selectItems>
+				</h:selectOneMenu>
+			</h:panelGrid>
+			<hr />
+			<p:button value="Back to list" outcome="/bikes/list.xhtml" />
+			<p:commandButton value="Save" action="#{movementView.save}" />
+		</h:form>
+	</ui:define>
+</ui:composition>

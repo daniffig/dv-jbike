@@ -1,5 +1,6 @@
 package com.jbike.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,7 +14,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "station")
-public class Station {
+public class Station implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9213716003524013327L;
 
 	@Id
 	@GeneratedValue
@@ -21,7 +27,7 @@ public class Station {
 
 	@Column(unique = true, nullable = false)
 	private String name;
-	
+
 	private String address;
 
 	@Enumerated(EnumType.ORDINAL)
@@ -74,7 +80,7 @@ public class Station {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -122,9 +128,9 @@ public class Station {
 	public void setBikes(List<Bike> bikes) {
 		this.bikes = bikes;
 	}
-	
-	public boolean isNew(){
-		return (this.id==null);
+
+	public boolean isNew() {
+		return (this.id == null);
 	}
 
 	@Override
@@ -147,12 +153,16 @@ public class Station {
 	public String toString() {
 		return this.getName();
 	}
-	
+
 	public Integer getAvailableBikes() {
 		return this.getBikes().size();
 	}
-	
-	public Integer getAvailableParkingSpaces(){
+
+	public Integer getAvailableParkingSpaces() {
 		return this.totalParkingSpaces - this.bikes.size();
+	}
+
+	public boolean canReceiveRequests() {
+		return this.getState().canReceiveRequests() && (this.getAvailableBikes() > 0);
 	}
 }

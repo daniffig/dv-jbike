@@ -4,26 +4,25 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import com.jbike.controller.BikeBean;
 import com.jbike.model.Bike;
+import com.jbike.model.Movement;
 import com.jbike.session.UserSession;
 
-@ManagedBean(name = "bikeView")
+@ManagedBean(name = "movementView")
 @ViewScoped
-public class BikeView implements Serializable {
+public class MovementView implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7446961008889911519L;
 
-	private List<Bike> filteredBikes;
+	private List<Movement> filteredMovements;
 
 	@ManagedProperty(value = "#{userSession.selectedBike}")
 	private Bike bike;
@@ -52,21 +51,14 @@ public class BikeView implements Serializable {
 				: String.format("Edit Bike (%s)", this.getBike());
 	}
 
-	public String viewForm(Bike bike) {
-		if (bike == null) {
-			bike = new Bike();
-		}
+	public String save() {
 
-		this.getUserSession().setSelectedBike(bike);
-
-		return "/admin/bikes/form.xhtml?faces-redirect=true";
+		return "/movements/list.xhtml?faces-redirect=true";
 	}
 
 	// FIXME
 	public String requestBike(Bike bike) {
 		if (bike.canBeRequested()) {
-			this.getUserSession().setSelectedBike(bike);
-
 			return "/movements/form.xhtml?faces-redirect=true";
 		}
 
@@ -75,20 +67,6 @@ public class BikeView implements Serializable {
 
 	public List<Bike> getBikes() {
 		return this.getBikeBean().getBikes();
-	}
-
-	public String save() {
-		String message = this.getBike().isNew() ? "Bike successfully created." : "Bike successfully updated.";
-
-		if (this.getBikeBean().saveBike(this.getBike())) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-					"An error occurred while saving the bike."));
-		}
-
-		return "/admin/bikes/list.xhtml?faces-redirect=true";
 	}
 
 	public String backToList() {
@@ -103,19 +81,19 @@ public class BikeView implements Serializable {
 		this.bikeBean = bikeBean;
 	}
 
-	public List<Bike> getFilteredBikes() {
-		return filteredBikes;
-	}
-
-	public void setFilteredBikes(List<Bike> filteredBikes) {
-		this.filteredBikes = filteredBikes;
-	}
-
 	public Bike getBike() {
 		return bike;
 	}
 
 	public void setBike(Bike bike) {
 		this.bike = bike;
+	}
+
+	public List<Movement> getFilteredMovements() {
+		return filteredMovements;
+	}
+
+	public void setFilteredMovements(List<Movement> filteredMovements) {
+		this.filteredMovements = filteredMovements;
 	}
 }

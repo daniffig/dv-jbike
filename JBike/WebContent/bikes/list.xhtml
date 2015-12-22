@@ -1,38 +1,54 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
-<ui:composition template="/WEB-INF/templates/layout.xhtml">
 	<ui:define name="title">JBike | Bikes</ui:define>
 	<ui:define name="content">
 		<h1>Bikes</h1>
 		<h:form>
-			<p:dataTable var="bike" value="#{bikeView.bikes}"
+			<p:dataTable var="bike" value="#{bikeBean.bikes}"
 				emptyMessage="No bikes found with given criteria"
-				filteredValue="#{bikeView.filteredBikes}" widgetVar="bikesTable">
-				<p:column headerText="Name">
+				filteredValue="#{bikeView.filteredBikes}" widgetVar="bikesTable"
+				paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom">
+
+				<p:column headerText="Name" sortBy="#{bike.name}"
+					filterBy="#{bike.name}" filterMatchMode="contains">
 					<h:outputText value="#{bike.name}" />
 				</p:column>
-
 				<p:column headerText="State" sortBy="#{bike.state}"
-					filterBy="#{bike.state}" filterOptions="#{bikeView.stateOptions}">
+					filterBy="#{bike.state}" filterMatchMode="exact">
+					<f:facet name="filter">
+						<h:selectOneMenu onchange="PF('bikesTable').filter()">
+							<f:selectItem itemLabel="All" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{bikeBean.states}" var="state"
+								itemLabel="#{state.name}" itemValue="#{state}" />
+						</h:selectOneMenu>
+					</f:facet>
 					<h:outputText value="#{bike.state.name}" />
 				</p:column>
-
 				<p:column headerText="Current Station"
-					filterBy="#{bike.currentStation.id}"
-					filterValue="#{param['currentStationId']}"
-					filterOptions="#{stationView.stationOptions}">
-					<h:outputText value="#{bike.currentStation.name}" />
+					filterBy="#{bike.currentStation}" filterMatchMode="exact">
+					<f:facet name="filter">
+						<h:selectOneMenu value="#{userSession.selectedStation}"
+							onchange="PF('bikesTable').filter()"
+							converter="#{stationConverter}">
+							<f:selectItem itemLabel="All" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{stationBean.stations}" />
+						</h:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{bike.currentStation}" />
 				</p:column>
+
 				<p:column>
-					<p:commandButton actionListener="#{requestBean.requestBike(bike)}"
-						value="Request" disabled="#{!bike.canBeRequested()}" ajax="false" />
+					<p:commandButton value="Request"
+						action="#{bikeView.requestBike(bike)}" icon="ui-icon-star"
+						rendered="#{bike.canBeRequested()}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
@@ -43,4 +59,3 @@
 		</script>
 	</ui:define>
 </ui:composition>
-</html>
