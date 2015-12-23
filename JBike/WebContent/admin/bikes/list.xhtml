@@ -59,13 +59,23 @@
 						<p:menuitem value="Edit" action="#{bikeView.viewForm(bike)}"
 							icon="ui-icon-pencil" />
 						<p:menuitem value="Delete" action="#{bikeView.delete(bike)}"
-							icon="ui-icon-trash" />
+							icon="ui-icon-trash">
+							<p:confirm header="Confirmation required" message="Delete?"
+								icon="ui-icon-alert"></p:confirm>
+						</p:menuitem>
 					</p:menuButton>
 				</p:column>
 			</p:dataTable>
 			<hr />
 			<p:commandButton value="New Bike" action="#{bikeView.viewForm(null)}"
 				icon="ui-icon-plus" />
+
+			<p:confirmDialog global="true">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 </ui:composition>

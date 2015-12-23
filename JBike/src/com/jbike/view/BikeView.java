@@ -3,7 +3,6 @@ package com.jbike.view;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -41,19 +40,14 @@ public class BikeView implements Serializable {
 		this.userSession = userSession;
 	}
 
-	@PostConstruct
-	public void init() {
-		// FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-	}
-
 	public String getFormTitle() {
 		return (null == this.getBike()) || this.getBike().isNew() ? "New Bike"
 				: String.format("Edit Bike (%s)", this.getBike());
 	}
-	
+
 	public String viewHistory(Bike bike) {
 		this.getUserSession().setSelectedBike(bike);
-		
+
 		return "bikes/history";
 	}
 
@@ -65,6 +59,18 @@ public class BikeView implements Serializable {
 		this.getUserSession().setSelectedBike(bike);
 
 		return "/admin/bikes/form.xhtml?faces-redirect=true";
+	}
+
+	public String delete(Bike bike) {
+		if (this.getBikeBean().deleteBike(bike)) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Bike successfully deleted."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while deleting the bike."));
+		}
+
+		return "bikes/list";
 	}
 
 	// FIXME

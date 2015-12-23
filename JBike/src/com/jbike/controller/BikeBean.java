@@ -37,6 +37,13 @@ public class BikeBean implements Serializable {
 			return this.getBikeDAO().update(bike);
 		}
 	}
+	
+	// FIXME
+	public boolean deleteBike(Bike bike) {
+		this.getBikeDAO().delete(bike);
+		
+		return true;
+	}
 
 	public List<Bike> getBikes() {
 		return this.getBikeDAO().findAll();
