@@ -50,6 +50,12 @@ public class BikeView implements Serializable {
 		return (null == this.getBike()) || this.getBike().isNew() ? "New Bike"
 				: String.format("Edit Bike (%s)", this.getBike());
 	}
+	
+	public String viewHistory(Bike bike) {
+		this.getUserSession().setSelectedBike(bike);
+		
+		return "bikes/history";
+	}
 
 	public String viewForm(Bike bike) {
 		if (bike == null) {

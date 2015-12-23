@@ -57,6 +57,10 @@ public class MovementView implements Serializable {
 		return (null == this.getBike()) || this.getBike().isNew() ? "New Bike"
 				: String.format("Edit Bike (%s)", this.getBike());
 	}
+	
+	public String getHistoryTitle() {
+		return "history";
+	}
 
 	public String save() {		
 		String message = this.getMovement().isNew() ? "Bike successfully created." : "Bike successfully updated.";

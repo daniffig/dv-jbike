@@ -3,8 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
+	<lifecycle>
+		<phase-listener>com.jbike.listener.MessageListener</phase-listener>
+	</lifecycle>
 	<navigation-rule>
 		<from-view-id>/admin/*</from-view-id>
+		<navigation-case>
+			<from-outcome>bikes/history</from-outcome>
+			<to-view-id>/admin/bikes/history.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
 		<navigation-case>
 			<from-outcome>bikes/list</from-outcome>
 			<to-view-id>/admin/bikes/list.xhtml</to-view-id>
