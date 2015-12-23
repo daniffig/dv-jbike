@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import com.jbike.controller.BikeBean;
+import com.jbike.controller.MovementBean;
 import com.jbike.model.Bike;
 import com.jbike.model.Movement;
 import com.jbike.session.UserSession;
@@ -27,8 +29,13 @@ public class MovementView implements Serializable {
 	@ManagedProperty(value = "#{userSession.selectedBike}")
 	private Bike bike;
 
+	private Movement movement;
+
 	@ManagedProperty("#{bikeBean}")
 	private BikeBean bikeBean;
+
+	@ManagedProperty("#{movementBean}")
+	private MovementBean movementBean;
 
 	@ManagedProperty(value = "#{userSession}")
 	private UserSession userSession;
@@ -51,9 +58,18 @@ public class MovementView implements Serializable {
 				: String.format("Edit Bike (%s)", this.getBike());
 	}
 
-	public String save() {
+	public String save() {		
+		String message = this.getMovement().isNew() ? "Bike successfully created." : "Bike successfully updated.";
 
-		return "/movements/list.xhtml?faces-redirect=true";
+		if (this.getMovementBean().saveMovement(this.getMovement())) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while saving the bike."));
+		}
+
+		return "movements/list";
 	}
 
 	// FIXME
@@ -67,10 +83,6 @@ public class MovementView implements Serializable {
 
 	public List<Bike> getBikes() {
 		return this.getBikeBean().getBikes();
-	}
-
-	public String backToList() {
-		return "/admin/bikes/list.xhtml?faces-redirect=true";
 	}
 
 	public BikeBean getBikeBean() {
@@ -95,5 +107,26 @@ public class MovementView implements Serializable {
 
 	public void setFilteredMovements(List<Movement> filteredMovements) {
 		this.filteredMovements = filteredMovements;
+	}
+
+	public Movement getMovement() {
+		if (null == movement) {
+			movement = new Movement();
+			
+			movement.setBike(this.getBike());
+		}
+		return movement;
+	}
+
+	public void setMovement(Movement movement) {
+		this.movement = movement;
+	}
+
+	public MovementBean getMovementBean() {
+		return movementBean;
+	}
+
+	public void setMovementBean(MovementBean movementBean) {
+		this.movementBean = movementBean;
 	}
 }

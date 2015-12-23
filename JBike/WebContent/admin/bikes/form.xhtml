@@ -16,7 +16,8 @@
 					value="#{bikeView.bike.name}" />
 				<p:outputLabel for="state" value="State" />
 				<h:selectOneMenu id="state" value="#{bikeView.bike.state}">
-					<f:selectItems value="#{bikeBean.stateOptions}" />
+					<f:selectItems value="#{bikeBean.states}" var="state"
+						itemLabel="#{state.name}" itemValue="#{state}" />
 				</h:selectOneMenu>
 				<p:outputLabel for="currentStation" value="Current station" />
 				<h:selectOneMenu id="currentStation"
@@ -26,7 +27,7 @@
 				</h:selectOneMenu>
 			</h:panelGrid>
 			<hr />
-			<p:commandButton value="Back to list" action="#{bikeView.backToList}" />
+			<p:button value="Back to list" outcome="bikes/list" />
 			<p:commandButton value="Save" action="#{bikeView.save}" />
 		</h:form>
 	</ui:define>

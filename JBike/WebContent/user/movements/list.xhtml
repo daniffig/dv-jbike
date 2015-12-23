@@ -8,8 +8,7 @@
 	<ui:define name="content">
 		<h1>My Requests</h1>
 		<h:form>
-			<p:dataTable var="movement"
-				value="#{userSession.selectedUser.movements}">
+			<p:dataTable var="movement" value="#{movementBean.movements}">
 
 				<p:column headerText="Bike">
 					<h:outputText value="#{movement.bike}" />
@@ -17,8 +16,8 @@
 				<p:column headerText="Created at">
 					<h:outputText value="#{movement.createdAt}" />
 				</p:column>
-				<p:column headerText="Destination Station">
-					<h:outputText />
+				<p:column headerText="Destination Station" converter="#{stationConverter}">
+					<h:outputText value="#{movement.station}" />
 				</p:column>
 				<p:column headerText="Status">
 					<h:outputText />

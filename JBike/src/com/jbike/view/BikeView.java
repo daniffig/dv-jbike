@@ -66,10 +66,10 @@ public class BikeView implements Serializable {
 		if (bike.canBeRequested()) {
 			this.getUserSession().setSelectedBike(bike);
 
-			return "/movements/form.xhtml?faces-redirect=true";
+			return "/user/movements/form.xhtml?faces-redirect=true";
 		}
 
-		return "/bikes/list.xhtml?faces-redirect=true";
+		return "bikes/list";
 	}
 
 	public List<Bike> getBikes() {
@@ -87,11 +87,7 @@ public class BikeView implements Serializable {
 					"An error occurred while saving the bike."));
 		}
 
-		return "/admin/bikes/list.xhtml?faces-redirect=true";
-	}
-
-	public String backToList() {
-		return "/admin/bikes/list.xhtml?faces-redirect=true";
+		return "bikes/list";
 	}
 
 	public BikeBean getBikeBean() {
@@ -103,6 +99,10 @@ public class BikeView implements Serializable {
 	}
 
 	public List<Bike> getFilteredBikes() {
+		if (null == filteredBikes) {
+			this.setFilteredBikes(this.getBikes());
+		}
+
 		return filteredBikes;
 	}
 

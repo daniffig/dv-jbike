@@ -4,18 +4,31 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
 	<navigation-rule>
-		<from-view-id>/stations/list.xhtml</from-view-id>
+		<from-view-id>/admin/*</from-view-id>
+		<navigation-case>
+			<from-outcome>bikes/list</from-outcome>
+			<to-view-id>/admin/bikes/list.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/user/*</from-view-id>
+		<navigation-case>
+			<from-outcome>movements/list</from-outcome>
+			<to-view-id>/user/movements/list.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/*</from-view-id>
 		<navigation-case>
 			<from-outcome>bikes/list</from-outcome>
 			<to-view-id>/bikes/list.xhtml</to-view-id>
 			<redirect></redirect>
 		</navigation-case>
-	</navigation-rule>
-	<navigation-rule>
-		<from-view-id>/admin/stations/list.xhtml</from-view-id>
 		<navigation-case>
-			<from-outcome>bikes/list</from-outcome>
-			<to-view-id>/admin/bikes/list.xhtml</to-view-id>
+			<from-outcome>user/movements</from-outcome>
+			<to-view-id>/users/movements.xhtml</to-view-id>
 			<redirect></redirect>
 		</navigation-case>
 	</navigation-rule>

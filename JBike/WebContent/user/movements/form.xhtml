@@ -9,15 +9,16 @@
 		<h:form role="form">
 			<h:panelGrid width="100%">
 				<p:outputLabel for="bike" value="Bike" />
-				<h:outputText id="bike" value="#{userSession.selectedBike}" />
+				<h:outputText id="bike" value="#{movementView.movement.bike}" />
 				<p:outputLabel for="destinationStation" value="Destination station" />
 				<h:selectOneMenu id="destinationStation"
+					value="#{movementView.movement.station}"
 					converter="#{stationConverter}">
 					<f:selectItems value="#{stationBean.stations}"></f:selectItems>
 				</h:selectOneMenu>
 			</h:panelGrid>
 			<hr />
-			<p:button value="Back to list" outcome="/bikes/list.xhtml" />
+			<p:button value="Back to list" outcome="bikes/list" />
 			<p:commandButton value="Save" action="#{movementView.save}" />
 		</h:form>
 	</ui:define>
