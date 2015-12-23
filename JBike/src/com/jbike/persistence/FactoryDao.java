@@ -9,6 +9,8 @@ public class FactoryDao {
 	
 	private static UserDaoHibernate UserDao = new UserDaoHibernate();
 	
+	private static MovementDaoHibernate MovementDao = new MovementDaoHibernate();
+	
 	public static BikeDaoHibernate getBikeDao(){
 		return BikeDao;
 	}
@@ -23,5 +25,9 @@ public class FactoryDao {
 	
 	public static UserDaoHibernate getUserDao(){
 		return UserDao;
+	}
+	
+	public static MovementDaoHibernate getMovementDao(){
+		return MovementDao;
 	}
 }

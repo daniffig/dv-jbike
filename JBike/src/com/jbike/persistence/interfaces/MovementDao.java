@@ -7,5 +7,7 @@ import com.jbike.model.Movement;
 
 public interface MovementDao extends BaseDao<Movement>{
 
-	public List<Movement> findAllByDateBetween(Date from, Date to);
+	public List<Movement> findAllByCreatedAtBetween(Date from, Date to);
+	
+	public List<Movement> findAllUnfinished();
 }
