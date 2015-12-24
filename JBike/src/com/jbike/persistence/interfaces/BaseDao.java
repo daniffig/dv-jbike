@@ -7,7 +7,7 @@ public interface BaseDao<T> {
 	
 	public boolean update(T obj);
 	
-	public void delete(T obj);
+	public boolean delete(T obj);
 	
 	public T findByPk(Long id);
 	

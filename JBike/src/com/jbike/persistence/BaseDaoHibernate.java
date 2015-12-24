@@ -76,7 +76,7 @@ public class BaseDaoHibernate<T> implements BaseDao<T> {
 		return true;
 	}
 
-	public void delete(T obj) {
+	public boolean delete(T obj) {
 		EntityManager em = this.getEntityManager();
 
 		EntityTransaction etx = em.getTransaction();
@@ -90,9 +90,11 @@ public class BaseDaoHibernate<T> implements BaseDao<T> {
 			if (etx.isActive()) {
 				etx.rollback();
 			}
+			return false;
 		}
 
 		em.close();
+		return true;
 	}
 
 	public T findByPk(Long id) {

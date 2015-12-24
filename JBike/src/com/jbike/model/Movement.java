@@ -1,11 +1,12 @@
 package com.jbike.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -21,28 +22,29 @@ public class Movement {
 	private User user;
 
 	@ManyToOne
-	private Station station;
+	@JoinColumn(name = "destination_station_id", nullable = true)
+	private Station destinationStation;
 
 	@ManyToOne
 	private Bike bike;
 
 	@Column(name = "created_at")
-	private Date createdAt;
+	private Timestamp createdAt;
 
 	@Column(name = "updated_at")
-	private Date updatedAt;
+	private Timestamp updatedAt;
 
 	public Movement() {
-		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.createdAt = new Timestamp((new java.util.Date()).getTime());
 	}
 
 	public Movement(User user) {
-		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.createdAt = new Timestamp((new java.util.Date()).getTime());
 		this.user = user;
 	}
 
 	public Movement(User user, Bike bike) {
-		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.createdAt = new Timestamp((new java.util.Date()).getTime());
 		this.user = user;
 		this.bike = bike;
 	}
@@ -63,12 +65,12 @@ public class Movement {
 		this.user = user;
 	}
 
-	public Station getStation() {
-		return this.station;
+	public Station getDestinationStation() {
+		return this.destinationStation;
 	}
 
-	public void setStation(Station station) {
-		this.station = station;
+	public void setDestinationStation(Station destinationStation) {
+		this.destinationStation = destinationStation;
 	}
 
 	public Bike getBike() {
@@ -79,19 +81,19 @@ public class Movement {
 		this.bike = bike;
 	}
 
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return this.createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return this.updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 	
