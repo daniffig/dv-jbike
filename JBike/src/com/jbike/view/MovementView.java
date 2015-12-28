@@ -3,7 +3,6 @@ package com.jbike.view;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -29,6 +28,7 @@ public class MovementView implements Serializable {
 	@ManagedProperty(value = "#{userSession.selectedBike}")
 	private Bike bike;
 
+	@ManagedProperty(value = "#{userSession.selectedMovement}")
 	private Movement movement;
 
 	@ManagedProperty("#{bikeBean}")
@@ -48,32 +48,37 @@ public class MovementView implements Serializable {
 		this.userSession = userSession;
 	}
 
-	@PostConstruct
-	public void init() {
-		// FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-	}
-
 	public String getFormTitle() {
 		return (null == this.getBike()) || this.getBike().isNew() ? "New Bike"
 				: String.format("Edit Bike (%s)", this.getBike());
 	}
-	
+
 	public String getHistoryTitle() {
 		return "history";
 	}
 
-	public String save() {		
-		String message = this.getMovement().isNew() ? "Bike successfully created." : "Bike successfully updated.";
+	public String viewForm(Movement movement) {
+		this.getUserSession().setSelectedMovement(movement);
+
+		return "/user/movements/form.xhtml?faces-redirect=true";
+	}
+
+	public String save() {
+		String message = this.getMovement().isNew() ? "Request successfully created." : "Request successfully updated.";
 
 		if (this.getMovementBean().saveMovement(this.getMovement())) {
 			this.getUserSession().getMessageQueue()
 					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
 		} else {
 			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-					"An error occurred while saving the bike."));
+					"An error occurred while saving the request."));
 		}
 
 		return "movements/list";
+	}
+	
+	public String back() {
+		return this.getMovement().isNew() ? "bikes/list" : "movements/list";
 	}
 
 	// FIXME
@@ -82,7 +87,43 @@ public class MovementView implements Serializable {
 			return "/movements/form.xhtml?faces-redirect=true";
 		}
 
-		return "/bikes/list.xhtml?faces-redirect=true";
+		return "bikes/list";
+	}
+
+	public String confirmMovement(Movement movement) {
+		if (this.getMovementBean().confirmMovement(movement)) {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!",
+					"Bike successfully withdrawn. Do not forget to return it before midnight."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while withdrawing the bike."));
+		}
+
+		return "movements/list";
+	}
+
+	public String cancelMovement(Movement movement) {
+		if (this.getMovementBean().cancelMovement(movement)) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Request successfully cancelled."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while cancelling the request."));
+		}
+
+		return "movements/list";
+	}
+
+	public String finishMovement(Movement movement) {
+		if (this.getMovementBean().finishMovement(movement)) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Bike successfully returned."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while returning the bike."));
+		}
+
+		return "movements/list";
 	}
 
 	public List<Bike> getBikes() {
@@ -116,7 +157,7 @@ public class MovementView implements Serializable {
 	public Movement getMovement() {
 		if (null == movement) {
 			movement = new Movement();
-			
+
 			movement.setBike(this.getBike());
 		}
 		return movement;

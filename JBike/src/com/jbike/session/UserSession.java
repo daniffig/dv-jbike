@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import com.jbike.model.Bike;
+import com.jbike.model.Movement;
 import com.jbike.model.Station;
 import com.jbike.model.User;
 
@@ -17,6 +18,7 @@ import com.jbike.model.User;
 public class UserSession {
 
 	private Bike selectedBike;
+	private Movement selectedMovement;
 	private Station selectedStation;
 	private User selectedUser;
 	
@@ -57,5 +59,13 @@ public class UserSession {
 
 	public void setMessageQueue(Queue<FacesMessage> linkedList) {
 		this.messageQueue = linkedList;
+	}
+
+	public Movement getSelectedMovement() {
+		return selectedMovement;
+	}
+
+	public void setSelectedMovement(Movement selectedMovement) {
+		this.selectedMovement = selectedMovement;
 	}
 }

@@ -1,13 +1,17 @@
 package com.jbike.controller;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 
+import com.jbike.model.BikeState;
 import com.jbike.model.Movement;
+import com.jbike.model.MovementState;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.interfaces.MovementDao;
 
@@ -19,7 +23,12 @@ public class MovementBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -7421057914797478637L;
+
+	@ManagedProperty("#{bikeBean}")
+	private BikeBean bikeBean;
 	private MovementDao movementDAO;
+	@ManagedProperty("#{stationBean}")
+	private StationBean stationBean;
 
 	@PostConstruct
 	public void init() {
@@ -28,10 +37,38 @@ public class MovementBean implements Serializable {
 
 	public boolean saveMovement(Movement movement) {
 		if (movement.isNew()) {
-			return this.getMovementDAO().save(movement);
+			movement.getBike().setState(BikeState.REQUESTED);
+
+			return this.getStationBean().saveStation(movement.getBike().getCurrentStation())
+					&& this.getBikeBean().saveBike(movement.getBike()) && this.getMovementDAO().save(movement);
 		} else {
-			return this.getMovementDAO().update(movement);
+			movement.setUpdatedAt(new Timestamp((new java.util.Date()).getTime()));
+
+			return this.getBikeBean().saveBike(movement.getBike()) && this.getMovementDAO().update(movement);
 		}
+	}
+
+	public boolean confirmMovement(Movement movement) {
+		movement.setState(MovementState.CONFIRMED);
+		movement.getBike().setCurrentStation(null);
+		movement.getBike().setState(BikeState.IN_USE);
+
+		return this.saveMovement(movement);
+	}
+
+	public boolean cancelMovement(Movement movement) {
+		movement.setState(MovementState.CANCELLED);
+		movement.getBike().setState(BikeState.AVAILABLE);
+
+		return this.saveMovement(movement);
+	}
+
+	public boolean finishMovement(Movement movement) {
+		movement.setState(MovementState.FINISHED);
+		movement.getBike().setCurrentStation(movement.getDestinationStation());
+		movement.getBike().setState(BikeState.AVAILABLE);
+
+		return this.saveMovement(movement);
 	}
 
 	public List<Movement> getMovements() {
@@ -44,5 +81,21 @@ public class MovementBean implements Serializable {
 
 	public void setMovementDAO(MovementDao movementDAO) {
 		this.movementDAO = movementDAO;
+	}
+
+	public BikeBean getBikeBean() {
+		return bikeBean;
+	}
+
+	public void setBikeBean(BikeBean bikeBean) {
+		this.bikeBean = bikeBean;
+	}
+
+	public StationBean getStationBean() {
+		return stationBean;
+	}
+
+	public void setStationBean(StationBean stationBean) {
+		this.stationBean = stationBean;
 	}
 }

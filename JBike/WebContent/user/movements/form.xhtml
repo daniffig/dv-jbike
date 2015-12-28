@@ -10,15 +10,15 @@
 			<h:panelGrid width="100%">
 				<p:outputLabel for="bike" value="Bike" />
 				<h:outputText id="bike" value="#{movementView.movement.bike}" />
-				<p:outputLabel for="destinationStation" value="Destination station" />
+				<p:outputLabel for="destinationStation" value="Destination Station" />
 				<h:selectOneMenu id="destinationStation"
-					value="#{movementView.movement.station}"
+					value="#{movementView.movement.destinationStation}"
 					converter="#{stationConverter}">
 					<f:selectItems value="#{stationBean.stations}"></f:selectItems>
 				</h:selectOneMenu>
 			</h:panelGrid>
 			<hr />
-			<p:button value="Back to list" outcome="bikes/list" />
+			<p:commandButton value="Back to list" action="#{movementView.back}" />
 			<p:commandButton value="Save" action="#{movementView.save}" />
 		</h:form>
 	</ui:define>

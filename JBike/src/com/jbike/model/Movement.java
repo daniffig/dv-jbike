@@ -29,7 +29,7 @@ public class Movement {
 
 	@ManyToOne
 	private Bike bike;
-	
+
 	@Enumerated(EnumType.ORDINAL)
 	private MovementState state;
 
@@ -41,26 +41,27 @@ public class Movement {
 
 	public Movement() {
 		this.createdAt = new Timestamp((new java.util.Date()).getTime());
-		this.state     = MovementState.NEW;
+		this.state = MovementState.NEW;
 	}
 
 	public Movement(User user) {
 		this.createdAt = new Timestamp((new java.util.Date()).getTime());
-		this.user      = user;
-		this.state     = MovementState.NEW;
+		this.user = user;
+		this.state = MovementState.NEW;
 	}
 
 	public Movement(User user, Bike bike) {
 		this.createdAt = new Timestamp((new java.util.Date()).getTime());
-		this.user      = user;
-		this.bike      = bike;
-		this.state     = MovementState.NEW;
+		this.user = user;
+		this.bike = bike;
+		this.state = MovementState.NEW;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
+	@SuppressWarnings("unused")
 	private void setId(Long id) {
 		this.id = id;
 	}
@@ -88,12 +89,12 @@ public class Movement {
 	public void setBike(Bike bike) {
 		this.bike = bike;
 	}
-	
-	public MovementState getState(){
+
+	public MovementState getState() {
 		return this.state;
 	}
-	
-	public void setState(MovementState state){
+
+	public void setState(MovementState state) {
 		this.state = state;
 	}
 
@@ -112,9 +113,9 @@ public class Movement {
 	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
-	public boolean isNew(){
-		return (this.id==null);
+
+	public boolean isNew() {
+		return (this.id == null);
 	}
 
 	@Override
@@ -132,5 +133,21 @@ public class Movement {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	public boolean canBeConfirmed() {
+		return this.getState().canBeConfirmed();
+	}
+
+	public boolean canBeCancelled() {
+		return this.getState().canBeCancelled();
+	}
+
+	public boolean canBeFinished() {
+		return this.getState().canBeFinished();
+	}
+
+	public boolean canBeEdited() {
+		return this.getState().canBeEdited();
 	}
 }

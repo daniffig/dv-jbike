@@ -4,7 +4,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-	<ui:define name="title">JBike | Stations</ui:define>
+	<ui:define name="title">JBike | My Requests</ui:define>
 	<ui:define name="content">
 		<h1>My Requests</h1>
 		<h:form>
@@ -16,18 +16,33 @@
 				<p:column headerText="Created at">
 					<h:outputText value="#{movement.createdAt}" />
 				</p:column>
-				<p:column headerText="Destination Station" converter="#{stationConverter}">
-					<h:outputText value="#{movement.station}" />
+				<p:column headerText="Destination Station"
+					converter="#{stationConverter}">
+					<h:outputText value="#{movement.destinationStation}" />
 				</p:column>
-				<p:column headerText="Status">
-					<h:outputText />
+				<p:column headerText="State">
+					<h:outputText value="#{movement.state.name}" />
 				</p:column>
 				<p:column headerText="Updated at">
-					<h:outputText />
+					<h:outputText value="#{movement.updatedAt}" />
 				</p:column>
 
 				<p:column>
-					<p:menuButton value="Options"></p:menuButton>
+					<p:menuButton value="Options"
+						rendered="#{movement.canBeConfirmed() or movement.canBeCancelled() or movement.canBeFinished()}">
+						<p:menuitem value="Withdraw Bike"
+							action="#{movementView.confirmMovement(movement)}"
+							icon="ui-icon-check" rendered="#{movement.canBeConfirmed()}" />
+						<p:menuitem value="Edit"
+							action="#{movementView.viewForm(movement)}"
+							icon="ui-icon-pencil" rendered="#{movement.canBeEdited()}" />
+						<p:menuitem value="Cancel"
+							action="#{movementView.cancelMovement(movement)}"
+							icon="ui-icon-close" rendered="#{movement.canBeCancelled()}" />
+						<p:menuitem value="Return Bike"
+							action="#{movementView.finishMovement(movement)}"
+							icon="ui-icon-check" rendered="#{movement.canBeFinished()}" />
+					</p:menuButton>
 				</p:column>
 			</p:dataTable>
 		</h:form>

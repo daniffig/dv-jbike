@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 
 import com.jbike.controller.BikeBean;
 import com.jbike.model.Bike;
+import com.jbike.model.Movement;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "bikeView")
@@ -76,7 +77,7 @@ public class BikeView implements Serializable {
 	// FIXME
 	public String requestBike(Bike bike) {
 		if (bike.canBeRequested()) {
-			this.getUserSession().setSelectedBike(bike);
+			this.getUserSession().setSelectedMovement(new Movement(null, bike));
 
 			return "/user/movements/form.xhtml?faces-redirect=true";
 		}
