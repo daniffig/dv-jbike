@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jbike.session.UserSession;
+
 public class AdminFilter implements Filter {
 
 	@Override
@@ -21,9 +23,9 @@ public class AdminFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
-        LoginBean loginBean = (LoginBean)((HttpServletRequest)request).getSession().getAttribute("loginBean");
+        UserSession userSession = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
          
-        if (false || loginBean == null || !loginBean.isLoggedIn() || !loginBean.getUser().isAdmin()) {
+        if (false || userSession == null ||userSession.getLoggedUser() == null || !userSession.getLoggedUser().isAdmin()) {
             String contextPath = ((HttpServletRequest)request).getContextPath();
             ((HttpServletResponse)response).sendRedirect(contextPath + "/auth/login.xhtml");
         }

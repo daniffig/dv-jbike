@@ -21,6 +21,7 @@ public class UserSession {
 	private Movement selectedMovement;
 	private Station selectedStation;
 	private User selectedUser;
+	private User loggedUser;
 	
 	private Queue<FacesMessage> messageQueue;
 	
@@ -67,5 +68,13 @@ public class UserSession {
 
 	public void setSelectedMovement(Movement selectedMovement) {
 		this.selectedMovement = selectedMovement;
+	}
+	
+	public User getLoggedUser(){
+		return this.loggedUser;
+	}
+	
+	public void setLoggedUser(User loggedUser){
+		this.loggedUser = loggedUser;
 	}
 }

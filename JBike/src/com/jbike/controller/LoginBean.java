@@ -1,59 +1,43 @@
-package com.jbike.auth;
+package com.jbike.controller;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import com.jbike.helper.UserHelper;
 import com.jbike.model.User;
 import com.jbike.navigation.NavigationBean;
 import com.jbike.persistence.FactoryDao;
+import com.jbike.session.UserSession;
 
 @ManagedBean(name="loginBean")
-@SessionScoped
+@ApplicationScoped
 public class LoginBean {
 	
+	@ManagedProperty(value="#{userSession.loggedUser}")
 	private User user;		
-	
-	private boolean loggedIn; 
 	
     @ManagedProperty(value="#{navigationBean}")
     private NavigationBean navigationBean;
 	
-	/*
-	@PostConstruct
-	public void init() {
-		List<User> users = new ArrayList<User>();
-		
-		for (int i = 1; i <= 10; i++) {
-			users.add(new User(i, "mail" + i, "password" + i));
-		}
-	}
-	*/
 	
 	/**
      * Login operation.
      * @return
+	 * @throws UnsupportedEncodingException 
+	 * @throws NoSuchAlgorithmException 
      */
-    public String doLogin() {
-       /*
-    	// Get every user from our sample database :)
-        for (String user: users) {
-            String dbUsername = user.split(":")[0];
-            String dbPassword = user.split(":")[1];
-             
-            // Successful login
-            if (dbUsername.equals(email) && dbPassword.equals(password)) {
-                loggedIn = true;
-                return navigationBean.redirectToWelcome();
-            }
-        }
-        */
-    	this.user = FactoryDao.getUserDao().authenticate(this.user.getEmail(), this.user.getPassword());
+    public String doLogin() throws NoSuchAlgorithmException, UnsupportedEncodingException {
+
+    	this.setUser(FactoryDao.getUserDao().authenticate(this.user.getEmail(), UserHelper.digest(this.user.getPassword())));
     	
-    	if (this.user != null) {
-            loggedIn = true;
+    	if (this.getUser() != null) {
             return navigationBean.redirectToWelcome();
         }
          
@@ -72,8 +56,7 @@ public class LoginBean {
      */
     public String doLogout() {
         // Set the paremeter indicating that user is logged in to false
-        this.loggedIn = false;
-        this.user     = null;
+        this.setUser(null);
          
         // Set logout message
         FacesMessage msg = new FacesMessage("Logout success!", "INFO MSG");
@@ -82,19 +65,7 @@ public class LoginBean {
          
         return navigationBean.toLogin();
     }
-	/*
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}*/
+
 	public User getUser() {
 		return user;
 	}
@@ -102,14 +73,7 @@ public class LoginBean {
 	public void setUser(User user) {
 		this.user = user;
 	}
-    
-	public boolean isLoggedIn() {
-		return loggedIn;
-	}
 
-	public void setLoggedIn(boolean loggedIn) {
-		this.loggedIn = loggedIn;
-	} 
     public void setNavigationBean(NavigationBean navigationBean) {
         this.navigationBean = navigationBean;
     }
