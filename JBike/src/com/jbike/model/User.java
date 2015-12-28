@@ -1,6 +1,7 @@
 package com.jbike.model;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.jbike.persistence.FactoryDao;
 
 @Entity
 @Table(name = "user")
@@ -183,6 +186,14 @@ public class User implements Serializable {
 
 	public String toString() {
 		return this.getEmail();
+	}
+	
+	public Boolean isPenalized(){
+		Penalization p = FactoryDao.getPenalizationDao().findLast(this);
+		
+		Timestamp currentDate = new Timestamp((new java.util.Date()).getTime());
+		
+		return !this.isAdmin && p != null && p.getEndDate().after(currentDate);
 	}
 
 }

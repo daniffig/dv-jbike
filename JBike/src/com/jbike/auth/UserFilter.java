@@ -23,7 +23,7 @@ public class UserFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
         LoginBean loginBean = (LoginBean)((HttpServletRequest)request).getSession().getAttribute("loginBean");
          
-        if (false || loginBean == null || !loginBean.isLoggedIn()) {
+        if (false || loginBean == null || !loginBean.isLoggedIn() || loginBean.getUser().isPenalized()) {
             String contextPath = ((HttpServletRequest)request).getContextPath();
             ((HttpServletResponse)response).sendRedirect(contextPath + "/auth/login.xhtml");
         }

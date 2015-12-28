@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.jbike.model.Penalization;
+import com.jbike.model.Station;
+import com.jbike.model.User;
 import com.jbike.persistence.interfaces.PenalizationDao;
 
 public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> implements PenalizationDao{
@@ -15,6 +18,27 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 		super(Penalization.class);
 	}
 
+	@Override
+	public Penalization findLast(User user){
+		EntityManager em = this.getEntityManager();
+		
+		Penalization p;
+		
+		try
+		{
+			Query q = em.createQuery("SELECT p FROM Penalization p WHERE user = :user ORDER BY p.createdAt DESC LIMIT 1");
+			q.setParameter("user", user);
+			p = (Penalization)q.getSingleResult();
+		}
+		catch(NoResultException e)
+		{
+			p = null;
+		}
+		em.close();
+		
+		return p;
+	}
+	
 	@Override
 	public List<Penalization> findAllCurrentlyActive() {
 		EntityManager em = this.getEntityManager();

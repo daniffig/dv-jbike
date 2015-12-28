@@ -1,6 +1,6 @@
 package com.jbike.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,20 +26,20 @@ public class Penalization {
 	private String description;
 
 	@Column(name = "created_at")
-	private Date createdAt;
+	private Timestamp createdAt;
 
 	@Column(name = "end_date")
-	private Date endDate;
+	private Timestamp endDate;
 
 	public Penalization() {
 	}
 
-	public Penalization(User user, Date endDate, String description) {
+	public Penalization(User user, Timestamp endDate, String description) {
 		this.user = user;
 		this.endDate = endDate;
 		this.description = description;
 
-		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.createdAt = new Timestamp((new java.util.Date()).getTime());
 	}
 
 	public Long getId() {
@@ -66,19 +66,19 @@ public class Penalization {
 		this.description = description;
 	}
 
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getEndDate() {
+	public Timestamp getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
 	
