@@ -2,10 +2,8 @@ package com.jbike.view;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -22,9 +20,9 @@ import javax.mail.Session;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.xml.bind.DatatypeConverter;
 
 import com.jbike.controller.UserBean;
+import com.jbike.helper.UserHelper;
 import com.jbike.model.User;
 import com.jbike.persistence.UserDaoHibernate;
 import com.jbike.session.UserSession;
@@ -83,29 +81,34 @@ public class UserView implements Serializable {
 		return this.getUserBean().getUsers();
 	}
 
-	public String signIn() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		MessageDigest md5 = MessageDigest.getInstance("MD5");
+	public String signIn() {
+		String password;
+		try {
+			password = UserHelper.generateRandomPassword();
 
-		String s = new Timestamp((new java.util.Date()).getTime()).toString();
+			this.getUser().setPassword(UserHelper.digest(password));
+			if (this.getUserBean().saveUser(this.getUser())) {
 
-		String password = DatatypeConverter.printHexBinary(md5.digest(s.getBytes("UTF-8"))).substring(0, 8);
-		String digestedPassword = DatatypeConverter.printHexBinary(md5.digest(password.getBytes("UTF-8")));
-
-		this.getUser().setPassword(digestedPassword);
-
-		if (this.getUserBean().saveUser(this.getUser())) {
-			try {
-				this.sendMail("webmaster.jbike", "jyaa2015", this.getUser().getEmail(), null, "Welcome to JBike!",
+				this.sendMail("webmaster.jbike", "jyaa2015", this.getUser().getEmail(), "Welcome to JBike!",
 						String.format("Your password is: <b>%s</b>", password));
 
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 						"Success!", "User created. We have sent an email with your password."));
 
 				return "home";
-			} catch (MessagingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
+		} catch (NoSuchAlgorithmException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
@@ -114,8 +117,8 @@ public class UserView implements Serializable {
 		return "home";
 	}
 
-	public void sendMail(final String username, final String password, String recipientEmail, String ccEmail,
-			String title, String message) throws AddressException, MessagingException {
+	public void sendMail(final String username, final String password, String recipientEmail, String title,
+			String message) throws AddressException, MessagingException {
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
@@ -150,14 +153,9 @@ public class UserView implements Serializable {
 		msg.setFrom(new InternetAddress(username + "@gmail.com"));
 		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
 
-		/*
-		if (ccEmail.length() > 0) {
-			msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
-		}
-		*/
-
 		msg.setSubject(title);
-		msg.setText(message, "utf-8");
+		msg.setContent(message, "text/html; charset=utf-8");
+		//msg.setText(message, "utf-8");
 		msg.setSentDate(new Date());
 
 		SMTPTransport t = (SMTPTransport) session.getTransport("smtps");
