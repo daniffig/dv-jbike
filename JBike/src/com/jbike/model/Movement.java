@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -27,6 +29,9 @@ public class Movement {
 
 	@ManyToOne
 	private Bike bike;
+	
+	@Enumerated(EnumType.ORDINAL)
+	private MovementState state;
 
 	@Column(name = "created_at")
 	private Timestamp createdAt;
@@ -36,17 +41,20 @@ public class Movement {
 
 	public Movement() {
 		this.createdAt = new Timestamp((new java.util.Date()).getTime());
+		this.state     = MovementState.NEW;
 	}
 
 	public Movement(User user) {
 		this.createdAt = new Timestamp((new java.util.Date()).getTime());
-		this.user = user;
+		this.user      = user;
+		this.state     = MovementState.NEW;
 	}
 
 	public Movement(User user, Bike bike) {
 		this.createdAt = new Timestamp((new java.util.Date()).getTime());
-		this.user = user;
-		this.bike = bike;
+		this.user      = user;
+		this.bike      = bike;
+		this.state     = MovementState.NEW;
 	}
 
 	public Long getId() {
@@ -79,6 +87,14 @@ public class Movement {
 
 	public void setBike(Bike bike) {
 		this.bike = bike;
+	}
+	
+	public MovementState getState(){
+		return this.state;
+	}
+	
+	public void setState(MovementState state){
+		this.state = state;
 	}
 
 	public Timestamp getCreatedAt() {

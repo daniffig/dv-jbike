@@ -109,10 +109,4 @@ public class BikeTest {
 		assertTrue(bdao.findAllRented().contains(bike_1));
 	}
 */
-	@Test
-	public void testFindByPk(){
-		Bike b = bdao.findByPk(1L);
-		assertNotNull(b);
-		assertTrue(b.getCode() == "AT45");
-	}
 }

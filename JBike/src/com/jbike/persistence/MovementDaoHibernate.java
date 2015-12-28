@@ -6,9 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import com.jbike.model.Bike;
 import com.jbike.model.Movement;
-import com.jbike.model.Penalization;
+import com.jbike.model.MovementState;
 import com.jbike.persistence.interfaces.MovementDao;
 
 public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements MovementDao {
@@ -48,6 +47,16 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		EntityManager em = this.getEntityManager();
 		
 		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.satation IS NULL");
+		
+		return (List<Movement>) query.getResultList();
+	}
+	
+	@Override
+	public List<Movement> findAllByState(MovementState state) {
+		EntityManager em = this.getEntityManager();
+		
+		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.state = :state");
+		query.setParameter("state", state);
 		
 		return (List<Movement>) query.getResultList();
 	}
