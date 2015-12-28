@@ -99,6 +99,7 @@ public class User implements Serializable {
 		return id;
 	}
 
+	@SuppressWarnings("unused")
 	private void setId(Long id) {
 		this.id = id;
 	}

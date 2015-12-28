@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -23,6 +24,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.xml.bind.DatatypeConverter;
 
+import com.jbike.controller.UserBean;
 import com.jbike.model.User;
 import com.jbike.persistence.UserDaoHibernate;
 import com.jbike.session.UserSession;
@@ -42,12 +44,17 @@ public class UserView implements Serializable {
 	@ManagedProperty(value = "#{userSession.selectedUser}")
 	private User user;
 
+	@ManagedProperty(value = "#{userBean}")
+	private UserBean userBean;
+
 	@ManagedProperty(value = "#{userSession}")
 	private UserSession userSession;
 
 	@PostConstruct
 	public void init() {
-		// FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		if (null == this.getUser()) {
+			this.setUser(new User());
+		}
 	}
 
 	public UserSession getUserSession() {
@@ -72,44 +79,42 @@ public class UserView implements Serializable {
 		return this.getUser().isNew() ? "New User" : String.format("Edit User (%s)", this.getUser());
 	}
 
-	// FIXME
 	public List<User> getUsers() {
-		UserDaoHibernate udh = new UserDaoHibernate();
-
-		return udh.findAll();
+		return this.getUserBean().getUsers();
 	}
 
 	public String signIn() throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		MessageDigest md5 = MessageDigest.getInstance("MD5");
 
-		String s = "my Password";
+		String s = new Timestamp((new java.util.Date()).getTime()).toString();
 
 		String password = DatatypeConverter.printHexBinary(md5.digest(s.getBytes("UTF-8"))).substring(0, 8);
 		String digestedPassword = DatatypeConverter.printHexBinary(md5.digest(password.getBytes("UTF-8")));
 
 		this.getUser().setPassword(digestedPassword);
 
-		UserDaoHibernate udh = new UserDaoHibernate();
+		if (this.getUserBean().saveUser(this.getUser())) {
+			try {
+				this.sendMail("webmaster.jbike", "jyaa2015", this.getUser().getEmail(), null, "Welcome to JBike!",
+						String.format("Your password is: <b>%s</b>", password));
 
-		udh.save(this.getUser());
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Success!", "User created. We have sent an email with your password."));
 
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Bike successfully saved."));
+				return "home";
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+				"An error occurred while creating your user. Please, try again later."));
 
 		return "home";
 	}
 
-	public void emailAndres() throws AddressException, MessagingException {
-		UserView.Send("webmaster.jbike", "jyaa2015", "andrescimadamore@gmail.com", "andrescimadamore@gmail.com", "hola",
-				"hola");
-	}
-
-	public void emailLucio() throws AddressException, MessagingException {
-		UserView.Send("webmaster.jbike", "jyaa2015", "daniffig@gmail.com", "daniffig@gmail.com", "hola",
-				"hola");
-	}
-
-	public static void Send(final String username, final String password, String recipientEmail, String ccEmail,
+	public void sendMail(final String username, final String password, String recipientEmail, String ccEmail,
 			String title, String message) throws AddressException, MessagingException {
 		Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
 		final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
@@ -145,9 +150,11 @@ public class UserView implements Serializable {
 		msg.setFrom(new InternetAddress(username + "@gmail.com"));
 		msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipientEmail, false));
 
+		/*
 		if (ccEmail.length() > 0) {
 			msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(ccEmail, false));
 		}
+		*/
 
 		msg.setSubject(title);
 		msg.setText(message, "utf-8");
@@ -209,5 +216,13 @@ public class UserView implements Serializable {
 
 	public void setFilteredUsers(List<User> filteredUsers) {
 		this.filteredUsers = filteredUsers;
+	}
+
+	public UserBean getUserBean() {
+		return userBean;
+	}
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
 }
