@@ -26,6 +26,10 @@ public class Movement {
 	@ManyToOne
 	@JoinColumn(name = "destination_station_id", nullable = true)
 	private Station destinationStation;
+	
+	@ManyToOne
+	@JoinColumn(name = "source_station_id", nullable = true)
+	private Station sourceStation;
 
 	@ManyToOne
 	private Bike bike;
@@ -82,6 +86,14 @@ public class Movement {
 		this.destinationStation = destinationStation;
 	}
 
+	public Station getSourceStation() {
+		return this.sourceStation;
+	}
+
+	public void setSourceStation(Station sourceStation) {
+		this.sourceStation = sourceStation;
+	}
+	
 	public Bike getBike() {
 		return this.bike;
 	}
