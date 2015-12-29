@@ -18,15 +18,15 @@
 				</p:inputText>
 				<p:message for="email" />
 				<p:outputLabel for="password" value="Password" />
-				<p:inputText id="password" class="form-control" size="10"
+				<p:password id="password" class="form-control" size="10"
 					value="#{loginView.user.password}"
 					requiredMessage="Please enter your password."
 					validatorMessage="Invalidad password format">
 					<f:validateRegex pattern="^[\w]+$" />
-				</p:inputText>
+				</p:password>
 			</h:panelGrid>
 			<hr />
-			<p:commandButton value="Log in" actionListener="#{loginView.doLogin}" />
+			<p:commandButton value="Log in" action="#{loginView.doLogin}" />
 		</h:form>
 	</ui:define>
 </ui:composition>

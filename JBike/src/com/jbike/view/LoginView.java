@@ -12,24 +12,20 @@ import javax.faces.context.FacesContext;
 
 import com.jbike.helper.UserHelper;
 import com.jbike.model.User;
-import com.jbike.navigation.NavigationBean;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "loginView")
 @ViewScoped
-public class LoginView implements Serializable{
-	
+public class LoginView implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@ManagedProperty(value = "#{userSession.loggedUser}")
 	private User user;
-	
+
 	@ManagedProperty(value = "#{userSession}")
 	private UserSession userSession;
-
-	@ManagedProperty(value = "#{navigationBean}")
-	private NavigationBean navigationBean;
 
 	/**
 	 * Login operation.
@@ -39,20 +35,19 @@ public class LoginView implements Serializable{
 	 * @throws NoSuchAlgorithmException
 	 */
 	public String doLogin() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		this.getUserSession().setLoggedUser(FactoryDao.getUserDao().authenticate(this.getUser().getEmail(), UserHelper.digest(this.getUser().getPassword())));
+		this.getUserSession().setLoggedUser(FactoryDao.getUserDao().authenticate(this.getUser().getEmail(),
+				UserHelper.digest(this.getUser().getPassword())));
 
 		if (this.getUser() != null) {
 			this.getUserSession().setIsLoggedIn(true);
+
 			return "home";
 		}
 		this.getUserSession().setLoggedUser(new User());
-		
-		// Set login ERROR
-		FacesMessage msg = new FacesMessage("Login error!", "ERROR MSG");
-		msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		// To to login page
+		this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+				"An error occurred, please check your credentials."));
+
 		return "login";
 	}
 
@@ -71,7 +66,7 @@ public class LoginView implements Serializable{
 		msg.setSeverity(FacesMessage.SEVERITY_INFO);
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
-		return navigationBean.toLogin();
+		return "home";
 	}
 
 	public User getUser() {
@@ -81,17 +76,13 @@ public class LoginView implements Serializable{
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
+
 	public UserSession getUserSession() {
 		return userSession;
 	}
 
 	public void setUserSession(UserSession userSession) {
 		this.userSession = userSession;
-	}
-
-	public void setNavigationBean(NavigationBean navigationBean) {
-		this.navigationBean = navigationBean;
 	}
 
 }
