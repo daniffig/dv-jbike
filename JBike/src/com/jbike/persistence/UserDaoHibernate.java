@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-import com.jbike.model.Station;
 import com.jbike.model.User;
 import com.jbike.persistence.interfaces.UserDao;
 
@@ -60,6 +59,7 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 		return u;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAllActive() {
 		EntityManager em = this.getEntityManager();
@@ -69,6 +69,7 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 		return (List<User>) query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> findAllAdmin() {
 		EntityManager em = this.getEntityManager();

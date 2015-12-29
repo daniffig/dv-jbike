@@ -8,7 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import com.jbike.helper.UserHelper;
 import com.jbike.model.User;
@@ -35,20 +34,20 @@ public class LoginView implements Serializable {
 	 * @throws NoSuchAlgorithmException
 	 */
 	public String doLogin() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-		this.getUserSession().setLoggedUser(FactoryDao.getUserDao().authenticate(this.getUser().getEmail(),
-				UserHelper.digest(this.getUser().getPassword())));
+		User user = FactoryDao.getUserDao().authenticate(this.getUser().getEmail(),
+				UserHelper.digest(this.getUser().getPassword()));
 
-		if (this.getUser() != null) {
-			this.getUserSession().setIsLoggedIn(true);
+		if (null == user) {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred, please check your credentials."));
 
-			return "home";
+			return "login";
 		}
-		this.getUserSession().setLoggedUser(new User());
 
-		this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-				"An error occurred, please check your credentials."));
+		this.getUserSession().setLoggedUser(user);
+		this.getUserSession().setIsLoggedIn(true);
 
-		return "login";
+		return "home";
 	}
 
 	/**
@@ -57,14 +56,8 @@ public class LoginView implements Serializable {
 	 * @return
 	 */
 	public String doLogout() {
-		// Set the paremeter indicating that user is logged in to false
-		this.getUserSession().setLoggedUser(new User());
+		this.getUserSession().setLoggedUser(null);
 		this.getUserSession().setIsLoggedIn(false);
-
-		// Set logout message
-		FacesMessage msg = new FacesMessage("Logout success!", "INFO MSG");
-		msg.setSeverity(FacesMessage.SEVERITY_INFO);
-		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		return "home";
 	}
