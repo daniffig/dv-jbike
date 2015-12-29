@@ -24,7 +24,8 @@
 			<ul class="nav navbar-nav">
 				<li><h:link value="Map" outcome="/stations/map.xhtml" /></li>
 				<li><h:link value="Stations" outcome="/stations/list.xhtml" /></li>
-				<li><h:link value="My Requests" outcome="/user/movements/list.xhtml" /></li>
+				<li><h:link value="My Requests"
+						outcome="/user/movements/list.xhtml" /></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
 					aria-expanded="false">Administration <span class="caret"></span></a>
@@ -36,9 +37,8 @@
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><p:commandLink value="Log in"
-						onclick="PF('logInDialog').show()" /></li>
-				<li><h:link value="Sign in" outcome="/users/sign-in.xhtml" /></li>
+				<li><h:link value="Log in" outcome="log-in" /></li>
+				<li><h:link value="Sign in" outcome="sign-in" /></li>
 				<h:panelGroup rendered="#{loginBean.isLoggedIn()}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"

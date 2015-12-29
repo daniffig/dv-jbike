@@ -7,28 +7,26 @@
 	<ui:define name="content">
 		<h1>Log in</h1>
 		<h:form role="form">
-			<div class="form-group">
-				<h:panelGrid>
-					<p:inputText id="email" class="form-control" size="10"
-						value="#{loginView.user.email}"
-						requiredMessage="Please enter your email address."
-						validatorMessage="Invalidad email format">
-						<f:validateRegex
-							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-					</p:inputText>
-					<p:watermark for="email" value="Email" />
-					<p:message for="email" />
-					<p:inputText id="password" class="form-control" size="10"
-						value="#{loginView.user.password}"
-						requiredMessage="Please enter your password."
-						validatorMessage="Invalidad password format">
-						<f:validateRegex
-							pattern="^[\w]+$" />
-					</p:inputText>
-				</h:panelGrid>
-			</div>
-			<p:commandButton value="Log in"
-				actionListener="#{loginView.doLogin}" />
+			<h:panelGrid width="100%">
+				<p:outputLabel for="email" value="Email" />
+				<p:inputText id="email" class="form-control" size="10"
+					value="#{loginView.user.email}"
+					requiredMessage="Please enter your email address."
+					validatorMessage="Invalidad email format">
+					<f:validateRegex
+						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+				</p:inputText>
+				<p:message for="email" />
+				<p:outputLabel for="password" value="Password" />
+				<p:inputText id="password" class="form-control" size="10"
+					value="#{loginView.user.password}"
+					requiredMessage="Please enter your password."
+					validatorMessage="Invalidad password format">
+					<f:validateRegex pattern="^[\w]+$" />
+				</p:inputText>
+			</h:panelGrid>
+			<hr />
+			<p:commandButton value="Log in" actionListener="#{loginView.doLogin}" />
 		</h:form>
 	</ui:define>
 </ui:composition>

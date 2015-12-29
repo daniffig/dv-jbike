@@ -30,6 +30,16 @@
 	<navigation-rule>
 		<from-view-id>/*</from-view-id>
 		<navigation-case>
+			<from-outcome>log-in</from-outcome>
+			<to-view-id>/users/log-in.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>sign-in</from-outcome>
+			<to-view-id>/users/sign-in.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>bikes/list</from-outcome>
 			<to-view-id>/bikes/list.xhtml</to-view-id>
 			<redirect></redirect>
