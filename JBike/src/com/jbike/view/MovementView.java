@@ -77,15 +77,6 @@ public class MovementView implements Serializable {
 		return this.getMovement().isNew() ? "bikes/list" : "movements/list";
 	}
 
-	// FIXME
-	public String requestBike(Bike bike) {
-		if (bike.canBeRequested()) {
-			return "/movements/form.xhtml?faces-redirect=true";
-		}
-
-		return "bikes/list";
-	}
-
 	public String confirmMovement(Movement movement) {
 		if (this.getMovementBean().confirmMovement(movement)) {
 			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!",

@@ -47,11 +47,12 @@
 				<h:panelGroup rendered="#{userSession.IsLoggedIn()}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
-						aria-expanded="false">#{userSession.loggedUser} <span class="caret"></span></a>
+						aria-expanded="false">#{userSession.loggedUser} <span
+							class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">My profile</a></li>
+							<li><h:link outcome="home" value="My profile" /></li>
 							<li role="separator" class="divider"></li>
-							<li><p:commandLink action="#{loginView.doLogout}" value="Log out" /></li>
+							<li><h:link action="#{loginView.doLogout}" value="Log out" /></li>
 						</ul></li>
 				</h:panelGroup>
 			</ul>

@@ -40,8 +40,7 @@ public class MovementBean implements Serializable {
 		if (movement.isNew()) {
 			movement.getBike().setState(BikeState.REQUESTED);
 
-			return this.getStationBean().saveStation(movement.getBike().getCurrentStation())
-					&& this.getBikeBean().saveBike(movement.getBike()) && this.getMovementDAO().save(movement);
+			return this.getBikeBean().saveBike(movement.getBike()) && this.getMovementDAO().save(movement);
 		} else {
 			movement.setUpdatedAt(new Timestamp((new java.util.Date()).getTime()));
 

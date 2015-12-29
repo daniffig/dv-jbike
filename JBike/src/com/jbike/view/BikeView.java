@@ -77,7 +77,7 @@ public class BikeView implements Serializable {
 	// FIXME
 	public String requestBike(Bike bike) {
 		if (bike.canBeRequested()) {
-			this.getUserSession().setSelectedMovement(new Movement(null, bike));
+			this.getUserSession().setSelectedMovement(new Movement(this.getUserSession().getLoggedUser(), bike));
 
 			return "/user/movements/form.xhtml?faces-redirect=true";
 		}

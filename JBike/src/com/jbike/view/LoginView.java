@@ -56,7 +56,7 @@ public class LoginView implements Serializable {
 	 * @return
 	 */
 	public String doLogout() {
-		this.getUserSession().setLoggedUser(null);
+		this.getUserSession().setLoggedUser(new User());
 		this.getUserSession().setIsLoggedIn(false);
 
 		return "home";

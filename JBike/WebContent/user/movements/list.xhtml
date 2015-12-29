@@ -16,6 +16,10 @@
 				<p:column headerText="Created at">
 					<h:outputText value="#{movement.createdAt}" />
 				</p:column>
+				<p:column headerText="Source Station"
+					converter="#{stationConverter}">
+					<h:outputText value="#{movement.sourceStation}" />
+				</p:column>
 				<p:column headerText="Destination Station"
 					converter="#{stationConverter}">
 					<h:outputText value="#{movement.destinationStation}" />
@@ -34,8 +38,8 @@
 							action="#{movementView.confirmMovement(movement)}"
 							icon="ui-icon-check" rendered="#{movement.canBeConfirmed()}" />
 						<p:menuitem value="Edit"
-							action="#{movementView.viewForm(movement)}"
-							icon="ui-icon-pencil" rendered="#{movement.canBeEdited()}" />
+							action="#{movementView.viewForm(movement)}" icon="ui-icon-pencil"
+							rendered="#{movement.canBeEdited()}" />
 						<p:menuitem value="Cancel"
 							action="#{movementView.cancelMovement(movement)}"
 							icon="ui-icon-close" rendered="#{movement.canBeCancelled()}" />

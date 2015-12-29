@@ -21,7 +21,7 @@
 					filterMatchMode="exact" sortBy="#{movement.id}">
 					<h:outputText value="#{movement.id}" />
 				</p:column>
-				<p:column headerText="User" filterBy="#{movement.user.name}"
+				<p:column headerText="User" filterBy="#{movement.user.email}"
 					filterMatchMode="contains" sortBy="#{movement.user}">
 					<h:outputText value="#{movement.user}" />
 				</p:column>
@@ -35,7 +35,7 @@
 							<f:selectItems value="#{stationBean.stations}" />
 						</h:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{movement.user}" />
+					<h:outputText value="#{movement.sourceStation}" />
 				</p:column>
 				<p:column headerText="Destination Station"
 					filterBy="#{movement.destinationStation}" filterMatchMode="exact"

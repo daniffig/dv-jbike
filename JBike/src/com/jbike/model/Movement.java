@@ -59,6 +59,7 @@ public class Movement {
 		this.user = user;
 		this.bike = bike;
 		this.state = MovementState.NEW;
+		this.sourceStation = bike.getCurrentStation();
 	}
 
 	public Long getId() {
