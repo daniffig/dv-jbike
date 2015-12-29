@@ -19,7 +19,7 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 	@Override
 	public User authenticate(String email, String password){
 		EntityManager em = this.getEntityManager();
-		
+
 		User u;
 		try
 		{

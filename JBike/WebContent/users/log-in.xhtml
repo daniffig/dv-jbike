@@ -10,7 +10,7 @@
 			<div class="form-group">
 				<h:panelGrid>
 					<p:inputText id="email" class="form-control" size="10"
-						value="#{LoginBean.user.email}"
+						value="#{loginView.user.email}"
 						requiredMessage="Please enter your email address."
 						validatorMessage="Invalidad email format">
 						<f:validateRegex
@@ -19,7 +19,7 @@
 					<p:watermark for="email" value="Email" />
 					<p:message for="email" />
 					<p:inputText id="password" class="form-control" size="10"
-						value="#{LoginBean.user.password}"
+						value="#{loginView.user.password}"
 						requiredMessage="Please enter your password."
 						validatorMessage="Invalidad password format">
 						<f:validateRegex
@@ -28,7 +28,7 @@
 				</h:panelGrid>
 			</div>
 			<p:commandButton value="Log in"
-				actionListener="#{LoginBean.logIn}" />
+				actionListener="#{loginView.doLogin}" />
 		</h:form>
 	</ui:define>
 </ui:composition>

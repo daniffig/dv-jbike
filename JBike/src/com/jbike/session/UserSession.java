@@ -28,6 +28,7 @@ public class UserSession {
 	@PostConstruct
 	public void init() {
 		this.setMessageQueue(new LinkedList<FacesMessage>());
+		this.setLoggedUser(new User());
 	}
 
 	public Bike getSelectedBike() {
