@@ -9,6 +9,11 @@
 	<navigation-rule>
 		<from-view-id>/admin/*</from-view-id>
 		<navigation-case>
+			<from-outcome>bikes/form</from-outcome>
+			<to-view-id>/admin/bikes/form.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>bikes/history</from-outcome>
 			<to-view-id>/admin/bikes/history.xhtml</to-view-id>
 			<redirect></redirect>
@@ -16,6 +21,36 @@
 		<navigation-case>
 			<from-outcome>bikes/list</from-outcome>
 			<to-view-id>/admin/bikes/list.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>stations/form</from-outcome>
+			<to-view-id>/admin/stations/form.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>stations/information</from-outcome>
+			<to-view-id>/admin/stations/information.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>stations/list</from-outcome>
+			<to-view-id>/admin/stations/list.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>users/form</from-outcome>
+			<to-view-id>/admin/users/form.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>users/list</from-outcome>
+			<to-view-id>/admin/users/list.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>users/profile</from-outcome>
+			<to-view-id>/admin/users/profile.xhtml</to-view-id>
 			<redirect></redirect>
 		</navigation-case>
 	</navigation-rule>
@@ -30,12 +65,17 @@
 	<navigation-rule>
 		<from-view-id>/*</from-view-id>
 		<navigation-case>
-			<from-outcome>log-in</from-outcome>
+			<from-outcome>home</from-outcome>
+			<to-view-id>/index.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>login</from-outcome>
 			<to-view-id>/users/log-in.xhtml</to-view-id>
 			<redirect></redirect>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>sign-in</from-outcome>
+			<from-outcome>signin</from-outcome>
 			<to-view-id>/users/sign-in.xhtml</to-view-id>
 			<redirect></redirect>
 		</navigation-case>

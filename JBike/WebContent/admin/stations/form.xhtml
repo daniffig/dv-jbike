@@ -24,7 +24,8 @@
 					value="#{stationView.station.totalParkingSpaces}"></p:inputText>
 				<p:outputLabel for="state" value="State" />
 				<h:selectOneMenu id="state" value="#{stationView.station.state}">
-					<f:selectItems value="#{stationBean.stateOptions}" />
+					<f:selectItems value="#{stationBean.states}" var="state"
+						itemLabel="#{state.name}" itemValue="#{state}" />
 				</h:selectOneMenu>
 				<p:outputLabel for="gmap" value="Geolocation" />
 				<p:gmap id="gmap" center="-34.921111, -57.954444" zoom="13"
@@ -35,8 +36,7 @@
 				<h:inputHidden id="lng" value="#{stationView.station.longitude}" />
 			</h:panelGrid>
 			<hr />
-			<p:commandButton value="Back to list"
-				action="#{stationView.backToList}" />
+			<p:button value="Back to list" outcome="stations/list" />
 			<p:commandButton value="Save" action="#{stationView.save}" />
 		</h:form>
 		<script type="text/javascript">

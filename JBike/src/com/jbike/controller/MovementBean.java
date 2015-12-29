@@ -2,6 +2,7 @@ package com.jbike.controller;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -73,6 +74,10 @@ public class MovementBean implements Serializable {
 
 	public List<Movement> getMovements() {
 		return this.getMovementDAO().findAll();
+	}
+
+	public List<MovementState> getStates() {
+		return Arrays.asList(MovementState.values());
 	}
 
 	public MovementDao getMovementDAO() {

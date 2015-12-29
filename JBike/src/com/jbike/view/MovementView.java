@@ -53,10 +53,6 @@ public class MovementView implements Serializable {
 				: String.format("Edit Bike (%s)", this.getBike());
 	}
 
-	public String getHistoryTitle() {
-		return "history";
-	}
-
 	public String viewForm(Movement movement) {
 		this.getUserSession().setSelectedMovement(movement);
 

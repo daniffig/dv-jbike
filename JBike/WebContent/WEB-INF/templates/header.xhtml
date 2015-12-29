@@ -22,7 +22,6 @@
 		<div class="collapse navbar-collapse"
 			id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><h:link value="Map" outcome="/stations/map.xhtml" /></li>
 				<li><h:link value="Stations" outcome="/stations/list.xhtml" /></li>
 				<li><h:link value="My Requests"
 						outcome="/user/movements/list.xhtml" /></li>
@@ -37,9 +36,11 @@
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-				<li><h:link value="Log in" outcome="log-in" /></li>
-				<li><h:link value="Sign in" outcome="sign-in" /></li>
-				<h:panelGroup rendered="#{loginBean.isLoggedIn()}">
+				<h:panelGroup rendered="#{!userSession.IsLoggedIn()}">
+					<li><h:link value="Log in" outcome="login" /></li>
+					<li><h:link value="Sign in" outcome="signin" /></li>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{userSession.IsLoggedIn()}">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">daniffig@gmail.com <span class="caret"></span></a>

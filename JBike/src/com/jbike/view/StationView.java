@@ -55,9 +55,9 @@ public class StationView implements Serializable {
 	@PostConstruct
 	public void init() {
 		if (this.getUserSession().getMessageQueue().size() > 0) {
-			
+
 		}
-		
+
 		emptyModel = new DefaultMapModel();
 
 		stations = stationBean.getStations();
@@ -71,14 +71,20 @@ public class StationView implements Serializable {
 				advancedModel.addOverlay(StationHelper.toMarker(station));
 			}
 		}
-	}    
-	
-    public void onMarkerSelect(OverlaySelectEvent event) {
-        marker = (Marker) event.getOverlay();
-    }
+	}
+
+	public void onMarkerSelect(OverlaySelectEvent event) {
+		marker = (Marker) event.getOverlay();
+	}
 
 	public String getFormTitle() {
 		return this.getStation().isNew() ? "New Station" : String.format("Edit Station (%s)", this.getStation());
+	}
+
+	public String viewInformation(Station station) {
+		this.getUserSession().setSelectedStation(station);
+
+		return "stations/information";
 	}
 
 	public String viewForm(Station station) {
@@ -88,12 +94,12 @@ public class StationView implements Serializable {
 
 		this.getUserSession().setSelectedStation(station);
 
-		return "/admin/stations/form.xhtml?faces-redirect=true";
+		return "stations/form";
 	}
-	
+
 	public String viewBikes(Station station) {
 		this.getUserSession().setSelectedStation(station);
-		
+
 		return "bikes/list";
 	}
 
@@ -109,11 +115,7 @@ public class StationView implements Serializable {
 					"An error occurred while saving the station."));
 		}
 
-		return "/admin/stations/list.xhtml?faces-redirect=true";
-	}
-
-	public String backToList() {
-		return "/admin/stations/list.xhtml?faces-redirect=true";
+		return "stations/list";
 	}
 
 	public List<Station> getStations() {

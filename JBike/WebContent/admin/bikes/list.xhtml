@@ -14,7 +14,8 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
 				filteredValue="#{bikeView.filteredBikes}"
-				emptyMessage="No bikes found with given criteria">
+				emptyMessage="No bikes found with given criteria"
+				resizableColumns="true" liveResize="true">
 
 				<p:column headerText="Id" filterBy="#{bike.id}"
 					filterMatchMode="exact" sortBy="#{bike.id}">
@@ -49,7 +50,7 @@
 							<f:selectItems value="#{stationBean.stations}" />
 						</h:selectOneMenu>
 					</f:facet>
-					<h:outputText value="#{bike.currentStation.name}" />
+					<h:outputText value="#{bike.currentStation}" />
 				</p:column>
 
 				<p:column>

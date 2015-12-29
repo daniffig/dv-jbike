@@ -11,7 +11,8 @@
 			<p:dataTable id="usersTable" widgetVar="usersTable" var="user"
 				value="#{userView.users}" rows="30"
 				filteredValue="#{userView.filteredUsers}"
-				emptyMessage="No users found with given criteria">
+				emptyMessage="No users found with given criteria"
+				resizableColumns="true" liveResize="true">
 
 				<p:column headerText="Id" sortBy="#{user.id}"
 					filterMatchMode="exact">

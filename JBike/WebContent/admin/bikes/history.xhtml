@@ -5,22 +5,71 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-	<ui:define name="title">JBike | Bikes</ui:define>
+	<ui:define name="title">JBike | History for #{userSession.selectedBike}</ui:define>
 	<ui:define name="content">
-		<h1>#{movementView.historyTitle}</h1>
-		<h:form id="bikesTableForm">
-			<p:dataTable id="bikesTable" widgetVar="bikesTable" var="bike"
-				value="#{userSession.selectedBike.movements}" paginator="true" rows="10"
+		<h1>History for #{userSession.selectedBike}</h1>
+		<h:form id="movementsTableForm">
+			<p:dataTable id="movementsTable" widgetVar="movementsTable"
+				var="movement" value="#{userSession.selectedBike.movements}"
+				paginator="true" rows="10"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
-				filteredValue="#{bikeView.filteredBikes}"
-				emptyMessage="No bikes found with given criteria">
+				filteredValue="#{movementView.filteredMovements}"
+				emptyMessage="No history found with given criteria" resizableColumns="true" liveResize="true">
 
 				<p:column headerText="Id" filterBy="#{movement.id}"
 					filterMatchMode="exact" sortBy="#{movement.id}">
 					<h:outputText value="#{movement.id}" />
 				</p:column>
+				<p:column headerText="User" filterBy="#{movement.user.name}"
+					filterMatchMode="contains" sortBy="#{movement.user}">
+					<h:outputText value="#{movement.user}" />
+				</p:column>
+				<p:column headerText="Source Station"
+					filterBy="#{movement.sourceStation}" filterMatchMode="exact"
+					sortBy="#{movement.sourceStation}">
+					<f:facet name="filter">
+						<h:selectOneMenu onchange="PF('movementsTable').filter()">
+							<f:selectItem itemLabel="All" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{stationBean.stations}" />
+						</h:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{movement.user}" />
+				</p:column>
+				<p:column headerText="Destination Station"
+					filterBy="#{movement.destinationStation}" filterMatchMode="exact"
+					sortBy="#{movement.destinationStation}">
+					<f:facet name="filter">
+						<h:selectOneMenu onchange="PF('movementsTable').filter()">
+							<f:selectItem itemLabel="All" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{stationBean.stations}" />
+						</h:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{movement.destinationStation}" />
+				</p:column>
+				<p:column headerText="State" filterBy="#{movement.state}"
+					filterMatchMode="exact" sortBy="#{movement.state}">
+					<f:facet name="filter">
+						<h:selectOneMenu onchange="PF('movementsTable').filter()">
+							<f:selectItem itemLabel="All" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{movementBean.states}" var="state"
+								itemLabel="#{state.name}" itemValue="#{state}" />
+						</h:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{movement.state.name}" />
+				</p:column>
+				<p:column headerText="Created at" sortBy="#{movement.createdAt}">
+					<h:outputText value="#{movement.createdAt}" />
+				</p:column>
+				<p:column headerText="Updated at" sortBy="#{movement.updatedAt}">
+					<h:outputText value="#{movement.updatedAt}" />
+				</p:column>
 			</p:dataTable>
+			<hr />
+			<p:button value="Back to list" outcome="bikes/list" />
 		</h:form>
 	</ui:define>
 </ui:composition>

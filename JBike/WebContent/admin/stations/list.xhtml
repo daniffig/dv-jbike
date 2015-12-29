@@ -14,7 +14,8 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
 				filteredValue="#{stationView.filteredStations}"
-				emptyMessage="No stations found with given criteria">
+				emptyMessage="No stations found with given criteria"
+				resizableColumns="true" liveResize="true">
 
 				<p:column headerText="Id" sortBy="#{station.id}">
 					<h:outputText value="#{station.id}" />
@@ -44,8 +45,13 @@
 						<p:menuitem value="View Bikes"
 							action="#{stationView.viewBikes(station)}"
 							icon="ui-icon-document" />
+						<p:menuitem value="View information"
+							action="#{stationView.viewInformation(station)}"
+							icon="ui-icon-document" />
 						<p:menuitem value="Edit" action="#{stationView.viewForm(station)}"
 							icon="ui-icon-pencil" />
+						<p:menuitem value="Delete" action="#{stationView.delete(station)}"
+							icon="ui-icon-trash" />
 					</p:menuButton>
 				</p:column>
 			</p:dataTable>
