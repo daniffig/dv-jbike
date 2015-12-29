@@ -22,9 +22,10 @@ public class UserSession {
 	private Station selectedStation;
 	private User selectedUser;
 	private User loggedUser;
-	
+	private Boolean isLoggedIn;
+
 	private Queue<FacesMessage> messageQueue;
-	
+
 	@PostConstruct
 	public void init() {
 		this.setMessageQueue(new LinkedList<FacesMessage>());
@@ -70,12 +71,20 @@ public class UserSession {
 	public void setSelectedMovement(Movement selectedMovement) {
 		this.selectedMovement = selectedMovement;
 	}
-	
-	public User getLoggedUser(){
+
+	public User getLoggedUser() {
 		return this.loggedUser;
 	}
-	
-	public void setLoggedUser(User loggedUser){
+
+	public void setLoggedUser(User loggedUser) {
 		this.loggedUser = loggedUser;
+	}
+	
+	public Boolean IsLoggedIn(){
+		return this.isLoggedIn;
+	}
+	
+	public void setIsLoggedIn(Boolean isLoggedIn){
+		this.isLoggedIn = isLoggedIn;
 	}
 }

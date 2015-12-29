@@ -23,9 +23,9 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 		User u;
 		try
 		{
-			Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.active = TRUE");
+			Query query = em.createQuery("SELECT u FROM User u WHERE u.email = :email AND u.password = :password AND u.active = TRUE");
 			query.setParameter("email", email);
-			//query.setParameter("password", password);
+			query.setParameter("password", password);
 			
 			u = (User)query.getSingleResult();
 		}

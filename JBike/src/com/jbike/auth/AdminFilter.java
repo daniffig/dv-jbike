@@ -25,7 +25,7 @@ public class AdminFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
         UserSession userSession = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
          
-        if (false || userSession == null ||userSession.getLoggedUser() == null || !userSession.getLoggedUser().isAdmin()) {
+        if (false || userSession == null ||userSession.IsLoggedIn() || !userSession.getLoggedUser().isAdmin()) {
             String contextPath = ((HttpServletRequest)request).getContextPath();
             ((HttpServletResponse)response).sendRedirect(contextPath + "/auth/login.xhtml");
         }

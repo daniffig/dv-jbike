@@ -25,7 +25,7 @@ public class UserFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
 		UserSession UserSession = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
          
-        if (false || UserSession == null || UserSession.getLoggedUser() == null || UserSession.getLoggedUser().isPenalized()) {
+        if (false || UserSession == null || UserSession.IsLoggedIn() || UserSession.getLoggedUser().isPenalized()) {
             String contextPath = ((HttpServletRequest)request).getContextPath();
             ((HttpServletResponse)response).sendRedirect(contextPath + "/auth/login.xhtml");
         }

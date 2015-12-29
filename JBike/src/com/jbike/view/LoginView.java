@@ -14,6 +14,7 @@ import com.jbike.helper.UserHelper;
 import com.jbike.model.User;
 import com.jbike.navigation.NavigationBean;
 import com.jbike.persistence.FactoryDao;
+import com.jbike.session.UserSession;
 
 @ManagedBean(name = "loginView")
 @ViewScoped
@@ -23,6 +24,9 @@ public class LoginView implements Serializable{
 
 	@ManagedProperty(value = "#{userSession.loggedUser}")
 	private User user;
+	
+	@ManagedProperty(value = "#{userSession}")
+	private UserSession userSession;
 
 	@ManagedProperty(value = "#{navigationBean}")
 	private NavigationBean navigationBean;
@@ -35,13 +39,13 @@ public class LoginView implements Serializable{
 	 * @throws NoSuchAlgorithmException
 	 */
 	public String doLogin() throws NoSuchAlgorithmException, UnsupportedEncodingException {
-
-		this.setUser(FactoryDao.getUserDao().authenticate(this.user.getEmail(), UserHelper.digest(this.user.getPassword())));
+		this.getUserSession().setLoggedUser(FactoryDao.getUserDao().authenticate(this.getUser().getEmail(), UserHelper.digest(this.getUser().getPassword())));
 
 		if (this.getUser() != null) {
-			return navigationBean.redirectToWelcome();
+			this.getUserSession().setIsLoggedIn(true);
+			return "home";
 		}
-		this.setUser(new User());
+		this.getUserSession().setLoggedUser(new User());
 		
 		// Set login ERROR
 		FacesMessage msg = new FacesMessage("Login error!", "ERROR MSG");
@@ -49,7 +53,7 @@ public class LoginView implements Serializable{
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 
 		// To to login page
-		return navigationBean.toLogin();
+		return "login";
 	}
 
 	/**
@@ -59,7 +63,8 @@ public class LoginView implements Serializable{
 	 */
 	public String doLogout() {
 		// Set the paremeter indicating that user is logged in to false
-		this.setUser(new User());
+		this.getUserSession().setLoggedUser(new User());
+		this.getUserSession().setIsLoggedIn(false);
 
 		// Set logout message
 		FacesMessage msg = new FacesMessage("Logout success!", "INFO MSG");
@@ -75,6 +80,14 @@ public class LoginView implements Serializable{
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public UserSession getUserSession() {
+		return userSession;
+	}
+
+	public void setUserSession(UserSession userSession) {
+		this.userSession = userSession;
 	}
 
 	public void setNavigationBean(NavigationBean navigationBean) {
