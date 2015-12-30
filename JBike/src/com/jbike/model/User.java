@@ -67,32 +67,20 @@ public class User implements Serializable {
 		this.active = true;
 	}
 
-	// ToDo add md5 hashing to password
 	public User(String email, String password) {
 		this.email = email;
 		this.password = password;
 		this.active = true;
 
 		this.profile = new Profile();
-		/*
-		 * MessageDigest md = MessageDigest.getInstance("MD5");
-		 * md.update(password.getBytes(Charset.forName("UTF-8"))); byte[]
-		 * digested_password = md.digest(); ...
-		 */
 	}
 
-	// ToDo add md5 hashing to password
 	public User(String email, String password, Profile profile) {
 		this.email = email;
 		this.password = password;
 		this.active = true;
 
 		this.profile = profile;
-		/*
-		 * MessageDigest md = MessageDigest.getInstance("MD5");
-		 * md.update(password.getBytes(Charset.forName("UTF-8"))); byte[]
-		 * digested_password = md.digest(); ...
-		 */
 	}
 
 	public Long getId() {
@@ -159,11 +147,7 @@ public class User implements Serializable {
 	public void setPenalizations(List<Penalization> penalizations) {
 		this.penalizations = penalizations;
 	}
-	/*
-	public boolean isPenalized(){
-		
-	}
-	*/
+
 	public boolean isNew(){
 		return (this.id==null);
 	}

@@ -2,6 +2,7 @@ package com.jbike.auth;
 
 import java.io.IOException;
 
+import javax.faces.application.FacesMessage;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -22,17 +23,18 @@ public class AdminFilter implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
-        UserSession userSession = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
-         
-        if (false || userSession == null ||userSession.IsLoggedIn() || !userSession.getLoggedUser().isAdmin()) {
-            String contextPath = ((HttpServletRequest)request).getContextPath();
-            ((HttpServletResponse)response).sendRedirect(contextPath + "/auth/login.xhtml");
-        }
-         
-        chain.doFilter(request, response);         
-	}
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		UserSession UserSession = (UserSession) ((HttpServletRequest) request).getSession().getAttribute("userSession");
 
+		if (UserSession == null || !UserSession.IsLoggedIn() || !UserSession.getLoggedUser().isAdmin()) {
+			String contextPath = ((HttpServletRequest) request).getContextPath();
+			System.out.println("AdminFilter: REJECT");
+			((HttpServletResponse) response).sendRedirect(contextPath + "/users/log-in.xhtml");
+		}
+
+		chain.doFilter(request, response);
+	}
 
 	@Override
 	public void init(FilterConfig arg0) throws ServletException {
