@@ -1,5 +1,6 @@
 package com.jbike.persistence.interfaces;
 
+import java.util.Date;
 import java.util.List;
 
 import com.jbike.model.Bike;
@@ -13,4 +14,8 @@ public interface BikeDao extends BaseDao<Bike>{
 	public List<Bike> findAllByState(BikeState state);
 	
 	public List<Bike> findAllRented();
+	
+	public List<Bike> findAllCreatedAtBetween(Date from, Date to);
+	
+	public List<Bike> findAllUpdatedAtBetween(Date from, Date to);
 }

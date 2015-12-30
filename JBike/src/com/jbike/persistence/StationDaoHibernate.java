@@ -41,7 +41,7 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 		return findAllByState(StationState.IN_OPERATION);
 	}
 
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Station> findAllByState(StationState state) {
 		EntityManager em = this.getEntityManager();
@@ -52,6 +52,7 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 		return (List<Station>) query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Station> findAllInactive() {
 		EntityManager em = this.getEntityManager();
@@ -62,6 +63,7 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 		return (List<Station>) query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Station> findAllWithAvailableParkingSpace() {
 		EntityManager em = this.getEntityManager();

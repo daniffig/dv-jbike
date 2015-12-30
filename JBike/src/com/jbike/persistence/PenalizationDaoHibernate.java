@@ -8,7 +8,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
 import com.jbike.model.Penalization;
-import com.jbike.model.Station;
 import com.jbike.model.User;
 import com.jbike.persistence.interfaces.PenalizationDao;
 
@@ -39,6 +38,7 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 		return p;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Penalization> findAllCurrentlyActive() {
 		EntityManager em = this.getEntityManager();
@@ -49,6 +49,7 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 		return (List<Penalization>) q.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Penalization> findAllCreatedAtBetween(Date from, Date to) {
 		EntityManager em = this.getEntityManager();
@@ -75,6 +76,7 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 		return (List<Penalization>) q.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Penalization> findAllEndedBetween(Date from, Date to) {
 		EntityManager em = this.getEntityManager();

@@ -7,14 +7,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import javax.persistence.QueryTimeoutException;
-import javax.persistence.RollbackException;
-import javax.persistence.TransactionRequiredException;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.persistence.EntityExistsException;
-
-import javax.transaction.SystemException;
 
 import com.jbike.persistence.interfaces.BaseDao;
 
@@ -112,7 +107,8 @@ public class BaseDaoHibernate<T> implements BaseDao<T> {
 
 		return rs;
 	}
-
+	
+	@SuppressWarnings("unchecked")
 	public List<T> findAll() {
 		EntityManager em = this.getEntityManager();
 

@@ -5,10 +5,17 @@ import java.util.List;
 
 import com.jbike.model.Movement;
 import com.jbike.model.MovementState;
+import com.jbike.model.Station;
 
 public interface MovementDao extends BaseDao<Movement>{
 
 	public List<Movement> findAllByCreatedAtBetween(Date from, Date to);
+	
+	public List<Movement> findAllByUpdatedAtBetween(Date from, Date to);
+	
+	public List<Movement> findAllBySourceStation(Station station);
+	
+	public List<Movement> findAllByDestinationStation(Station station);
 	
 	public List<Movement> findAllUnfinished();
 	
