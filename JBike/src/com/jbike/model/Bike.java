@@ -1,6 +1,6 @@
 package com.jbike.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -23,10 +23,10 @@ public class Bike {
 	private Long id;
 
 	@Column(name = "created_at")
-	private Date createdAt;
+	private Timestamp createdAt;
 
 	@Column(name = "updated_at")
-	private Date updatedAt;
+	private Timestamp updatedAt;
 
 	@ManyToOne
 	@JoinColumn(name = "created_by")
@@ -53,14 +53,14 @@ public class Bike {
 
 	public Bike() {
 		this.state = BikeState.AVAILABLE;
-		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.createdAt = new Timestamp((new java.util.Date()).getTime());
 	}
 
 	public Bike(String code, String name) {
 		this.code = code;
 		this.name = name;
 		this.state = BikeState.AVAILABLE;
-		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.createdAt = new Timestamp((new java.util.Date()).getTime());
 	}
 
 	public Bike(String code, String name, Station station) {
@@ -68,7 +68,7 @@ public class Bike {
 		this.name = name;
 		this.currentStation = station;
 		this.state = BikeState.AVAILABLE;
-		this.createdAt = new Date((new java.util.Date()).getTime());
+		this.createdAt = new Timestamp((new java.util.Date()).getTime());
 	}
 
 	public String toString() {
@@ -84,19 +84,19 @@ public class Bike {
 		this.id = id;
 	}
 
-	public Date getCreatedAt() {
+	public Timestamp getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Date createdAt) {
+	public void setCreatedAt(Timestamp createdAt) {
 		this.createdAt = createdAt;
 	}
 
-	public Date getUpdatedAt() {
+	public Timestamp getUpdatedAt() {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(Date updatedAt) {
+	public void setUpdatedAt(Timestamp updatedAt) {
 		this.updatedAt = updatedAt;
 	}
 
