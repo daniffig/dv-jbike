@@ -50,7 +50,10 @@ public class User implements Serializable {
 	private List<Penalization> penalizations;
 
 	public User() {
-		this.active = true;
+		this.active  = true;
+		this.isAdmin = false;
+		
+		this.profile = new Profile();
 	}
 
 	public User(String email) {

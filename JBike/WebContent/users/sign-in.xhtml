@@ -8,6 +8,19 @@
 		<h1>Sign in</h1>
 		<h:form role="form">
 			<h:panelGrid width="100%">
+				<p:message for="firstName" />
+				<p:outputLabel for="firstName" value="First name" />
+				<p:inputText id="firstName" class="form-control" size="10"
+					value="#{userView.user.profile.firstName}"
+					requiredMessage="Please enter your first name.">
+				</p:inputText>
+				
+				<p:message for="lastName" />
+				<p:outputLabel for="lastName" value="Last name" />
+				<p:inputText id="lastName" class="form-control" size="10"
+					value="#{userView.user.profile.lastName}">
+				</p:inputText>
+				
 				<p:message for="email" />
 				<p:outputLabel for="email" value="Email" />
 				<p:inputText id="email" class="form-control" size="10"
@@ -17,6 +30,23 @@
 					<f:validateRegex
 						pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 				</p:inputText>
+	
+				<p:message for="dni" />
+				<p:outputLabel for="dni" value="DNI" />
+				<p:inputText id="dni" class="form-control" size="10" value="#{userView.user.profile.dni}" />
+				
+				<p:outputLabel for="gender" value="Gender" />
+				<h:selectOneMenu id="gender" value="#{userView.user.profile.gender}">
+					<f:selectItems value="#{userBean.genders}" var="gender"
+						itemLabel="#{gender.toString()}" itemValue="#{gender}" />
+				</h:selectOneMenu>
+				
+				<p:outputLabel for="birthDate" value="Birth date" />
+				<p:calendar id="birthDate" navigator="true" yearRange="c-100:c+0" value="#{userView.user.profile.birthDate}" />
+				
+				<p:message for="address" />
+				<p:outputLabel for="address" value="Address" />
+				<p:inputText id="address" class="form-control" size="10" value="#{userView.user.profile.address}" />
 			</h:panelGrid>
 			<hr />
 			<p:commandButton value="Sign in" actionListener="#{userView.signIn}" />

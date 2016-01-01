@@ -1,12 +1,14 @@
 package com.jbike.controller;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import com.jbike.model.Gender;
 import com.jbike.model.User;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.interfaces.UserDao;
@@ -25,6 +27,10 @@ public class UserBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		this.setUserDAO(FactoryDao.getUserDao());
+	}
+	
+	public List<Gender> getGenders() {
+		return Arrays.asList(Gender.values());
 	}
 
 	public boolean saveUser(User user) {
