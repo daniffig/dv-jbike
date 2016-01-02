@@ -12,19 +12,21 @@
 				<p:outputLabel for="firstName" value="First name" />
 				<p:inputText id="firstName" class="form-control" size="10"
 					value="#{userView.user.profile.firstName}"
-					requiredMessage="Please enter your first name.">
-				</p:inputText>
+					required="true"
+					requiredMessage="Please enter your first name." />
 				
 				<p:message for="lastName" />
 				<p:outputLabel for="lastName" value="Last name" />
 				<p:inputText id="lastName" class="form-control" size="10"
-					value="#{userView.user.profile.lastName}">
-				</p:inputText>
+					value="#{userView.user.profile.lastName}"
+					required="true"
+					requiredMessage="Please enter your last name."/>
 				
 				<p:message for="email" />
 				<p:outputLabel for="email" value="Email" />
 				<p:inputText id="email" class="form-control" size="10"
 					value="#{userView.user.email}"
+					required="true"
 					requiredMessage="Please enter your email address."
 					validatorMessage="Invalidad email format">
 					<f:validateRegex
@@ -33,7 +35,14 @@
 	
 				<p:message for="dni" />
 				<p:outputLabel for="dni" value="DNI" />
-				<p:inputText id="dni" class="form-control" size="10" value="#{userView.user.profile.dni}" />
+				<p:inputText id="dni" class="form-control" size="10" 
+					value="#{userView.user.profile.dni}"
+					required="true" 
+					requiredMessage="Please enter your DNI."
+					validatorMessage="Invalid DNI format">
+					<f:validateRegex
+						pattern="^\d+$" />
+				</p:inputText>
 				
 				<p:outputLabel for="gender" value="Gender" />
 				<h:selectOneMenu id="gender" value="#{userView.user.profile.gender}">
