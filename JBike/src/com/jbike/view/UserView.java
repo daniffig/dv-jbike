@@ -82,35 +82,37 @@ public class UserView implements Serializable {
 	}
 
 	public String signIn() {
-		String password;
-		try {
-			password = UserHelper.generateRandomPassword();
-
-			this.getUser().setPassword(UserHelper.digest(password));
-			if (this.getUserBean().saveUser(this.getUser())) {
-
-				this.sendMail("webmaster.jbike", "jyaa2015", this.getUser().getEmail(), "Welcome to JBike!",
-						String.format("Your password is: <b>%s</b>", password));
-
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Success!", "User created. We have sent an email with your password."));
-
-				return "home";
-			}
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		if(!this.getUserBean().userExists(this.getUser()))
+		{
+			String password;
+			try {
+				password = UserHelper.generateRandomPassword();
+	
+				this.getUser().setPassword(UserHelper.digest(password));
+				if (this.getUserBean().saveUser(this.getUser())) {
+	
+					this.sendMail("webmaster.jbike", "jyaa2015", this.getUser().getEmail(), "Welcome to JBike!",
+							String.format("Your password is: <b>%s</b>", password));
+	
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Success!", "User created. We have sent an email with your password."));
+	
+					return "home";
+				}
+			} catch (NoSuchAlgorithmException|UnsupportedEncodingException|MessagingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
 		}
-
+		else
+		{
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Error!", "An user with the same email or dni already exists."));
+			
+			return "signin";
+		}
+		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
 				"An error occurred while creating your user. Please, try again later."));
 

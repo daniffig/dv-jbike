@@ -32,6 +32,11 @@ public class UserBean implements Serializable {
 	public List<Gender> getGenders() {
 		return Arrays.asList(Gender.values());
 	}
+	
+	public boolean userExists(User user){
+		return this.getUserDAO().findOneByDni(user.getProfile().getDni()) != null 
+			|| this.getUserDAO().findOneByEmail(user.getEmail()) != null; 
+	}
 
 	public boolean saveUser(User user) {
 		if (user.isNew()) {

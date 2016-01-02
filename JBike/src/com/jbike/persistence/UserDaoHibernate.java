@@ -58,6 +58,27 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 		
 		return u;
 	}
+	
+	@Override
+	public User findOneByDni(Long dni) {
+		EntityManager em = this.getEntityManager();
+		
+		User u;
+		
+		try
+		{
+			Query query = em.createQuery("SELECT u FROM User u WHERE u.profile.dni = :dni");
+			query.setParameter("dni", dni);
+			u = (User)query.getSingleResult();
+		}
+		catch(NoResultException e)
+		{
+			u = null;
+		}
+		em.close();
+		
+		return u;
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

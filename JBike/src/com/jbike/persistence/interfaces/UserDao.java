@@ -9,6 +9,8 @@ public interface UserDao  extends BaseDao<User>{
 	
 	public User findOneByEmail(String email);
 	
+	public User findOneByDni(Long dni);
+	
 	public List<User> findAllActive();
 	
 	public List<User> findAllAdmin();
