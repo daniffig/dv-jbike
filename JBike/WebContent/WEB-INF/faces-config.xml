@@ -80,6 +80,11 @@
 			<redirect></redirect>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>myprofile</from-outcome>
+			<to-view-id>/users/my-profile.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>bikes/list</from-outcome>
 			<to-view-id>/bikes/list.xhtml</to-view-id>
 			<redirect></redirect>

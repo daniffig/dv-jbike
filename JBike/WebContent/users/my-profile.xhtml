@@ -1,0 +1,53 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="content">
+		<h1>My Profile</h1>
+		<h:form role="form">
+			<h:panelGrid width="100%">
+				<p:message for="firstName" />
+				<p:outputLabel for="firstName" value="First name" />
+				<p:inputText id="firstName" class="form-control" size="10"
+					value="#{userView.loggedUser.profile.firstName}"
+					required="true"
+					requiredMessage="Please enter your first name." />
+				
+				<p:message for="lastName" />
+				<p:outputLabel for="lastName" value="Last name" />
+				<p:inputText id="lastName" class="form-control" size="10"
+					value="#{userView.loggedUser.profile.lastName}"
+					required="true"
+					requiredMessage="Please enter your last name."/>
+	
+				<p:message for="dni" />
+				<p:outputLabel for="dni" value="DNI" />
+				<p:inputText id="dni" class="form-control" size="10" 
+					value="#{userView.loggedUser.profile.dni}"
+					required="true" 
+					requiredMessage="Please enter your DNI."
+					validatorMessage="Invalid DNI format">
+					<!--  <f:validateRegex
+						pattern="^\d+$" />-->
+				</p:inputText>
+				
+				<p:outputLabel for="gender" value="Gender" />
+				<h:selectOneMenu id="gender" value="#{userView.loggedUser.profile.gender}">
+					<f:selectItems value="#{userBean.genders}" var="gender"
+						itemLabel="#{gender.toString()}" itemValue="#{gender}" />
+				</h:selectOneMenu>
+				
+				<p:outputLabel for="birthDate" value="Birth date" />
+				<p:calendar id="birthDate" navigator="true" yearRange="c-100:c+0" value="#{userView.loggedUser.profile.birthDate}" />
+				
+				<p:message for="address" />
+				<p:outputLabel for="address" value="Address" />
+				<p:inputText id="address" class="form-control" size="10" value="#{userView.loggedUser.profile.address}" />
+			</h:panelGrid>
+			<hr />
+			<p:commandButton value="Save" actionListener="#{userView.updateMyProfile}" />
+		</h:form>
+	</ui:define>
+</ui:composition>

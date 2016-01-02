@@ -41,6 +41,9 @@ public class UserView implements Serializable {
 
 	@ManagedProperty(value = "#{userSession.selectedUser}")
 	private User user;
+	
+	@ManagedProperty(value = "#{userSession.loggedUser}")
+	private User loggedUser;
 
 	@ManagedProperty(value = "#{userBean}")
 	private UserBean userBean;
@@ -82,37 +85,34 @@ public class UserView implements Serializable {
 	}
 
 	public String signIn() {
-		
-		if(!this.getUserBean().userExists(this.getUser()))
-		{
+
+		if (!this.getUserBean().userExists(this.getUser())) {
 			String password;
 			try {
 				password = UserHelper.generateRandomPassword();
-	
+
 				this.getUser().setPassword(UserHelper.digest(password));
 				if (this.getUserBean().saveUser(this.getUser())) {
-	
+
 					this.sendMail("webmaster.jbike", "jyaa2015", this.getUser().getEmail(), "Welcome to JBike!",
 							String.format("Your password is: <b>%s</b>", password));
-	
+
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Success!", "User created. We have sent an email with your password."));
-	
+
 					return "home";
 				}
-			} catch (NoSuchAlgorithmException|UnsupportedEncodingException|MessagingException e1) {
+			} catch (NoSuchAlgorithmException | UnsupportedEncodingException | MessagingException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
-			} 
-		}
-		else
-		{
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-					"Error!", "An user with the same email or dni already exists."));
-			
+			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An user with the same email or dni already exists."));
+
 			return "signin";
 		}
-		
+
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
 				"An error occurred while creating your user. Please, try again later."));
 
@@ -157,7 +157,7 @@ public class UserView implements Serializable {
 
 		msg.setSubject(title);
 		msg.setContent(message, "text/html; charset=utf-8");
-		//msg.setText(message, "utf-8");
+		// msg.setText(message, "utf-8");
 		msg.setSentDate(new Date());
 
 		SMTPTransport t = (SMTPTransport) session.getTransport("smtps");
@@ -188,6 +188,17 @@ public class UserView implements Serializable {
 
 		return this.backToList();
 	}
+	
+	public String updateMyProfile() {
+		UserDaoHibernate udh = new UserDaoHibernate();
+
+		udh.update(this.getLoggedUser());
+
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Your profile has been successfully updated."));
+
+		return "welcome";
+	}
 
 	public String backToList() {
 		return "/admin/users/list.xhtml?faces-redirect=true";
@@ -200,6 +211,14 @@ public class UserView implements Serializable {
 
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully deleted."));
+	}
+
+	public User getLoggedUser() {
+		return loggedUser;
+	}
+	
+	public void setLoggedUser(User loggedUser) {
+		this.loggedUser = loggedUser;
 	}
 
 	public User getUser() {
