@@ -81,6 +81,12 @@ public class StationView implements Serializable {
 		return this.getStation().isNew() ? "New Station" : String.format("Edit Station (%s)", this.getStation());
 	}
 
+	public String viewBikes(Station station) {
+		this.getUserSession().setSelectedStation(station);
+
+		return "bikes/list";
+	}
+
 	public String viewInformation(Station station) {
 		this.getUserSession().setSelectedStation(station);
 
@@ -97,10 +103,16 @@ public class StationView implements Serializable {
 		return "stations/form";
 	}
 
-	public String viewBikes(Station station) {
-		this.getUserSession().setSelectedStation(station);
+	public String delete(Station station) {
+		if (this.getStationBean().deleteStation(station)) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Station successfully deleted."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while deleting the station."));
+		}
 
-		return "bikes/list";
+		return "stations/list";
 	}
 
 	// TODO Validaciones!

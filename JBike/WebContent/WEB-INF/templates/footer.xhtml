@@ -4,8 +4,35 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 	<footer class="footer">
-		<div class="container">
-			<p class="text-muted">footer</p>
+		<div class="ui-grid ui-grid-responsive">
+			<div class="ui-grid-row">
+				<div class="ui-grid-col-4">
+					<p>
+						<b>Information center</b>
+					</p>
+					<span>0810 222 1234</span><br /> <span>Calle 1 2345</span><br />
+					<span>La Plata, Buenos Aires, Argentina</span>
+				</div>
+				<div class="ui-grid-col-4" />
+				<div class="ui-grid-col-2">
+					<h:outputLink value="http://www.unlp.edu.ar/">
+						<p:graphicImage value="/resources/images/unlp_logo.png"
+							height="40" />
+					</h:outputLink>
+				</div>
+				<div class="ui-grid-col-2">
+					<h:outputLink value="http://www.dvorakdev.com/">
+						<p:graphicImage value="/resources/images/dvorak_logo.png"
+							height="40" />
+					</h:outputLink>
+				</div>
+				<div class="ui-grid-col-2">
+					<h:outputLink value="http://www.laplata.gov.ar/">
+						<p:graphicImage value="/resources/images/municipalidad_logo.png"
+							height="40" />
+					</h:outputLink>
+				</div>
+			</div>
 		</div>
 	</footer>
 </ui:composition>

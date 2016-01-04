@@ -45,6 +45,16 @@ public class StationBean implements Serializable {
 		}
 	}
 
+	public boolean deleteStation(Station station) {
+		if (station.canBeDeleted()) {
+			this.getStationDAO().delete(station);
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public List<Station> getStations() {
 		return this.getStationDAO().findAll();
 	}

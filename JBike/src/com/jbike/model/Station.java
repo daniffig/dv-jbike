@@ -165,4 +165,11 @@ public class Station implements Serializable {
 	public boolean canReceiveRequests() {
 		return this.getState().canReceiveRequests() && (this.getAvailableBikes() > 0);
 	}
+	
+	public boolean canBeDeleted() {
+		boolean hasBikes = this.getAvailableBikes() > 0;
+		boolean hasMovements = true;
+		
+		return !hasBikes && !hasMovements;
+	}
 }

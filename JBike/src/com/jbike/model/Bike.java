@@ -184,4 +184,10 @@ public class Bike {
 	public boolean canBeRequested() {
 		return this.getState().canBeRequested() && !this.isRented();
 	}
+	
+	public boolean canBeDeleted() {
+		boolean hasMovements = this.getMovements().size() > 0;
+		
+		return !hasMovements;
+	}
 }
