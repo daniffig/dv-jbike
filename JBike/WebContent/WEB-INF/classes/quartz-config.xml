@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<job-scheduling-data
+	xmlns="http://www.quartz-scheduler.org/xml/JobSchedulingData"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.quartz-scheduler.org/xml/JobSchedulingData 
+	http://www.quartz-scheduler.org/xml/job_scheduling_data_1_8.xsd"
+	version="1.8">
+
+	<schedule>
+		<job>
+			<name>AddPenalizationTrigger</name>
+			<group>Penalization</group>
+			<description>This job adds a penalization to thos users who have not returned the bike.</description>
+			<job-class>com.jbike.scheduler.AddPenalizationJob</job-class>
+		</job>
+
+		<trigger>
+			<cron>
+				<name>AddPenalizationTrigger</name>
+				<job-name>AddPenalization</job-name>
+				<job-group>Penalization</job-group>
+				<!-- It will run everyday at 12:30 am -->
+				<cron-expression>0 30 0 * * ?</cron-expression>				
+			</cron>
+		</trigger>
+	</schedule>
+</job-scheduling-data>
