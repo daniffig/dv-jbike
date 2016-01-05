@@ -33,7 +33,7 @@
 
 				<p:column>
 					<p:menuButton value="Options"
-						rendered="#{movement.canBeConfirmed() or movement.canBeCancelled() or movement.canBeFinished()}">
+						rendered="#{movement.canBeConfirmed() or movement.canBeCancelled() or movement.canBeFinished() or movement.canBeReported()}">
 						<p:menuitem value="Withdraw Bike"
 							action="#{movementView.confirmMovement(movement)}"
 							icon="ui-icon-check" rendered="#{movement.canBeConfirmed()}" />
@@ -46,6 +46,9 @@
 						<p:menuitem value="Return Bike"
 							action="#{movementView.finishMovement(movement)}"
 							icon="ui-icon-check" rendered="#{movement.canBeFinished()}" />
+						<p:menuitem value="Report Bike"
+							action="#{movementView.reportBike(movement.bike)}"
+							icon="ui-icon-alert" rendered="#{movement.canBeReported()}" />
 					</p:menuButton>
 				</p:column>
 			</p:dataTable>

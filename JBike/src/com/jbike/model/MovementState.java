@@ -33,4 +33,8 @@ public enum MovementState {
 	public boolean canBeEdited() {
 		return this.equals(MovementState.NEW);
 	}
+	
+	public boolean canBeReported() {
+		return this.equals(MovementState.FINISHED);
+	}
 }

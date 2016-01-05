@@ -15,24 +15,30 @@
 			<h:panelGrid width="100%">
 				<p:outputLabel for="name" value="Name" />
 				<p:inputText id="name" class="form-control" size="10"
-					value="#{stationView.station.name}"></p:inputText>
+					value="#{stationView.station.name}" required="true" />
 				<p:outputLabel for="address" value="Address" />
 				<p:inputText id="address" class="form-control" size="10"
 					value="#{stationView.station.address}"></p:inputText>
 				<p:outputLabel for="totalParkingSpaces" value="Total parking spaces" />
 				<p:inputText id="totalParkingSpaces" class="form-control" size="10"
-					value="#{stationView.station.totalParkingSpaces}"></p:inputText>
+					value="#{stationView.station.totalParkingSpaces}" required="true">
+					<f:convertNumber integerOnly="true" type="number" />
+				</p:inputText>
 				<p:outputLabel for="state" value="State" />
-				<h:selectOneMenu id="state" value="#{stationView.station.state}">
+				<h:selectOneMenu id="state" value="#{stationView.station.state}"
+					required="true">
 					<f:selectItems value="#{stationBean.states}" var="state"
 						itemLabel="#{state.name}" itemValue="#{state}" />
 				</h:selectOneMenu>
-				<p:outputLabel for="gmap" value="Geolocation" />
+				<!-- FIXME -->
+				<p:outputLabel for="gmap" value="Geolocation *" />
 				<p:gmap id="gmap" center="-34.921111, -57.954444" zoom="13"
 					type="HYBRID" style="width:100%;height:400px"
 					model="#{stationView.emptyModel}"
 					onPointClick="handlePointClick(event);" widgetVar="gmap" />
-				<h:inputHidden id="lat" value="#{stationView.station.latitude}" />
+				<h:inputHidden id="lat" value="#{stationView.station.latitude}"
+					required="true"
+					requiredMessage="Geolocation: Error de validación: se necesita un valor." />
 				<h:inputHidden id="lng" value="#{stationView.station.longitude}" />
 			</h:panelGrid>
 			<hr />

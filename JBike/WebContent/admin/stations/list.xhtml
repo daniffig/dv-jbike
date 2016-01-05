@@ -20,6 +20,10 @@
 				<p:column headerText="Id" sortBy="#{station.id}">
 					<h:outputText value="#{station.id}" />
 				</p:column>
+				<p:column headerText="Name" filterBy="#{station.name}"
+					filterMatchMode="contains" sortBy="#{station.name}">
+					<h:outputText value="#{station.name}" />
+				</p:column>
 				<p:column headerText="Address" filterBy="#{station.address}"
 					filterMatchMode="contains" sortBy="#{station.address}">
 					<h:outputText value="#{station.address}" />

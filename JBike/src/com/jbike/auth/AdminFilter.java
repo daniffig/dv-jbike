@@ -2,7 +2,6 @@ package com.jbike.auth;
 
 import java.io.IOException;
 
-import javax.faces.application.FacesMessage;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -27,7 +26,7 @@ public class AdminFilter implements Filter {
 			throws IOException, ServletException {
 		UserSession UserSession = (UserSession) ((HttpServletRequest) request).getSession().getAttribute("userSession");
 
-		if (UserSession == null || !UserSession.IsLoggedIn() || !UserSession.getLoggedUser().isAdmin()) {
+		if (UserSession == null || !UserSession.isLoggedIn() || !UserSession.getLoggedUser().isAdmin()) {
 			String contextPath = ((HttpServletRequest) request).getContextPath();
 			System.out.println("AdminFilter: REJECT");
 			((HttpServletResponse) response).sendRedirect(contextPath + "/users/log-in.xhtml");

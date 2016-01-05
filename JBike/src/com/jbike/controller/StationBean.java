@@ -38,10 +38,14 @@ public class StationBean implements Serializable {
 	}
 
 	public boolean saveStation(Station station) {
-		if (station.isNew()) {
-			return this.getStationDAO().save(station);
-		} else {
-			return this.getStationDAO().update(station);
+		try {
+			if (station.isNew()) {
+				return this.getStationDAO().save(station);
+			} else {
+				return this.getStationDAO().update(station);
+			}
+		} catch (Exception e) {
+			return false;
 		}
 	}
 

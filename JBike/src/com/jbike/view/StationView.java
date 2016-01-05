@@ -8,7 +8,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -120,14 +119,16 @@ public class StationView implements Serializable {
 		String message = this.getStation().isNew() ? "Station successfully created." : "Station successfully updated.";
 
 		if (this.getStationBean().saveStation(this.getStation())) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
-		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-					"An error occurred while saving the station."));
-		}
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", message));
 
-		return "stations/list";
+			return "stations/list";
+		}
+		
+		this.getUserSession().getMessageQueue().offer(
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", "An error occurred while saving the station."));
+
+		return "stations/form";
 	}
 
 	public List<Station> getStations() {

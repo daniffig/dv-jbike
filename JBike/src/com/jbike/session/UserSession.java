@@ -80,7 +80,7 @@ public class UserSession {
 		this.loggedUser = loggedUser;
 	}
 	
-	public Boolean IsLoggedIn(){
+	public Boolean isLoggedIn(){
 		return this.isLoggedIn;
 	}
 	

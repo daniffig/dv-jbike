@@ -72,7 +72,7 @@ public class MovementView implements Serializable {
 
 		return "movements/list";
 	}
-	
+
 	public String back() {
 		return this.getMovement().isNew() ? "bikes/list" : "movements/list";
 	}
@@ -108,6 +108,18 @@ public class MovementView implements Serializable {
 		} else {
 			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
 					"An error occurred while returning the bike."));
+		}
+
+		return "movements/list";
+	}
+
+	public String reportBike(Bike bike) {
+		if (this.getBikeBean().reportBike(bike)) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Bike successfully reported."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while reporting the bike."));
 		}
 
 		return "movements/list";

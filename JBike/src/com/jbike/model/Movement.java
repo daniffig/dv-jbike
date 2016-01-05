@@ -1,6 +1,7 @@
 package com.jbike.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +27,7 @@ public class Movement {
 	@ManyToOne
 	@JoinColumn(name = "destination_station_id", nullable = true)
 	private Station destinationStation;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "source_station_id", nullable = true)
 	private Station sourceStation;
@@ -94,7 +95,7 @@ public class Movement {
 	public void setSourceStation(Station sourceStation) {
 		this.sourceStation = sourceStation;
 	}
-	
+
 	public Bike getBike() {
 		return this.bike;
 	}
@@ -162,5 +163,18 @@ public class Movement {
 
 	public boolean canBeEdited() {
 		return this.getState().canBeEdited();
+	}
+
+	public boolean canBeReported() {
+		// 86400000 milliseconds = 24 hours
+		boolean lessThan24Hours = true;
+
+		if (null != this.getUpdatedAt()) {
+			lessThan24Hours = (new Timestamp(new Date().getTime() - 60000)).before(this.getUpdatedAt());
+		}
+		System.out.println((new Timestamp(new Date().getTime() - 60000)) + " with " + this.getUpdatedAt() );
+		System.out.println((new Timestamp(new Date().getTime() - 60000)).before(this.getUpdatedAt()));
+
+		return lessThan24Hours && this.getBike().canBeReported() && this.getState().canBeReported();
 	}
 }

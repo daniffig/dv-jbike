@@ -7,9 +7,9 @@
 	<ui:define name="title">JBike | Stations</ui:define>
 	<ui:define name="content">
 		<h1>Stations</h1>
-		<h:form>
+		<h:form id="stationsTableForm">
 			<p:dataTable id="stationsTable" var="station"
-				value="#{stationBean.stations}" widgetVar="stationsTable"
+				value="#{stationView.stations}" widgetVar="stationsTable"
 				paginator="true" rows="10"
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
@@ -38,8 +38,7 @@
 					</f:facet>
 					<h:outputText value="#{station.state.name}" />
 				</p:column>
-				
-				<p:column>
+				<p:column rendered="#{userSession.isLoggedIn()}">
 					<p:commandButton value="View Bikes"
 						action="#{stationView.viewBikes(station)}" icon="ui-icon-document"
 						rendered="#{station.canReceiveRequests()}" />

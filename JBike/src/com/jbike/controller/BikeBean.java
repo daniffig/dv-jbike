@@ -48,6 +48,16 @@ public class BikeBean implements Serializable {
 		}
 	}
 
+	public boolean reportBike(Bike bike) {
+		if (bike.canBeReported()) {
+			bike.setState(BikeState.REPORTED);
+
+			return this.getBikeDAO().update(bike);
+		} else {
+			return false;
+		}
+	}
+
 	public List<Bike> getBikes() {
 		return this.getBikeDAO().findAll();
 	}

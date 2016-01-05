@@ -44,7 +44,7 @@ public class Bike {
 	@ManyToOne
 	@JoinColumn(name = "current_station_id", nullable = true)
 	private Station currentStation;
-	
+
 	@OneToMany(mappedBy = "bike")
 	private List<Movement> movements;
 
@@ -140,14 +140,14 @@ public class Bike {
 		this.currentStation = station;
 	}
 
-	public List<Movement> getMovements(){
+	public List<Movement> getMovements() {
 		return movements;
 	}
-	
-	public void setMovements(List<Movement> movements){
+
+	public void setMovements(List<Movement> movements) {
 		this.movements = movements;
 	}
-	
+
 	public BikeState getState() {
 		return state;
 	}
@@ -184,10 +184,14 @@ public class Bike {
 	public boolean canBeRequested() {
 		return this.getState().canBeRequested() && !this.isRented();
 	}
-	
+
 	public boolean canBeDeleted() {
 		boolean hasMovements = this.getMovements().size() > 0;
-		
+
 		return !hasMovements;
+	}
+
+	public boolean canBeReported() {
+		return this.getState().canBeReported();
 	}
 }

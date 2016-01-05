@@ -15,47 +15,44 @@
 	</ui:define>
 	<ui:define name="title">JBike</ui:define>
 	<ui:define name="content">
-		<div class="ui-grid ui-grid-responsive">
-			<h1>Welcome to JBike!</h1>
-			<p>JBike is a sustainability project of the Municipalidad de La
-				Plata run in partnership with Universidad de La Plata and SAMBA
-				bicycle system. The bikes are available in distributed stations at
-				strategic points of the city, representing alternative transport
-				routes to facilitate the movement of people in urban centers.</p>
-			<p>You can check the stations and their availability on the
-				following map.</p>
-			<h:form>
-				<p:gmap center="-34.921111, -57.954444" zoom="13" type="HYBRID"
-					style="width:100%;height:400px"
-					model="#{stationView.advancedModel}">
-					<p:ajax event="overlaySelect"
-						listener="#{stationView.onMarkerSelect}" />
+		<h1>Welcome to JBike!</h1>
+		<p>JBike is a sustainability project of the Municipalidad de La
+			Plata run in partnership with Universidad de La Plata and SAMBA
+			bicycle system. The bikes are available in distributed stations at
+			strategic points of the city, representing alternative transport
+			routes to facilitate the movement of people in urban centers.</p>
+		<p>You can check the stations and their availability on the
+			following map.</p>
+		<h:form>
+			<p:gmap center="-34.921111, -57.954444" zoom="13" type="HYBRID"
+				style="width:100%;height:400px" model="#{stationView.advancedModel}">
+				<p:ajax event="overlaySelect"
+					listener="#{stationView.onMarkerSelect}" />
 
-					<p:gmapInfoWindow id="infoWindow">
-						<p:outputPanel
-							style="text-align: center; display: block; margin: auto">
-							<h4>
-								<h:outputText value="#{stationView.marker.title}"
-									style="font-weight:bold" />
-							</h4>
+				<p:gmapInfoWindow id="infoWindow">
+					<p:outputPanel
+						style="text-align: center; display: block; margin: auto">
+						<h4>
+							<h:outputText value="#{stationView.marker.title}"
+								style="font-weight:bold" />
+						</h4>
 
-							<p:panelGrid columns="2">
-								<h:outputText value="Available bikes" />
-								<h:outputText value="#{stationView.marker.data.availableBikes}" />
+						<p:panelGrid columns="2">
+							<h:outputText value="Available bikes" />
+							<h:outputText value="#{stationView.marker.data.availableBikes}" />
 
-								<h:outputText value="Available parking spaces" />
-								<h:outputText
-									value="#{stationView.marker.data.availableParkingSpaces}" />
-							</p:panelGrid>
-							<br />
-							<p:commandButton value="View Bikes"
-								action="#{stationView.viewBikes(stationView.marker.data)}"
-								rendered="#{stationView.marker.data.canReceiveRequests()}" />
-						</p:outputPanel>
-					</p:gmapInfoWindow>
-				</p:gmap>
-			</h:form>
-		</div>
+							<h:outputText value="Available parking spaces" />
+							<h:outputText
+								value="#{stationView.marker.data.availableParkingSpaces}" />
+						</p:panelGrid>
+						<br />
+						<p:commandButton value="View Bikes"
+							action="#{stationView.viewBikes(stationView.marker.data)}"
+							rendered="#{userSession.isLoggedIn() and stationView.marker.data.canReceiveRequests()}" />
+					</p:outputPanel>
+				</p:gmapInfoWindow>
+			</p:gmap>
+		</h:form>
 	</ui:define>
 </ui:composition>
 </html>

@@ -22,4 +22,8 @@ public enum BikeState {
 	public boolean canBeRequested() {
 		return this.equals(BikeState.AVAILABLE);
 	}
+
+	public boolean canBeReported() {
+		return this.equals(BikeState.AVAILABLE);
+	}
 }

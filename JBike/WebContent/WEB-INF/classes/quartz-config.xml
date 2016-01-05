@@ -11,8 +11,13 @@
 		<job>
 			<name>AddPenalizationTrigger</name>
 			<group>Penalization</group>
-			<description>This job adds a penalization to thos users who have not returned the bike.</description>
+			<description>This job adds a penalization to those users who have not returned the bike.</description>
 			<job-class>com.jbike.scheduler.AddPenalizationJob</job-class>
+		</job>
+		<job>
+			<name>RemoveMovementTrigger</name>
+			<group>Movement</group>
+			<job-class>com.jbike.scheduler.RemoveMovementJob</job-class>
 		</job>
 
 		<trigger>
@@ -20,6 +25,16 @@
 				<name>AddPenalizationTrigger</name>
 				<job-name>AddPenalization</job-name>
 				<job-group>Penalization</job-group>
+				<!-- It will run everyday at 12:30 am -->
+				<cron-expression>0 30 0 * * ?</cron-expression>				
+			</cron>
+		</trigger>
+		<!-- TODO -->
+		<trigger>
+			<cron>
+				<name>RemoveMovementTrigger</name>
+				<job-name>RemoveMovement</job-name>
+				<job-group>Movement</job-group>
 				<!-- It will run everyday at 12:30 am -->
 				<cron-expression>0 30 0 * * ?</cron-expression>				
 			</cron>
