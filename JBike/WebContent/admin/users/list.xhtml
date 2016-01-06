@@ -9,7 +9,9 @@
 		<h1>Users</h1>
 		<h:form id="usersTableForm">
 			<p:dataTable id="usersTable" widgetVar="usersTable" var="user"
-				value="#{userView.users}" rows="30"
+				value="#{userView.users}" paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
 				filteredValue="#{userView.filteredUsers}"
 				emptyMessage="No users found with given criteria"
 				resizableColumns="true" liveResize="true">
@@ -50,13 +52,11 @@
 				<p:column>
 					<p:menuButton value="Options">
 						<p:menuitem value="View profile"
-							actionListener="#{userView.viewProfile(user)}"
-							icon="ui-icon-person" />
+							action="#{userView.viewProfile(user)}" icon="ui-icon-person" />
 						<p:menuitem value="View history"
-							actionListener="#{userView.viewHistory(user)}"
-							icon="ui-icon-document" />
+							action="#{userView.viewHistory(user)}" icon="ui-icon-document" />
 						<p:menuitem value="View penalizations"
-							actionListener="#{userView.viewPenalizations(user)}"
+							action="#{userView.viewPenalizations(user)}"
 							icon="ui-icon-document" />
 						<p:menuitem value="Activate"
 							actionListener="#{userView.activate(user)}"
@@ -74,8 +74,6 @@
 							actionListener="#{userView.demote(user)}"
 							icon="ui-icon-carat-1-s" update=":usersTableForm"
 							rendered="#{user.isAdmin() and !userSession.loggedUser.equals(user)}" />
-						<p:menuitem value="Edit" action="#{userView.viewForm(user)}"
-							icon="ui-icon-pencil" />
 						<p:menuitem value="Delete" action="#{userView.delete(user)}"
 							icon="ui-icon-trash"
 							rendered="#{!userSession.loggedUser.equals(user)}">
@@ -93,8 +91,5 @@
 					styleClass="ui-confirmdialog-no" />
 			</p:confirmDialog>
 		</h:form>
-		<hr />
-		<p:commandButton value="New User" icon="ui-icon-plus"
-			action="#{userView.viewForm(null)}" />
 	</ui:define>
 </ui:composition>

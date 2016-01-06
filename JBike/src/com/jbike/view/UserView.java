@@ -91,7 +91,7 @@ public class UserView implements Serializable {
 	public String viewPenalizations(User user) {
 		this.getUserSession().setSelectedUser(user);
 
-		return "penalizations/list";
+		return "users/penalizations";
 	}
 
 	public void activate(User user) {

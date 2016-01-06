@@ -49,6 +49,16 @@
 			<redirect></redirect>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>users/history</from-outcome>
+			<to-view-id>/admin/users/history.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>users/penalizations</from-outcome>
+			<to-view-id>/admin/users/penalizations.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>users/profile</from-outcome>
 			<to-view-id>/admin/users/profile.xhtml</to-view-id>
 			<redirect></redirect>

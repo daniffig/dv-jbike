@@ -10,6 +10,7 @@ import javax.faces.bean.SessionScoped;
 
 import com.jbike.model.Bike;
 import com.jbike.model.Movement;
+import com.jbike.model.Penalization;
 import com.jbike.model.Station;
 import com.jbike.model.User;
 
@@ -19,6 +20,7 @@ public class UserSession {
 
 	private Bike selectedBike;
 	private Movement selectedMovement;
+	private Penalization selectedPenalization;
 	private Station selectedStation;
 	private User selectedUser;
 	private User loggedUser;
@@ -86,5 +88,13 @@ public class UserSession {
 	
 	public void setIsLoggedIn(Boolean isLoggedIn){
 		this.isLoggedIn = isLoggedIn;
+	}
+
+	public Penalization getSelectedPenalization() {
+		return selectedPenalization;
+	}
+
+	public void setSelectedPenalization(Penalization selectedPenalization) {
+		this.selectedPenalization = selectedPenalization;
 	}
 }

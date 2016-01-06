@@ -1,0 +1,61 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<ui:define name="title">JBike | Penalizations for #{userSession.selectedUser}</ui:define>
+	<ui:define name="content">
+		<h1>Penalizations for #{userSession.selectedUser}</h1>
+		<h:form id="penalizationsTableForm">
+			<p:dataTable id="penalizationsTable" widgetVar="penalizationsTable"
+				var="penalization" value="#{userSession.selectedUser.penalizations}"
+				rows="30" filteredValue="#{penalizationView.filteredPenalizations}"
+				emptyMessage="No penalizations found with given criteria"
+				resizableColumns="true" liveResize="true">
+
+				<p:column headerText="Id" sortBy="#{penalization.id}"
+					filterMatchMode="exact">
+					<h:outputText value="#{penalization.id}" />
+				</p:column>
+				<p:column headerText="Description"
+					filterBy="#{penalization.description}" filterMatchMode="contains">
+					<h:outputText value="#{penalization.description}" />
+				</p:column>
+				<p:column headerText="Created at"
+					filterBy="#{penalization.createdAt}"
+					sortBy="#{penalization.createdAt}">
+					<h:outputText value="#{penalization.createdAt}" />
+				</p:column>
+				<p:column headerText="End date" filterBy="#{penalization.endDate}"
+					sortBy="#{penalization.endDate}">
+					<h:outputText value="#{penalization.endDate}" />
+				</p:column>
+
+				<p:column>
+					<p:menuButton value="Options">
+						<p:menuitem value="Edit"
+							action="#{penalizationView.viewForm(penalization)}"
+							icon="ui-icon-pencil" />
+						<p:menuitem value="Delete"
+							action="#{penalizationView.delete(penalization)}"
+							icon="ui-icon-trash">
+							<p:confirm header="Confirmation"
+								message="Are you sure?"
+								icon="ui-icon-alert" />
+						</p:menuitem>
+					</p:menuButton>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog global="true" closable="true" draggable="true">
+				<p:commandButton value="Yes" type="button"
+					styleClass="ui-confirmdialog-yes" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no" />
+			</p:confirmDialog>
+		</h:form>
+		<hr />
+		<p:commandButton value="New Penalization" icon="ui-icon-plus"
+			action="#{penalizationView.viewForm(null)}" />
+	</ui:define>
+</ui:composition>
