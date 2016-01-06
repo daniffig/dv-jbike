@@ -40,9 +40,7 @@ public class BikeBean implements Serializable {
 
 	public boolean deleteBike(Bike bike) {
 		if (bike.canBeDeleted()) {
-			this.getBikeDAO().delete(bike);
-
-			return true;
+			return this.getBikeDAO().delete(bike);
 		} else {
 			return false;
 		}
@@ -51,6 +49,7 @@ public class BikeBean implements Serializable {
 	public boolean reportBike(Bike bike) {
 		if (bike.canBeReported()) {
 			bike.setState(BikeState.REPORTED);
+			bike.setCurrentStation(null);
 
 			return this.getBikeDAO().update(bike);
 		} else {

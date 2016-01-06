@@ -43,6 +43,12 @@ public class Station implements Serializable {
 	@OneToMany(mappedBy = "currentStation")
 	private List<Bike> bikes;
 
+	@OneToMany(mappedBy = "sourceStation")
+	private List<Movement> movementsAsSource;
+
+	@OneToMany(mappedBy = "destinationStation")
+	private List<Movement> movementsAsDestination;
+
 	public Station() {
 	}
 
@@ -129,6 +135,22 @@ public class Station implements Serializable {
 		this.bikes = bikes;
 	}
 
+	public List<Movement> getMovementsAsSource() {
+		return movementsAsSource;
+	}
+
+	public void setMovementsAsSource(List<Movement> movementsAsSource) {
+		this.movementsAsSource = movementsAsSource;
+	}
+
+	public List<Movement> getMovementsAsDestination() {
+		return movementsAsDestination;
+	}
+
+	public void setMovementsAsDestination(List<Movement> movementsAsDestination) {
+		this.movementsAsDestination = movementsAsDestination;
+	}
+
 	public boolean isNew() {
 		return (this.id == null);
 	}
@@ -162,14 +184,30 @@ public class Station implements Serializable {
 		return this.totalParkingSpaces - this.bikes.size();
 	}
 
+	public Integer countMovementsAsSource() {
+		return this.getMovementsAsSource().size();
+	}
+
+	public Integer countMovementsAsDestination() {
+		return this.getMovementsAsDestination().size();
+	}
+
+	public boolean hasMovementsAsSource() {
+		return this.countMovementsAsSource() > 0;
+	}
+
+	public boolean hasMovementsAsDestination() {
+		return this.countMovementsAsSource() > 0;
+	}
+
 	public boolean canReceiveRequests() {
 		return this.getState().canReceiveRequests() && (this.getAvailableBikes() > 0);
 	}
-	
+
 	public boolean canBeDeleted() {
 		boolean hasBikes = this.getAvailableBikes() > 0;
-		boolean hasMovements = true;
-		
+		boolean hasMovements = this.hasMovementsAsSource() || this.hasMovementsAsDestination();
+
 		return !hasBikes && !hasMovements;
 	}
 }

@@ -17,8 +17,10 @@
 					value="#{userView.user.email}"></p:inputText>
 			</h:panelGrid>
 			<hr />
-			<p:commandButton value="Back to list" action="#{userView.backToList}" />
-			<p:commandButton value="Save" action="#{userView.save}" />
+			<p:commandButton value="Back to list" action="#{userView.backToList}"
+				icon="ui-icon-arrowreturnthick-1-w" />
+			<p:commandButton value="Save" action="#{userView.save}"
+				icon="ui-icon-disk" />
 		</h:form>
 	</ui:define>
 </ui:composition>

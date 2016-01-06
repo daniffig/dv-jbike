@@ -42,8 +42,10 @@
 				<h:inputHidden id="lng" value="#{stationView.station.longitude}" />
 			</h:panelGrid>
 			<hr />
-			<p:button value="Back to list" outcome="stations/list" />
-			<p:commandButton value="Save" action="#{stationView.save}" />
+			<p:button value="Back to list" outcome="stations/list"
+				icon="ui-icon-arrowreturnthick-1-w" />
+			<p:commandButton value="Save" action="#{stationView.save}"
+				icon="ui-icon-disk" />
 		</h:form>
 		<script type="text/javascript">
 			jQuery(document).ready(function() {

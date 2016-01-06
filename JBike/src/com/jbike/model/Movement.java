@@ -170,10 +170,8 @@ public class Movement {
 		boolean lessThan24Hours = true;
 
 		if (null != this.getUpdatedAt()) {
-			lessThan24Hours = (new Timestamp(new Date().getTime() - 60000)).before(this.getUpdatedAt());
+			lessThan24Hours = (new Timestamp(new Date().getTime() - 86400000)).before(this.getUpdatedAt());
 		}
-		System.out.println((new Timestamp(new Date().getTime() - 60000)) + " with " + this.getUpdatedAt() );
-		System.out.println((new Timestamp(new Date().getTime() - 60000)).before(this.getUpdatedAt()));
 
 		return lessThan24Hours && this.getBike().canBeReported() && this.getState().canBeReported();
 	}

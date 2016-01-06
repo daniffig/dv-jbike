@@ -50,17 +50,36 @@
 				<p:column>
 					<p:menuButton value="Options">
 						<p:menuitem value="View profile"
-							actionListener="#{userView.viewProfile}" icon="ui-icon-person" />
+							actionListener="#{userView.viewProfile(user)}"
+							icon="ui-icon-person" />
 						<p:menuitem value="View history"
-							actionListener="#{userView.viewHistory}" icon="ui-icon-document" />
-						<p:menuitem value="Add penalization"
-							actionListener="#{userView.addPenalization}" icon="ui-icon-alert" />
+							actionListener="#{userView.viewHistory(user)}"
+							icon="ui-icon-document" />
+						<p:menuitem value="View penalizations"
+							actionListener="#{userView.viewPenalizations(user)}"
+							icon="ui-icon-document" />
+						<p:menuitem value="Activate"
+							actionListener="#{userView.activate(user)}"
+							update=":usersTableForm" icon="ui-icon-radio-on"
+							rendered="#{!user.isActive()}" />
+						<p:menuitem value="Deactivate"
+							actionListener="#{userView.deactivate(user)}"
+							icon="ui-icon-radio-off" update=":usersTableForm"
+							rendered="#{user.isActive() and !userSession.loggedUser.equals(user)}" />
+						<p:menuitem value="Promote"
+							actionListener="#{userView.promote(user)}"
+							update=":usersTableForm" icon="ui-icon-carat-1-n"
+							rendered="#{!user.isAdmin()}" />
+						<p:menuitem value="Demote"
+							actionListener="#{userView.demote(user)}"
+							icon="ui-icon-carat-1-s" update=":usersTableForm"
+							rendered="#{user.isAdmin() and !userSession.loggedUser.equals(user)}" />
 						<p:menuitem value="Edit" action="#{userView.viewForm(user)}"
 							icon="ui-icon-pencil" />
-						<p:menuitem value="Delete"
-							actionListener="#{userView.delete(user)}" icon="ui-icon-trash"
-							update=":usersTableForm">
-							<p:confirm header="Confirmation required"
+						<p:menuitem value="Delete" action="#{userView.delete(user)}"
+							icon="ui-icon-trash"
+							rendered="#{!userSession.loggedUser.equals(user)}">
+							<p:confirm header="Confirmation"
 								message="Are you sure you want to delete #{user}?"
 								icon="ui-icon-alert" />
 						</p:menuitem>

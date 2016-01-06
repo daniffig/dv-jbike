@@ -50,9 +50,9 @@ public class User implements Serializable {
 	private List<Penalization> penalizations;
 
 	public User() {
-		this.active  = true;
+		this.active = true;
 		this.isAdmin = false;
-		
+
 		this.profile = new Profile();
 	}
 
@@ -151,8 +151,8 @@ public class User implements Serializable {
 		this.penalizations = penalizations;
 	}
 
-	public boolean isNew(){
-		return (this.id==null);
+	public boolean isNew() {
+		return (this.id == null);
 	}
 
 	@Override
@@ -175,13 +175,33 @@ public class User implements Serializable {
 	public String toString() {
 		return this.getEmail();
 	}
-	
-	public Boolean isPenalized(){
+
+	public Boolean isPenalized() {
 		Penalization p = FactoryDao.getPenalizationDao().findLast(this);
-		
+
 		Timestamp currentDate = new Timestamp((new java.util.Date()).getTime());
-		
+
 		return !this.isAdmin && p != null && p.getEndDate().after(currentDate);
+	}
+
+	public Integer countMovements() {
+		return this.getMovements().size();
+	}
+
+	public Integer countPenalizations() {
+		return this.getPenalizations().size();
+	}
+
+	public boolean hasMovements() {
+		return this.countMovements() > 0;
+	}
+
+	public boolean hasPenalizations() {
+		return this.countPenalizations() > 0;
+	}
+
+	public Boolean canBeDeleted() {
+		return !this.hasMovements() && !this.hasPenalizations();
 	}
 
 }

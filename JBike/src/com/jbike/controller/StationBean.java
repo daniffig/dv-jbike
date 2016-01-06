@@ -51,9 +51,7 @@ public class StationBean implements Serializable {
 
 	public boolean deleteStation(Station station) {
 		if (station.canBeDeleted()) {
-			this.getStationDAO().delete(station);
-
-			return true;
+			return this.getStationDAO().delete(station);
 		} else {
 			return false;
 		}

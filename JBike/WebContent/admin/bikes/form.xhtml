@@ -23,12 +23,15 @@
 				<h:selectOneMenu id="currentStation"
 					value="#{bikeView.bike.currentStation}"
 					converter="#{stationConverter}">
+					<f:selectItem value="#{null}" itemLabel="" />
 					<f:selectItems value="#{stationBean.stations}" />
 				</h:selectOneMenu>
 			</h:panelGrid>
 			<hr />
-			<p:button value="Back to list" outcome="bikes/list" />
-			<p:commandButton value="Save" action="#{bikeView.save}" />
+			<p:button value="Back to list" outcome="bikes/list"
+				icon="ui-icon-arrowreturnthick-1-w" />
+			<p:commandButton value="Save" action="#{bikeView.save}"
+				icon="ui-icon-disk" />
 		</h:form>
 	</ui:define>
 </ui:composition>

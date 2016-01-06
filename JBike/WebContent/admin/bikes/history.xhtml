@@ -15,7 +15,8 @@
 				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
 				filteredValue="#{movementView.filteredMovements}"
-				emptyMessage="No history found with given criteria" resizableColumns="true" liveResize="true">
+				emptyMessage="No history found with given criteria"
+				resizableColumns="true" liveResize="true">
 
 				<p:column headerText="Id" filterBy="#{movement.id}"
 					filterMatchMode="exact" sortBy="#{movement.id}">
@@ -69,7 +70,8 @@
 				</p:column>
 			</p:dataTable>
 			<hr />
-			<p:button value="Back to list" outcome="bikes/list" />
+			<p:button value="Back to list" outcome="bikes/list"
+				icon="ui-icon-arrowreturnthick-1-w" />
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -76,6 +76,72 @@ public class UserView implements Serializable {
 		return this.getUserBean().getUsers();
 	}
 
+	public String viewProfile(User user) {
+		this.getUserSession().setSelectedUser(user);
+
+		return "users/profile";
+	}
+
+	public String viewHistory(User user) {
+		this.getUserSession().setSelectedUser(user);
+
+		return "users/history";
+	}
+
+	public String viewPenalizations(User user) {
+		this.getUserSession().setSelectedUser(user);
+
+		return "penalizations/list";
+	}
+
+	public void activate(User user) {
+		user.setActive(true);
+
+		if (this.getUserBean().saveUser(user)) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully activated."));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while activating the user."));
+		}
+	}
+
+	public void deactivate(User user) {
+		user.setActive(false);
+
+		if (this.getUserBean().saveUser(user)) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully deactivated."));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while deactivating the user."));
+		}
+	}
+
+	public void promote(User user) {
+		user.setIsAdmin(true);
+
+		if (this.getUserBean().saveUser(user)) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully promoted."));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while promoting the user."));
+		}
+	}
+
+	public void demote(User user) {
+		user.setIsAdmin(false);
+
+		if (this.getUserBean().saveUser(user)) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully demoted."));
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while demoting the user."));
+		}
+	}
+
 	public String signIn() {
 
 		if (!this.getUserBean().userExists(this.getUser())) {
@@ -148,13 +214,16 @@ public class UserView implements Serializable {
 		return "/admin/users/list.xhtml?faces-redirect=true";
 	}
 
-	public void delete(User user) {
-		UserDaoHibernate udh = new UserDaoHibernate();
+	public String delete(User user) {
+		if (this.getUserBean().deleteUser(user)) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully deleted."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while deleting the user."));
+		}
 
-		udh.delete(user);
-
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "User successfully deleted."));
+		return "users/list";
 	}
 
 	public User getLoggedUser() {

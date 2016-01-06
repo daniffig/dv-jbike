@@ -28,14 +28,14 @@ public class UserBean implements Serializable {
 	public void init() {
 		this.setUserDAO(FactoryDao.getUserDao());
 	}
-	
+
 	public List<Gender> getGenders() {
 		return Arrays.asList(Gender.values());
 	}
-	
-	public boolean userExists(User user){
-		return this.getUserDAO().findOneByDni(user.getProfile().getDni()) != null 
-			|| this.getUserDAO().findOneByEmail(user.getEmail()) != null; 
+
+	public boolean userExists(User user) {
+		return this.getUserDAO().findOneByDni(user.getProfile().getDni()) != null
+				|| this.getUserDAO().findOneByEmail(user.getEmail()) != null;
 	}
 
 	public boolean saveUser(User user) {
@@ -43,6 +43,14 @@ public class UserBean implements Serializable {
 			return this.getUserDAO().save(user);
 		} else {
 			return this.getUserDAO().update(user);
+		}
+	}
+
+	public boolean deleteUser(User user) {
+		if (user.canBeDeleted()) {
+			return this.getUserDAO().delete(user);
+		} else {
+			return false;
 		}
 	}
 
