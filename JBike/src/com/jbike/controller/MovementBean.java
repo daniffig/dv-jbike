@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedProperty;
 import com.jbike.model.BikeState;
 import com.jbike.model.Movement;
 import com.jbike.model.MovementState;
+import com.jbike.model.User;
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.interfaces.MovementDao;
 
@@ -101,5 +102,9 @@ public class MovementBean implements Serializable {
 
 	public void setStationBean(StationBean stationBean) {
 		this.stationBean = stationBean;
+	}
+
+	public List<Movement> getActiveMovements(User user) {
+		return this.getMovementDAO().findAllActive(user);
 	}
 }

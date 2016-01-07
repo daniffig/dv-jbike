@@ -10,8 +10,8 @@
 		<h:form id="penalizationsTableForm">
 			<p:dataTable id="penalizationsTable" widgetVar="penalizationsTable"
 				var="penalization"
-				value="#{penalizationView.getPenalizations(userSession.selectedUser)}"
-				rows="30" filteredValue="#{penalizationView.filteredPenalizations}"
+				value="#{penalizationView.penalizationsForSelectedUser}" rows="10"
+				filteredValue="#{penalizationView.filteredPenalizations}"
 				emptyMessage="No penalizations found with given criteria"
 				resizableColumns="true" liveResize="true"
 				sortBy="#{penalization.endDate}" sortOrder="DESCENDING">

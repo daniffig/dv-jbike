@@ -59,7 +59,7 @@ public class MovementView implements Serializable {
 		return "/user/movements/form.xhtml?faces-redirect=true";
 	}
 
-	public String save() {
+	public String save() {		
 		String message = this.getMovement().isNew() ? "Request successfully created." : "Request successfully updated.";
 
 		if (this.getMovementBean().saveMovement(this.getMovement())) {

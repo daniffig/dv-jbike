@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import com.jbike.controller.BikeBean;
+import com.jbike.controller.UserBean;
 import com.jbike.model.Bike;
 import com.jbike.model.Movement;
 import com.jbike.session.UserSession;
@@ -29,6 +30,9 @@ public class BikeView implements Serializable {
 
 	@ManagedProperty("#{bikeBean}")
 	private BikeBean bikeBean;
+
+	@ManagedProperty("#{userBean}")
+	private UserBean userBean;
 
 	@ManagedProperty(value = "#{userSession}")
 	private UserSession userSession;
@@ -76,6 +80,20 @@ public class BikeView implements Serializable {
 
 	// FIXME
 	public String requestBike(Bike bike) {
+		if (!this.getUserBean().isPenalized(this.getUserSession().getLoggedUser())) {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!",
+					"You cannot request bikes. You are penalized."));
+			
+			return null;
+		}
+		
+		if (this.getUserBean().hasActiveBike(this.getUserSession().getLoggedUser())) {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_WARN, "Warning!",
+					"You cannot request more than one bike."));
+			
+			return null;			
+		}
+
 		if (bike.canBeRequested()) {
 			this.getUserSession().setSelectedMovement(new Movement(this.getUserSession().getLoggedUser(), bike));
 
@@ -129,5 +147,13 @@ public class BikeView implements Serializable {
 
 	public void setBike(Bike bike) {
 		this.bike = bike;
+	}
+
+	public UserBean getUserBean() {
+		return userBean;
+	}
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
 	}
 }

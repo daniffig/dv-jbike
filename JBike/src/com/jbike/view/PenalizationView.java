@@ -22,6 +22,8 @@ public class PenalizationView implements Serializable {
 	 */
 	private static final long serialVersionUID = 9061051521587518635L;
 
+	private List<Penalization> penalizations;
+
 	private List<Penalization> filteredPenalizations;
 
 	@ManagedProperty(value = "#{userSession.selectedPenalization}")
@@ -54,10 +56,6 @@ public class PenalizationView implements Serializable {
 		this.getUserSession().setSelectedPenalization(penalization);
 
 		return "penalizations/form";
-	}
-
-	public List<Penalization> getPenalizations() {
-		return this.getPenalizationBean().getPenalizations();
 	}
 
 	public String save() {
@@ -116,7 +114,27 @@ public class PenalizationView implements Serializable {
 		this.penalization = penalization;
 	}
 
-	public List<Penalization> getPenalizations(User user) {
+	public List<Penalization> getPenalizationsForSelectedUser() {
+		this.setPenalizations(this.getPenalizations(this.getUserSession().getSelectedUser()));
+
+		return this.getPenalizations();
+	}
+
+	public List<Penalization> getPenalizationsForLoggedUser() {
+		this.setPenalizations(this.getPenalizations(this.getUserSession().getLoggedUser()));
+
+		return this.getPenalizations();
+	}
+
+	private List<Penalization> getPenalizations(User user) {
 		return this.getPenalizationBean().getPenalizations(user);
+	}
+
+	public void setPenalizations(List<Penalization> penalizations) {
+		this.penalizations = penalizations;
+	}
+
+	public List<Penalization> getPenalizations() {
+		return this.penalizations;
 	}
 }

@@ -10,8 +10,8 @@
 		<h:form id="penalizationsTableForm">
 			<p:dataTable id="penalizationsTable" widgetVar="penalizationsTable"
 				var="penalization"
-				value="#{penalizationView.getPenalizations(userSession.loggedUser)}"
-				rows="30" filteredValue="#{penalizationView.filteredPenalizations}"
+				value="#{penalizationView.penalizationsForLoggedUser}" rows="10"
+				filteredValue="#{penalizationView.filteredPenalizations}"
 				emptyMessage="No penalizations found with given criteria"
 				resizableColumns="true" liveResize="true"
 				sortBy="#{penalization.endDate}" sortOrder="DESCENDING">
@@ -28,6 +28,9 @@
 				<p:column headerText="End date" filterBy="#{penalization.endDate}"
 					sortBy="#{penalization.endDate}">
 					<h:outputText value="#{penalization.endDate}" />
+				</p:column>
+				<p:column headerText="Is active">
+					<h:outputText value="#{penalization.isActive() ? 'Yes': 'No'}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>

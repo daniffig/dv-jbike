@@ -60,6 +60,10 @@ public class StationBean implements Serializable {
 	public List<Station> getStations() {
 		return this.getStationDAO().findAll();
 	}
+	
+	public List<Station> getActiveStations() {
+		return this.getStationDAO().findAllActive();
+	}
 
 	public List<StationState> getStates() {
 		return Arrays.asList(StationState.values());

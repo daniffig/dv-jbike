@@ -14,7 +14,7 @@
 				<h:selectOneMenu id="destinationStation"
 					value="#{movementView.movement.destinationStation}"
 					converter="#{stationConverter}">
-					<f:selectItems value="#{stationBean.stations}"></f:selectItems>
+					<f:selectItems value="#{stationBean.activeStations}"></f:selectItems>
 				</h:selectOneMenu>
 			</h:panelGrid>
 			<hr />

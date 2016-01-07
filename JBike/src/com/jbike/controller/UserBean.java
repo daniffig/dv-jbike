@@ -25,6 +25,9 @@ public class UserBean implements Serializable {
 
 	private UserDao userDAO;
 
+	@ManagedProperty(value = "#{movementBean}")
+	private MovementBean movementBean;
+
 	@ManagedProperty(value = "#{penalizationBean}")
 	private PenalizationBean penalizationBean;
 
@@ -78,7 +81,19 @@ public class UserBean implements Serializable {
 		this.penalizationBean = penalizationBean;
 	}
 
-	public boolean canRequestBikes(User user) {
+	public boolean isPenalized(User user) {
 		return this.getPenalizationBean().getActivePenalizations(user).size() == 0;
+	}
+	
+	public boolean hasActiveBike(User user) {
+		return this.getMovementBean().getActiveMovements(user).size() > 0;
+	}
+
+	public MovementBean getMovementBean() {
+		return movementBean;
+	}
+
+	public void setMovementBean(MovementBean movementBean) {
+		this.movementBean = movementBean;
 	}
 }

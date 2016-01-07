@@ -199,6 +199,10 @@ public class User implements Serializable {
 	public boolean hasPenalizations() {
 		return this.countPenalizations() > 0;
 	}
+	
+	public boolean hasProfile() {
+		return null != this.getProfile();
+	}
 
 	public Boolean canBeDeleted() {
 		return !this.hasMovements() && !this.hasPenalizations();
