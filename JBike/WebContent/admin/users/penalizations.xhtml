@@ -9,27 +9,38 @@
 		<h1>Penalizations for #{userSession.selectedUser}</h1>
 		<h:form id="penalizationsTableForm">
 			<p:dataTable id="penalizationsTable" widgetVar="penalizationsTable"
-				var="penalization" value="#{userSession.selectedUser.penalizations}"
+				var="penalization"
+				value="#{penalizationView.getPenalizations(userSession.selectedUser)}"
 				rows="30" filteredValue="#{penalizationView.filteredPenalizations}"
 				emptyMessage="No penalizations found with given criteria"
-				resizableColumns="true" liveResize="true">
+				resizableColumns="true" liveResize="true"
+				sortBy="#{penalization.endDate}" sortOrder="DESCENDING">
 
 				<p:column headerText="Id" sortBy="#{penalization.id}"
-					filterMatchMode="exact">
+					filterBy="#{penalization.id}" filterMatchMode="exact">
 					<h:outputText value="#{penalization.id}" />
 				</p:column>
 				<p:column headerText="Description"
 					filterBy="#{penalization.description}" filterMatchMode="contains">
 					<h:outputText value="#{penalization.description}" />
 				</p:column>
-				<p:column headerText="Created at"
-					filterBy="#{penalization.createdAt}"
-					sortBy="#{penalization.createdAt}">
+				<p:column headerText="Created at" sortBy="#{penalization.createdAt}">
 					<h:outputText value="#{penalization.createdAt}" />
 				</p:column>
-				<p:column headerText="End date" filterBy="#{penalization.endDate}"
-					sortBy="#{penalization.endDate}">
+				<p:column headerText="End date" sortBy="#{penalization.endDate}">
 					<h:outputText value="#{penalization.endDate}" />
+				</p:column>
+				<p:column headerText="Is active"
+					filterBy="#{penalization.isActive()}" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneButton onchange="PF('penalizationsTable').filter()">
+							<f:converter converterId="javax.faces.Boolean" />
+							<f:selectItem itemLabel="All" itemValue="" />
+							<f:selectItem itemLabel="Yes" itemValue="true" />
+							<f:selectItem itemLabel="No" itemValue="false" />
+						</p:selectOneButton>
+					</f:facet>
+					<h:outputText value="#{penalization.isActive() ? 'Yes': 'No'}" />
 				</p:column>
 
 				<p:column>
@@ -40,8 +51,7 @@
 						<p:menuitem value="Delete"
 							action="#{penalizationView.delete(penalization)}"
 							icon="ui-icon-trash">
-							<p:confirm header="Confirmation"
-								message="Are you sure?"
+							<p:confirm header="Confirmation" message="Are you sure?"
 								icon="ui-icon-alert" />
 						</p:menuitem>
 					</p:menuButton>

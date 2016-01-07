@@ -1,6 +1,7 @@
 package com.jbike.model;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,12 +30,17 @@ public class Penalization {
 	private Timestamp createdAt;
 
 	@Column(name = "end_date")
-	private Timestamp endDate;
+	private Date endDate;
 
 	public Penalization() {
 	}
 
-	public Penalization(User user, Timestamp endDate, String description) {
+	public Penalization(User user) {
+		this.user = user;
+		this.createdAt = new Timestamp((new java.util.Date()).getTime());
+	}
+
+	public Penalization(User user, Date endDate, String description) {
 		this.user = user;
 		this.endDate = endDate;
 		this.description = description;
@@ -45,7 +51,7 @@ public class Penalization {
 	public Long getId() {
 		return id;
 	}
-	
+
 	@SuppressWarnings("unused")
 	private void setId(Long id) {
 		this.id = id;
@@ -75,16 +81,20 @@ public class Penalization {
 		this.createdAt = createdAt;
 	}
 
-	public Timestamp getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(Timestamp endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
-	public boolean isNew(){
-		return (this.id==null);
+
+	public boolean isActive() {
+		return (new java.util.Date().before(this.getEndDate()));
+	}
+
+	public boolean isNew() {
+		return (this.id == null);
 	}
 
 	@Override
@@ -101,6 +111,10 @@ public class Penalization {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		return true;
+	}
+
+	public boolean canBeDeleted() {
 		return true;
 	}
 }

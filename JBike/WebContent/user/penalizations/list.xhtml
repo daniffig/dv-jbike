@@ -9,10 +9,12 @@
 		<h1>My Penalizations</h1>
 		<h:form id="penalizationsTableForm">
 			<p:dataTable id="penalizationsTable" widgetVar="penalizationsTable"
-				var="penalization" value="#{userSession.loggedUser.penalizations}"
+				var="penalization"
+				value="#{penalizationView.getPenalizations(userSession.loggedUser)}"
 				rows="30" filteredValue="#{penalizationView.filteredPenalizations}"
 				emptyMessage="No penalizations found with given criteria"
-				resizableColumns="true" liveResize="true">
+				resizableColumns="true" liveResize="true"
+				sortBy="#{penalization.endDate}" sortOrder="DESCENDING">
 
 				<p:column headerText="Description"
 					filterBy="#{penalization.description}" filterMatchMode="contains">

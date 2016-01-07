@@ -10,6 +10,7 @@ import javax.faces.bean.ViewScoped;
 
 import com.jbike.controller.PenalizationBean;
 import com.jbike.model.Penalization;
+import com.jbike.model.User;
 import com.jbike.session.UserSession;
 
 @ManagedBean(name = "penalizationView")
@@ -47,13 +48,12 @@ public class PenalizationView implements Serializable {
 
 	public String viewForm(Penalization penalization) {
 		if (penalization == null) {
-			penalization = new Penalization();
-			penalization.setUser(this.getUserSession().getSelectedUser());
+			penalization = new Penalization(this.getUserSession().getSelectedUser());
 		}
 
 		this.getUserSession().setSelectedPenalization(penalization);
 
-		return "/admin/penalizations/form.xhtml?faces-redirect=true";
+		return "penalizations/form";
 	}
 
 	public List<Penalization> getPenalizations() {
@@ -61,7 +61,8 @@ public class PenalizationView implements Serializable {
 	}
 
 	public String save() {
-		String message = this.getPenalization().isNew() ? "Penalization successfully created." : "Penalization successfully updated.";
+		String message = this.getPenalization().isNew() ? "Penalization successfully created."
+				: "Penalization successfully updated.";
 
 		if (this.getPenalizationBean().savePenalization(this.getPenalization())) {
 			this.getUserSession().getMessageQueue()
@@ -71,7 +72,20 @@ public class PenalizationView implements Serializable {
 					"An error occurred while saving the penalization."));
 		}
 
-		return "penalizations/list";
+		return "users/penalizations";
+	}
+
+	public String delete(Penalization penalization) {
+		if (this.getPenalizationBean().deletePenalization(penalization)) {
+			this.getUserSession().getMessageQueue().offer(
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Penalization successfully deleted."));
+		} else {
+
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while deleting the penalization."));
+		}
+
+		return "users/penalizations";
 	}
 
 	public PenalizationBean getPenalizationBean() {
@@ -100,5 +114,9 @@ public class PenalizationView implements Serializable {
 
 	public void setPenalization(Penalization penalization) {
 		this.penalization = penalization;
+	}
+
+	public List<Penalization> getPenalizations(User user) {
+		return this.getPenalizationBean().getPenalizations(user);
 	}
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 
 import com.jbike.model.Gender;
 import com.jbike.model.User;
@@ -23,6 +24,9 @@ public class UserBean implements Serializable {
 	private static final long serialVersionUID = -7421057914797478637L;
 
 	private UserDao userDAO;
+
+	@ManagedProperty(value = "#{penalizationBean}")
+	private PenalizationBean penalizationBean;
 
 	@PostConstruct
 	public void init() {
@@ -64,5 +68,17 @@ public class UserBean implements Serializable {
 
 	public void setUserDAO(UserDao userDAO) {
 		this.userDAO = userDAO;
+	}
+
+	public PenalizationBean getPenalizationBean() {
+		return penalizationBean;
+	}
+
+	public void setPenalizationBean(PenalizationBean penalizationBean) {
+		this.penalizationBean = penalizationBean;
+	}
+
+	public boolean canRequestBikes(User user) {
+		return this.getPenalizationBean().getActivePenalizations(user).size() == 0;
 	}
 }

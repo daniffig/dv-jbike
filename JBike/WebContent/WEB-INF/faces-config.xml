@@ -24,6 +24,11 @@
 			<redirect></redirect>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>penalizations/form</from-outcome>
+			<to-view-id>/admin/penalizations/form.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>stations/form</from-outcome>
 			<to-view-id>/admin/stations/form.xhtml</to-view-id>
 			<redirect></redirect>
