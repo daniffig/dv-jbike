@@ -23,6 +23,8 @@ public class MovementView implements Serializable {
 	 */
 	private static final long serialVersionUID = 7446961008889911519L;
 
+	private List<Movement> movements;
+
 	private List<Movement> filteredMovements;
 
 	@ManagedProperty(value = "#{userSession.selectedBike}")
@@ -59,7 +61,7 @@ public class MovementView implements Serializable {
 		return "/user/movements/form.xhtml?faces-redirect=true";
 	}
 
-	public String save() {		
+	public String save() {
 		String message = this.getMovement().isNew() ? "Request successfully created." : "Request successfully updated.";
 
 		if (this.getMovementBean().saveMovement(this.getMovement())) {
@@ -172,5 +174,19 @@ public class MovementView implements Serializable {
 
 	public void setMovementBean(MovementBean movementBean) {
 		this.movementBean = movementBean;
+	}
+
+	public List<Movement> getMovementsForLoggedUser() {
+		this.setMovements(this.getUserSession().getLoggedUser().getMovements());
+
+		return this.getMovements();
+	}
+
+	public List<Movement> getMovements() {
+		return movements;
+	}
+
+	public void setMovements(List<Movement> movements) {
+		this.movements = movements;
 	}
 }

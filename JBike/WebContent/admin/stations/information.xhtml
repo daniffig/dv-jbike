@@ -7,8 +7,67 @@
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 	<ui:define name="title">JBike | Information on #{userSession.selectedStation}</ui:define>
 	<ui:define name="content">
-		<h1>History for #{userSession.selectedStation}</h1>
+		<h1>Information on #{userSession.selectedStation}</h1>
 		<h:form id="stationInfoForm">
+			<hr />
+
+			<h2>Movements as source</h2>
+			<p:dataTable id="movementsAsSourceTable"
+				widgetVar="movementsAsSourceTable" var="movement"
+				value="#{userSession.selectedStation.movementsAsSource}"
+				paginator="true" rows="10"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom"
+				filteredValue="#{movementView.filteredMovements}"
+				emptyMessage="No movements found with given criteria"
+				resizableColumns="true" liveResize="true">
+
+				<p:column headerText="Id" sortBy="#{movement.id}"
+					filterBy="#{movement.id}" filterMatchMode="exact">
+					<h:outputText value="#{movement.id}" />
+				</p:column>
+				<p:column headerText="Bike">
+					<h:outputText value="#{movement.bike}" />
+				</p:column>
+				<p:column headerText="Created at">
+					<h:outputText value="#{movement.createdAt}" />
+				</p:column>
+				<p:column headerText="Source Station"
+					converter="#{stationConverter}">
+					<h:outputText value="#{movement.sourceStation}" />
+				</p:column>
+				<p:column headerText="Destination Station"
+					converter="#{stationConverter}">
+					<h:outputText value="#{movement.destinationStation}" />
+				</p:column>
+				<p:column headerText="State">
+					<h:outputText value="#{movement.state.name}" />
+				</p:column>
+				<p:column headerText="Updated at">
+					<h:outputText value="#{movement.updatedAt}" />
+				</p:column>
+
+				<p:column>
+					<p:menuButton value="Options"
+						rendered="#{movement.canBeConfirmed() or movement.canBeCancelled() or movement.canBeFinished() or movement.canBeReported()}">
+						<p:menuitem value="Withdraw Bike"
+							action="#{movementView.confirmMovement(movement)}"
+							icon="ui-icon-check" rendered="#{movement.canBeConfirmed()}" />
+						<p:menuitem value="Edit"
+							action="#{movementView.viewForm(movement)}" icon="ui-icon-pencil"
+							rendered="#{movement.canBeEdited()}" />
+						<p:menuitem value="Cancel"
+							action="#{movementView.cancelMovement(movement)}"
+							icon="ui-icon-close" rendered="#{movement.canBeCancelled()}" />
+						<p:menuitem value="Return Bike"
+							action="#{movementView.finishMovement(movement)}"
+							icon="ui-icon-check" rendered="#{movement.canBeFinished()}" />
+						<p:menuitem value="Report Bike"
+							action="#{movementView.reportBike(movement.bike)}"
+							icon="ui-icon-alert" rendered="#{movement.canBeReported()}" />
+					</p:menuButton>
+				</p:column>
+			</p:dataTable>
 			<hr />
 			<p:button value="Back to list" outcome="stations/list"
 				icon="ui-icon-arrowreturnthick-1-w" />
