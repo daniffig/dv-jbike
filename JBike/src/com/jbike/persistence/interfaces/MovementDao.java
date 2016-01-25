@@ -3,6 +3,7 @@ package com.jbike.persistence.interfaces;
 import java.util.Date;
 import java.util.List;
 
+import com.jbike.model.Bike;
 import com.jbike.model.Movement;
 import com.jbike.model.MovementState;
 import com.jbike.model.Station;
@@ -19,6 +20,8 @@ public interface MovementDao extends BaseDao<Movement> {
 	public List<Movement> findAllByDestinationStation(Station station);
 
 	public List<Movement> findAllUnfinished();
+	
+	public Movement findOneUnfinishedByBike(Bike bike);
 
 	public List<Movement> findAllByState(MovementState state);
 

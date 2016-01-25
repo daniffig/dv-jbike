@@ -19,6 +19,11 @@
 			<redirect></redirect>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>bikes/active-movement</from-outcome>
+			<to-view-id>/admin/bikes/movement.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>bikes/list</from-outcome>
 			<to-view-id>/admin/bikes/list.xhtml</to-view-id>
 			<redirect></redirect>

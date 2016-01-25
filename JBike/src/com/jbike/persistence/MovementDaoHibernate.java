@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.jbike.model.Bike;
 import com.jbike.model.Movement;
 import com.jbike.model.MovementState;
 import com.jbike.model.Station;
@@ -103,6 +104,20 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 
 		return (List<Movement>) query.getResultList();
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Movement findOneUnfinishedByBike(Bike bike){
+		EntityManager em = this.getEntityManager();
+		
+		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.bike = :bike AND (m.state != :finished OR m.state != :cancelled)");
+		query.setParameter("bike", bike);
+		query.setParameter("finished", MovementState.FINISHED);
+		query.setParameter("cancelled", MovementState.CANCELLED);
+		
+		return (Movement) query.getSingleResult();
+	}
+	
 
 	@SuppressWarnings("unchecked")
 	@Override

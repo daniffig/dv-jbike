@@ -55,6 +55,12 @@ public class BikeView implements Serializable {
 
 		return "bikes/history";
 	}
+	
+	public String viewActiveMovement(Bike bike){
+		this.getUserSession().setSelectedBike(bike);
+		
+		return "bikes/active-movement";
+	}
 
 	public String viewForm(Bike bike) {
 		if (bike == null) {
