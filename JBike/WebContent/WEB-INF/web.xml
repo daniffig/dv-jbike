@@ -10,7 +10,7 @@
     <filter-name>AdminFilter</filter-name>
     <filter-class>com.jbike.auth.AdminFilter</filter-class>
   </filter>
-  <!-- 
+ 
   <filter-mapping>
   	<filter-name>AdminFilter</filter-name>
     <url-pattern>/admin/*</url-pattern>
@@ -28,7 +28,7 @@
   	<filter-name>UserFilter</filter-name>
     <url-pattern>/stations/*</url-pattern>
   </filter-mapping>
- -->
+
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>	
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

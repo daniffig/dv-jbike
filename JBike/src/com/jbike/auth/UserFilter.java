@@ -25,7 +25,7 @@ public class UserFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException{
 		UserSession UserSession = (UserSession)((HttpServletRequest)request).getSession().getAttribute("userSession");
 
-        if (UserSession == null || !UserSession.isLoggedIn() || UserSession.getLoggedUser().isPenalized()) {
+        if (UserSession == null || !UserSession.isLoggedIn()) {
         	String contextPath = ((HttpServletRequest)request).getContextPath();
         	System.out.println("UserFilter: REJECT");
             ((HttpServletResponse)response).sendRedirect(contextPath + "/users/log-in.xhtml");
