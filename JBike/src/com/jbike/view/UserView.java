@@ -176,6 +176,39 @@ public class UserView implements Serializable {
 
 		return "home";
 	}
+	
+    public String restorePassword(){
+    	
+    	if (this.getUserBean().userExists(this.getUser())) {
+			String password;
+			try {
+				password = UserHelper.generateRandomPassword();
+
+				this.getUser().setPassword(UserHelper.digest(password));
+				if (this.getUserBean().saveUser(this.getUser())) {
+
+					GMailMailHandler.send(this.getUser().getEmail(), "Hello!",
+							String.format("Your new password is: <b>%s</b> <br/>. Have a good ride!", password));
+
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+							"Success!", "Password resetted. We have sent an email with your new password."));
+
+					return "home";
+				}
+			} catch (NoSuchAlgorithmException | UnsupportedEncodingException | MessagingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		} else {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"The email address provided doesn't correspond to a user"));
+
+			return "restore-password";
+		}
+    	
+    	
+    	return "home";
+    }
 
 	public String logIn() {
 		return "success";
