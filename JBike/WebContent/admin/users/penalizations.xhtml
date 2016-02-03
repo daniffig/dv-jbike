@@ -10,7 +10,10 @@
 		<h:form id="penalizationsTableForm">
 			<p:dataTable id="penalizationsTable" widgetVar="penalizationsTable"
 				var="penalization"
-				value="#{penalizationView.penalizationsForSelectedUser}" rows="10"
+				value="#{penalizationView.penalizationsForSelectedUser}"
+				paginator="true"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="10,20,50" paginatorPosition="bottom" rows="10"
 				filteredValue="#{penalizationView.filteredPenalizations}"
 				emptyMessage="No penalizations found with given criteria"
 				resizableColumns="true" liveResize="true"

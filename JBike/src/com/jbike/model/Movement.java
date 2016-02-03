@@ -1,5 +1,6 @@
 package com.jbike.model;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -15,7 +16,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "movement")
-public class Movement {
+public class Movement implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2397322409195619007L;
 
 	@Id
 	@GeneratedValue

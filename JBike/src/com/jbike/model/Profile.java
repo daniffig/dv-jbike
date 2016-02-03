@@ -1,5 +1,6 @@
 package com.jbike.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,9 +14,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="profile")
-public class Profile {
+public class Profile implements Serializable {
 
-  @Id @GeneratedValue
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3994177782685803465L;
+
+@Id @GeneratedValue
   private Long id;
 
   @OneToOne(mappedBy = "profile")

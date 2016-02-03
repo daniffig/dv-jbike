@@ -1,6 +1,8 @@
 package com.jbike.view;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -148,6 +150,10 @@ public class MovementView implements Serializable {
 	}
 
 	public List<Movement> getFilteredMovements() {
+		if (null == filteredMovements) {
+			this.setFilteredMovements(this.getMovements());
+		}
+		
 		return filteredMovements;
 	}
 
@@ -177,10 +183,18 @@ public class MovementView implements Serializable {
 	}
 
 	public List<Movement> getMovementsForLoggedUser() {
-		// Si no lo hacemos así, los listados no se actualizan hasta que el usuario no vuelve a iniciar sesión.
-		this.setMovements(this.getUserSession().getLoggedUser().getMovements());
-		System.out.println("hola");
-		//this.setMovements(this.getMovementBean().getMovements(this.getUserSession().getLoggedUser()));
+		// FIXME Esto lo tendríamos que hacer con las configuraciones del dataTable,
+		// pero con los campos del tipo Timestamp no está funcionando.
+		
+		List<Movement> movements = this.getMovementBean().getMovements(this.getUserSession().getLoggedUser());
+		
+		Collections.sort(movements, new Comparator<Movement>() {
+			public int compare(Movement m1, Movement m2) {
+				return m2.getCreatedAt().compareTo(m1.getCreatedAt());
+			}
+		});
+		
+		this.setMovements(movements);
 
 		return this.getMovements();
 	}
