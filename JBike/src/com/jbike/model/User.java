@@ -43,7 +43,7 @@ public class User implements Serializable {
 	@OneToOne(cascade = { CascadeType.ALL })
 	private Profile profile;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = { CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.MERGE })
 	private List<Movement> movements;
 
 	@OneToMany(mappedBy = "user")
