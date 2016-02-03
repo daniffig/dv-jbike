@@ -25,7 +25,7 @@ public class AddPenalizationJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-
+		
 		UserBean userBean = new UserBean();
 
 		MovementDao movementDAO = new MovementDaoHibernate();

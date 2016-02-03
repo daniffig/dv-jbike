@@ -9,22 +9,24 @@
 
 	<schedule>
 		<job>
-			<name>AddPenalizationTrigger</name>
-			<group>Penalization</group>
+			<name>AddPenalization</name>
+			<group>PenalizationGroup</group>
 			<description>This job adds a penalization to those users who have not returned the bike.</description>
 			<job-class>com.jbike.scheduler.AddPenalizationJob</job-class>
 		</job>
 		<job>
-			<name>RemoveMovementTrigger</name>
-			<group>Movement</group>
+			<name>RemoveMovement</name>
+			<group>MovementGroup</group>
 			<job-class>com.jbike.scheduler.RemoveMovementJob</job-class>
 		</job>
 
 		<trigger>
 			<cron>
 				<name>AddPenalizationTrigger</name>
+				<group>AddPenalizationTriggerGroup</group>
+				
 				<job-name>AddPenalization</job-name>
-				<job-group>Penalization</job-group>
+				<job-group>PenalizationGroup</job-group>
 				<!-- It will run everyday at 12:30 am -->
 				<cron-expression>0 30 0 * * ?</cron-expression>				
 			</cron>
@@ -33,10 +35,12 @@
 		<trigger>
 			<cron>
 				<name>RemoveMovementTrigger</name>
+				<group>RemoveMovementTriggerGroup</group>
+				
 				<job-name>RemoveMovement</job-name>
-				<job-group>Movement</job-group>
+				<job-group>MovementGroup</job-group>
 				<!-- It will run everyday at 12:30 am -->
-				<cron-expression>0 30 0 * * ?</cron-expression>				
+				<cron-expression>0-59 0 0 * * ?</cron-expression>				
 			</cron>
 		</trigger>
 	</schedule>
