@@ -144,6 +144,19 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 	}
 
 	@SuppressWarnings("unchecked")
+	public List<Movement> findAllByUserAndState(User user, MovementState state) {
+
+		EntityManager em = this.getEntityManager();
+
+		Query query = em.createQuery(
+				"SELECT m FROM Movement m WHERE m.user = :user AND m.state = :state ");
+		query.setParameter("user", user);
+		query.setParameter("state", state);
+
+		return (List<Movement>) query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<Movement> findAllByUser(User user) {
 
 		EntityManager em = this.getEntityManager();
