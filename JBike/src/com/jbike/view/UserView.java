@@ -166,7 +166,7 @@ public class UserView implements Serializable {
 			}
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-					"An user with the same email or dni already exists."));
+					"An user with the same email or DNI already exists."));
 
 			return "signin";
 		}

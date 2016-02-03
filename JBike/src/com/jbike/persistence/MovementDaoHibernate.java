@@ -105,7 +105,6 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		return (List<Movement>) query.getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	public Movement findOneUnfinishedByBike(Bike bike){
 		EntityManager em = this.getEntityManager();
@@ -144,4 +143,15 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		return (List<Movement>) query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Movement> findAllByUser(User user) {
+
+		EntityManager em = this.getEntityManager();
+
+		Query query = em.createQuery(
+				"SELECT m FROM Movement m WHERE m.user = :user");
+		query.setParameter("user", user);
+
+		return (List<Movement>) query.getResultList();
+	}
 }

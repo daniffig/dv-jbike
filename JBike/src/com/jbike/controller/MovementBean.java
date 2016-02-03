@@ -76,6 +76,10 @@ public class MovementBean implements Serializable {
 		return this.getMovementDAO().findAll();
 	}
 
+	public List<Movement> getMovements(User user) {
+		return this.getMovementDAO().findAllByUser(user);
+	}
+
 	public List<MovementState> getStates() {
 		return Arrays.asList(MovementState.values());
 	}

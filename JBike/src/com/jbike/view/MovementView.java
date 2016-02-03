@@ -177,7 +177,10 @@ public class MovementView implements Serializable {
 	}
 
 	public List<Movement> getMovementsForLoggedUser() {
+		// Si no lo hacemos así, los listados no se actualizan hasta que el usuario no vuelve a iniciar sesión.
 		this.setMovements(this.getUserSession().getLoggedUser().getMovements());
+		System.out.println("hola");
+		//this.setMovements(this.getMovementBean().getMovements(this.getUserSession().getLoggedUser()));
 
 		return this.getMovements();
 	}

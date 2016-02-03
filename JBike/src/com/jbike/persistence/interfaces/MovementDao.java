@@ -25,5 +25,7 @@ public interface MovementDao extends BaseDao<Movement> {
 
 	public List<Movement> findAllByState(MovementState state);
 
-	public List<Movement> findAllActive(User user);
+	public List<Movement> findAllActive(User user);	
+
+	public List<Movement> findAllByUser(User user);
 }

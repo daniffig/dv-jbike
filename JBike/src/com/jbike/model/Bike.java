@@ -194,4 +194,15 @@ public class Bike {
 	public boolean canBeReported() {
 		return this.getState().canBeReported();
 	}
+	
+	public Movement getLastMovement() {
+		List<Movement> movements = this.getMovements();
+		
+		if (movements.size() > 0) {
+			return movements.get(movements.size() - 1);
+		}
+		else {
+			return null;
+		}
+	}
 }

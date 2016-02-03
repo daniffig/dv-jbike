@@ -1,7 +1,9 @@
 package com.jbike.view;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -10,6 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.chart.PieChartModel;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
@@ -43,6 +46,9 @@ public class StationView implements Serializable {
 	@ManagedProperty("#{userSession}")
 	private UserSession userSession;
 
+	private PieChartModel sourcePieModel;
+	private PieChartModel destinationPieModel;
+
 	public UserSession getUserSession() {
 		return userSession;
 	}
@@ -51,6 +57,7 @@ public class StationView implements Serializable {
 		this.userSession = userSession;
 	}
 
+	@SuppressWarnings("unchecked")
 	@PostConstruct
 	public void init() {
 		if (this.getUserSession().getMessageQueue().size() > 0) {
@@ -70,6 +77,18 @@ public class StationView implements Serializable {
 				advancedModel.addOverlay(StationHelper.toMarker(station));
 			}
 		}
+		
+		sourcePieModel = new PieChartModel();
+		sourcePieModel.setData(this.getStationsForSourceChart());
+		sourcePieModel.setTitle("Usage as source");        
+		sourcePieModel.setShowDataLabels(true);
+		sourcePieModel.setLegendPosition("w");
+		
+		destinationPieModel = new PieChartModel();
+		destinationPieModel.setData(this.getStationsForDestinationChart());
+		destinationPieModel.setTitle("Usage as destination");        
+		destinationPieModel.setShowDataLabels(true);
+		destinationPieModel.setLegendPosition("w");
 	}
 
 	public void onMarkerSelect(OverlaySelectEvent event) {
@@ -185,5 +204,43 @@ public class StationView implements Serializable {
 
 	public void setEmptyModel(MapModel emptyModel) {
 		this.emptyModel = emptyModel;
+	}
+	
+	public PieChartModel getSourcePieModel() {
+		return sourcePieModel;
+	}
+
+	public void setSourcePieModel(PieChartModel pieModel) {
+		this.sourcePieModel = pieModel;
+	}
+	
+	public PieChartModel getDestinationPieModel() {
+		return destinationPieModel;
+	}
+
+	public void setDestinationPieModel(PieChartModel pieModel) {
+		this.destinationPieModel = pieModel;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Map getStationsForSourceChart() {
+		Map<String, Integer> stations = new LinkedHashMap<String, Integer>();
+		
+		for (Station station : stationBean.getStations()) {
+			stations.put(station.getName(), station.getMovementsAsSource().size());
+		}
+		
+		return stations;		
+	}
+
+	@SuppressWarnings("rawtypes")
+	public Map getStationsForDestinationChart() {
+		Map<String, Integer> stations = new LinkedHashMap<String, Integer>();
+		
+		for (Station station : stationBean.getStations()) {
+			stations.put(station.getName(), station.getMovementsAsDestination().size());
+		}
+		
+		return stations;		
 	}
 }

@@ -44,7 +44,9 @@
 				<p:column headerText="Current Station"
 					filterBy="#{bike.currentStation}" filterMatchMode="exact">
 					<f:facet name="filter">
-						<h:selectOneMenu onchange="PF('bikesTable').filter()">
+						<h:selectOneMenu value="#{userSession.selectedStation}"
+							onchange="PF('bikesTable').filter()"
+							converter="#{stationConverter}">
 							<f:selectItem itemLabel="All" itemValue="#{null}"
 								noSelectionOption="true" />
 							<f:selectItems value="#{stationBean.stations}" />
@@ -57,6 +59,18 @@
 					<p:menuButton value="Options">
 						<p:menuitem value="View history"
 							action="#{bikeView.viewHistory(bike)}" icon="ui-icon-document" />
+						<p:menuitem value="Withdraw Bike"
+							action="#{bikeView.confirmMovement(bike.lastMovement)}"
+							icon="ui-icon-check"
+							rendered="#{bike.lastMovement.canBeEdited()}" />
+						<p:menuitem value="Cancel request"
+							action="#{bikeView.cancelMovement(bike.lastMovement)}"
+							icon="ui-icon-close"
+							rendered="#{bike.lastMovement.canBeCancelled()}" />
+						<p:menuitem value="Return Bike"
+							action="#{bikeView.finishMovement(bike.lastMovement)}"
+							icon="ui-icon-check"
+							rendered="#{bike.lastMovement.canBeFinished()}" />
 						<p:menuitem value="Edit" action="#{bikeView.viewForm(bike)}"
 							icon="ui-icon-pencil" />
 						<p:menuitem value="Delete" action="#{bikeView.delete(bike)}"
@@ -77,5 +91,10 @@
 			<p:commandButton value="New Bike" action="#{bikeView.viewForm(null)}"
 				icon="ui-icon-plus" />
 		</h:form>
+		<script type="text/javascript">
+			jQuery(document).ready(function() {
+				PF('bikesTable').filter();
+			});
+		</script>
 	</ui:define>
 </ui:composition>

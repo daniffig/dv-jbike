@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
 import com.jbike.controller.BikeBean;
+import com.jbike.controller.MovementBean;
 import com.jbike.controller.UserBean;
 import com.jbike.model.Bike;
 import com.jbike.model.Movement;
@@ -30,6 +31,9 @@ public class BikeView implements Serializable {
 
 	@ManagedProperty("#{bikeBean}")
 	private BikeBean bikeBean;
+
+	@ManagedProperty("#{movementBean}")
+	private MovementBean movementBean;
 
 	@ManagedProperty("#{userBean}")
 	private UserBean userBean;
@@ -54,6 +58,42 @@ public class BikeView implements Serializable {
 		this.getUserSession().setSelectedBike(bike);
 
 		return "bikes/history";
+	}
+
+	public String confirmMovement(Movement movement) {
+		if (this.getMovementBean().confirmMovement(movement)) {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!",
+					"Request successfully confirmed."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while withdrawing the bike."));
+		}
+
+		return "bikes/list";
+	}
+
+	public String cancelMovement(Movement movement) {
+		if (this.getMovementBean().cancelMovement(movement)) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Request successfully cancelled."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while cancelling the request."));
+		}
+
+		return "bikes/list";
+	}
+
+	public String finishMovement(Movement movement) {
+		if (this.getMovementBean().finishMovement(movement)) {
+			this.getUserSession().getMessageQueue()
+					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Bike successfully returned."));
+		} else {
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
+					"An error occurred while returning the bike."));
+		}
+
+		return "bikes/list";
 	}
 	
 	public String viewActiveMovement(Bike bike){
@@ -161,5 +201,13 @@ public class BikeView implements Serializable {
 
 	public void setUserBean(UserBean userBean) {
 		this.userBean = userBean;
+	}
+
+	public MovementBean getMovementBean() {
+		return movementBean;
+	}
+
+	public void setMovementBean(MovementBean movementBean) {
+		this.movementBean = movementBean;
 	}
 }
