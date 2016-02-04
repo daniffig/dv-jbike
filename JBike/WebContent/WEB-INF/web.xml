@@ -55,8 +55,6 @@
     <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
   </listener>
   <listener>
-		<listener-class>
-			org.quartz.ee.servlet.QuartzInitializerListener
-		</listener-class>
-	</listener>
+	<listener-class>org.quartz.ee.servlet.QuartzInitializerListener</listener-class>
+  </listener>
 </web-app>

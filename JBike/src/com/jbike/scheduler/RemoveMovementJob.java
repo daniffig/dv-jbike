@@ -11,6 +11,7 @@ import com.jbike.model.BikeState;
 import com.jbike.model.Movement;
 import com.jbike.model.MovementState;
 import com.jbike.persistence.BikeDaoHibernate;
+import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.MovementDaoHibernate;
 import com.jbike.persistence.interfaces.BikeDao;
 import com.jbike.persistence.interfaces.MovementDao;
@@ -20,10 +21,8 @@ public class RemoveMovementJob implements Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 
-		BikeDao bikeDAO = new BikeDaoHibernate();
-		MovementDao movementDAO = new MovementDaoHibernate();
-		
-		System.out.println("Hola");
+		BikeDao bikeDAO = FactoryDao.getBikeDao();
+		MovementDao movementDAO = FactoryDao.getMovementDao();
 		
 		for (Movement movement : movementDAO.findAllByState(MovementState.NEW)) {
 			Calendar dueDate = Calendar.getInstance();

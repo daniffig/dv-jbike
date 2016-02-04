@@ -10,28 +10,25 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import com.jbike.controller.UserBean;
 import com.jbike.mailer.GMailMailHandler;
 import com.jbike.model.Movement;
 import com.jbike.model.MovementState;
 import com.jbike.model.Penalization;
 import com.jbike.model.User;
-import com.jbike.persistence.MovementDaoHibernate;
-import com.jbike.persistence.PenalizationDaoHibernate;
+import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.interfaces.MovementDao;
 import com.jbike.persistence.interfaces.PenalizationDao;
+import com.jbike.persistence.interfaces.UserDao;
 
 public class AddPenalizationJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-		
-		UserBean userBean = new UserBean();
+		UserDao userDAO                 = FactoryDao.getUserDao();
+		MovementDao movementDAO         = FactoryDao.getMovementDao();
+		PenalizationDao penalizationDAO = FactoryDao.getPenalizationDao();
 
-		MovementDao movementDAO = new MovementDaoHibernate();
-		PenalizationDao penalizationDAO = new PenalizationDaoHibernate();
-
-		for (User user : userBean.getUsers()) {
+		for (User user : userDAO.findAll()) {
 			List<Movement> movements = movementDAO.findAllByUserAndState(user, MovementState.CONFIRMED);
 
 			if (movements.size() > 0) {
