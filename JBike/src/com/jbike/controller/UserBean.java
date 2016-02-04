@@ -44,6 +44,10 @@ public class UserBean implements Serializable {
 		return this.getUserDAO().findOneByDni(user.getProfile().getDni()) != null
 				|| this.getUserDAO().findOneByEmail(user.getEmail()) != null;
 	}
+	
+	public User getUserByEmail(String email){
+		return this.getUserDAO().findOneByEmail(email);
+	}
 
 	public boolean saveUser(User user) {
 		if (user.isNew()) {

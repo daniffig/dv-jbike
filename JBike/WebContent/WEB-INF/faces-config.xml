@@ -100,7 +100,7 @@
 			<redirect></redirect>
 		</navigation-case>
 		<navigation-case>
-			<from-outcome>restore-password</from-outcome>
+			<from-outcome>restore</from-outcome>
 			<to-view-id>/users/restore-password.xhtml</to-view-id>
 			<redirect></redirect>
 		</navigation-case>
