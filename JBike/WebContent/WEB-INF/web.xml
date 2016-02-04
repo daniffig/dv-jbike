@@ -24,11 +24,7 @@
   	<filter-name>UserFilter</filter-name>
     <url-pattern>/bikes/*</url-pattern>
   </filter-mapping>
-    <filter-mapping>
-  	<filter-name>UserFilter</filter-name>
-    <url-pattern>/stations/*</url-pattern>
-  </filter-mapping>
-
+  
   <servlet>
     <servlet-name>Faces Servlet</servlet-name>	
     <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
