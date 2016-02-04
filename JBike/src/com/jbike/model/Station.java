@@ -210,4 +210,8 @@ public class Station implements Serializable {
 
 		return !hasBikes && !hasMovements;
 	}
+
+	public boolean isInOperation() {
+		return this.getState().equals(StationState.IN_OPERATION);
+	}
 }

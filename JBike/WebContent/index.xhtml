@@ -37,7 +37,13 @@
 								style="font-weight:bold" />
 						</h4>
 
-						<p:panelGrid columns="2">
+						<p:outputPanel
+							rendered="#{!stationView.marker.data.isInOperation()}">
+							<h:outputText value="#{stationView.marker.data.state.name}" />
+						</p:outputPanel>
+
+						<p:panelGrid columns="2"
+							rendered="#{stationView.marker.data.isInOperation()}">
 							<h:outputText value="Available bikes" />
 							<h:outputText value="#{stationView.marker.data.availableBikes}" />
 
