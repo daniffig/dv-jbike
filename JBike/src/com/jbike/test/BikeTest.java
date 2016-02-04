@@ -1,17 +1,13 @@
 package com.jbike.test;
 
-import static org.junit.Assert.*;
 
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
 import com.jbike.persistence.FactoryDao;
 import com.jbike.persistence.StationDaoHibernate;
 import com.jbike.model.Bike;
-import com.jbike.model.BikeState;
 import com.jbike.model.Station;
 import com.jbike.persistence.BikeDaoHibernate;
 
