@@ -24,29 +24,32 @@ public class AddPenalizationJob implements Job {
 
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
-		UserDao userDAO                 = FactoryDao.getUserDao();
-		MovementDao movementDAO         = FactoryDao.getMovementDao();
+		UserDao userDAO = FactoryDao.getUserDao();
+		MovementDao movementDAO = FactoryDao.getMovementDao();
 		PenalizationDao penalizationDAO = FactoryDao.getPenalizationDao();
 
 		for (User user : userDAO.findAll()) {
-			List<Movement> movements = movementDAO.findAllByUserAndState(user, MovementState.CONFIRMED);
+			if (!user.isPenalized()) {
+				List<Movement> movements = movementDAO.findAllByUserAndState(user, MovementState.CONFIRMED);
+				
+				if (movements.size() > 0) {
+					Movement lastMovement = movements.get(movements.size() - 1);
+					Calendar calendar = Calendar.getInstance();
 
-			if (movements.size() > 0) {
-				Movement lastMovement = movements.get(movements.size() - 1);
-				Calendar calendar = Calendar.getInstance();
+					calendar.setTime(new Date());
+					calendar.add(Calendar.DATE, 1);
 
-				calendar.setTime(new Date());
-				calendar.add(Calendar.DATE, 1);
+					Penalization penalization = new Penalization(user, calendar.getTime(), "Bike not returned.");
 
-				Penalization penalization = new Penalization(user, calendar.getTime(), "Bike not returned.");
-
-				if (penalizationDAO.save(penalization)) {
-					try {
-						GMailMailHandler.send(user.getEmail(), "You've been penalized", String.format(
-								"You've been penalized for not returning %s on time", lastMovement.getBike().toString()));
-					} catch (MessagingException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (penalizationDAO.save(penalization)) {
+						try {
+							GMailMailHandler.send(user.getEmail(), "You've been penalized",
+									String.format("You've been penalized for not returning %s on time",
+											lastMovement.getBike().toString()));
+						} catch (MessagingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 			}
