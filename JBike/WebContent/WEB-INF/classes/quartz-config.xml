@@ -28,8 +28,7 @@
 				<job-name>AddPenalization</job-name>
 				<job-group>PenalizationGroup</job-group>
 				<!-- It will run everyday at 12:30 am -->
-				<!-- <cron-expression>0 30 0 * * ?</cron-expression>-->
-				<cron-expression>0/5 * * * * ?</cron-expression>		
+				<cron-expression>0 30 0 * * ?</cron-expression>		
 			</cron>
 		</trigger>
 		<!-- TODO -->
@@ -41,7 +40,7 @@
 				<job-name>RemoveMovement</job-name>
 				<job-group>MovementGroup</job-group>
 				<!-- It will run everyday at 12:30 am -->
-				<cron-expression>0-59 0 0 * * ?</cron-expression>				
+				<cron-expression>0-59 0 0 * * ?</cron-expression>			
 			</cron>
 		</trigger>
 	</schedule>
