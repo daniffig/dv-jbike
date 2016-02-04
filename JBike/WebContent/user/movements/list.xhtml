@@ -41,10 +41,18 @@
 
 				<p:column>
 					<p:menuButton value="Options"
-						rendered="#{movement.canBeCancelled() or movement.canBeReported()}">
+						rendered="#{movement.canBeEdited() or movement.canBeConfirmed() or movement.canBeCancelled() or movement.canBeFinished() or movement.canBeReported()}">
 						<p:menuitem value="Edit"
 							action="#{movementView.viewForm(movement)}" icon="ui-icon-pencil"
 							rendered="#{movement.canBeEdited()}" />
+						<p:menuitem value="Withdraw Bike"
+							action="#{movementView.confirmMovement(movement)}"
+							icon="ui-icon-check"
+							rendered="#{movement.canBeConfirmed()}" />
+						<p:menuitem value="Return Bike"
+							action="#{movementView.finishMovement(movement)}"
+							icon="ui-icon-check"
+							rendered="#{movement.canBeFinished()}" />
 						<p:menuitem value="Cancel"
 							action="#{movementView.cancelMovement(movement)}"
 							icon="ui-icon-close" rendered="#{movement.canBeCancelled()}" />

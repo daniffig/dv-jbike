@@ -59,42 +59,6 @@ public class BikeView implements Serializable {
 
 		return "bikes/history";
 	}
-
-	public String confirmMovement(Movement movement) {
-		if (this.getMovementBean().confirmMovement(movement)) {
-			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!",
-					"Request successfully confirmed."));
-		} else {
-			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-					"An error occurred while withdrawing the bike."));
-		}
-
-		return "bikes/list";
-	}
-
-	public String cancelMovement(Movement movement) {
-		if (this.getMovementBean().cancelMovement(movement)) {
-			this.getUserSession().getMessageQueue()
-					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Request successfully cancelled."));
-		} else {
-			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-					"An error occurred while cancelling the request."));
-		}
-
-		return "bikes/list";
-	}
-
-	public String finishMovement(Movement movement) {
-		if (this.getMovementBean().finishMovement(movement)) {
-			this.getUserSession().getMessageQueue()
-					.offer(new FacesMessage(FacesMessage.SEVERITY_INFO, "Success!", "Bike successfully returned."));
-		} else {
-			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-					"An error occurred while returning the bike."));
-		}
-
-		return "bikes/list";
-	}
 	
 	public String viewActiveMovement(Bike bike){
 		this.getUserSession().setSelectedBike(bike);

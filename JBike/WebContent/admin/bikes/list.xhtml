@@ -59,18 +59,6 @@
 					<p:menuButton value="Options">
 						<p:menuitem value="View history"
 							action="#{bikeView.viewHistory(bike)}" icon="ui-icon-document" />
-						<p:menuitem value="Withdraw Bike"
-							action="#{bikeView.confirmMovement(bike.lastMovement)}"
-							icon="ui-icon-check"
-							rendered="#{bike.lastMovement.canBeEdited()}" />
-						<p:menuitem value="Cancel request"
-							action="#{bikeView.cancelMovement(bike.lastMovement)}"
-							icon="ui-icon-close"
-							rendered="#{bike.lastMovement.canBeCancelled()}" />
-						<p:menuitem value="Return Bike"
-							action="#{bikeView.finishMovement(bike.lastMovement)}"
-							icon="ui-icon-check"
-							rendered="#{bike.lastMovement.canBeFinished()}" />
 						<p:menuitem value="Edit" action="#{bikeView.viewForm(bike)}"
 							icon="ui-icon-pencil" />
 						<p:menuitem value="Delete" action="#{bikeView.delete(bike)}"
