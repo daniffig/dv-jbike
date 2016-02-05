@@ -104,19 +104,19 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 
 		return (List<Movement>) query.getResultList();
 	}
-	
+
 	@Override
-	public Movement findOneUnfinishedByBike(Bike bike){
+	public Movement findOneUnfinishedByBike(Bike bike) {
 		EntityManager em = this.getEntityManager();
-		
-		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.bike = :bike AND (m.state != :finished OR m.state != :cancelled)");
+
+		Query query = em.createQuery(
+				"SELECT m FROM Movement m WHERE m.bike = :bike AND (m.state != :finished OR m.state != :cancelled)");
 		query.setParameter("bike", bike);
 		query.setParameter("finished", MovementState.FINISHED);
 		query.setParameter("cancelled", MovementState.CANCELLED);
-		
+
 		return (Movement) query.getSingleResult();
 	}
-	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -148,8 +148,7 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 
 		EntityManager em = this.getEntityManager();
 
-		Query query = em.createQuery(
-				"SELECT m FROM Movement m WHERE m.user = :user AND m.state = :state ");
+		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.user = :user AND m.state = :state ");
 		query.setParameter("user", user);
 		query.setParameter("state", state);
 
@@ -161,8 +160,7 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 
 		EntityManager em = this.getEntityManager();
 
-		Query query = em.createQuery(
-				"SELECT m FROM Movement m WHERE m.user = :user");
+		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.user = :user");
 		query.setParameter("user", user);
 
 		return (List<Movement>) query.getResultList();

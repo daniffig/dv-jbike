@@ -181,7 +181,16 @@ public class Station implements Serializable {
 	}
 
 	public Integer getAvailableParkingSpaces() {
-		return this.totalParkingSpaces - this.bikes.size();
+
+		Integer destination_movements_confirmed = 0;
+		
+		for(Movement m : this.getMovementsAsDestination()){
+			if(m.getState() == MovementState.CONFIRMED){
+				destination_movements_confirmed++;
+			}
+		}
+		
+		return this.totalParkingSpaces - this.bikes.size() - destination_movements_confirmed;
 	}
 
 	public Integer countMovementsAsSource() {

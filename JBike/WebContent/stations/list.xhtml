@@ -22,6 +22,10 @@
 				<p:column headerText="Address" sortBy="#{station.address}">
 					<h:outputText value="#{station.address}" />
 				</p:column>
+				<p:column headerText="Available parking spaces"
+					sortBy="#{station.availableParkingSpaces}">
+					<h:outputText value="#{station.availableParkingSpaces}" />
+				</p:column>
 				<p:column headerText="Available bikes"
 					sortBy="#{station.availableBikes}">
 					<h:outputText value="#{station.availableBikes}" />
