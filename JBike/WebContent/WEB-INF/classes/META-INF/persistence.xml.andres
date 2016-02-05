@@ -8,12 +8,19 @@
     <class>com.jbike.model.Movement</class>
     <class>com.jbike.model.User</class>
     <properties>
+      <property name="hibernate.enable_lazy_load_no_trans" value="true"/>
       <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
-      <property name="hibernate.connection.password" value="desa"/>
-      <property name="hibernate.connection.url" value="jdbc:mysql://vm_desa:3306/jbike"/>
+      <!-- 
+      <property name="hibernate.connection.url" value="jdbc:mysql://mysql.java.linti.unlp.edu.ar:3306/jyaa2015_bd40"/>
+      <property name="hibernate.connection.username" value="grupo40" />
+      <property name="hibernate.connection.password" value="jyaa!grupo40"/>
+       -->
+      <property name="hibernate.connection.url" value="jdbc:mysql://lamp:3306/jbike"/>
       <property name="hibernate.connection.username" value="root" />
+      <property name="hibernate.connection.password" value="lamp"/>
+      
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
-      <property name="hibernate.hbm2ddl.auto" value="create" />
+      <property name="hibernate.hbm2ddl.auto" value="update" />
     </properties>
   </persistence-unit>
 </persistence>
