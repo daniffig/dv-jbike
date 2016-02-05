@@ -176,40 +176,42 @@ public class UserView implements Serializable {
 
 		return "home";
 	}
-	
-    public String restorePassword(){
-    	
-    	User user = this.getUserBean().getUserByEmail(this.getUser().getEmail()); 
-    	
-    	if (user != null) {
+
+	public String restorePassword() {
+
+		User user = this.getUserBean().getUserByEmail(this.getUser().getEmail());
+
+		if (user != null) {
 			String password;
 			try {
 				password = UserHelper.generateRandomPassword();
-				
+
 				user.setPassword(UserHelper.digest(password));
 				if (this.getUserBean().saveUser(user)) {
-					
-					GMailMailHandler.send(user.getEmail(), "Password resetted",
+
+					GMailMailHandler.send(user.getEmail(), "Password resetted", 
 							String.format("Hi!<br/> Your new password is: <b>%s</b>. <br/> Have a good ride!", password));
 
-					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+					this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_INFO,
 							"Success!", "Password resetted. We have sent you an email with your new password."));
-					
-			    	return "home";
+
+					return "home";
 				}
 			} catch (NoSuchAlgorithmException | UnsupportedEncodingException | MessagingException e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		} else {
-			System.out.println("entre al else :o");
+			this.getUserSession().getMessageQueue().offer(new FacesMessage(FacesMessage.SEVERITY_ERROR,
+					"Error!", "The email address provided doesn't correspond to a user."));
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
 					"The email address provided doesn't correspond to a user"));
-			
+
 			return "restore";
 		}
-    	
-    	return "restore";
-    }
+
+		return "restore";
+	}
 
 	public String logIn() {
 		return "success";
