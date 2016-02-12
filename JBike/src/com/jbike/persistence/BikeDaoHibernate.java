@@ -40,8 +40,12 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao 
 
 		Query query = em.createQuery("SELECT b FROM Bike b WHERE b.name = :name");
 		query.setParameter("name", name);
+		
+		List<Bike> lb = query.getResultList();
+		
+		em.close();
 
-		return (List<Bike>) query.getResultList();
+		return lb;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -50,8 +54,12 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao 
 
 		Query query = em.createQuery("SELECT b FROM Bike b WHERE b.state = :state");
 		query.setParameter("state", state);
+		
+		List<Bike> lb = query.getResultList();
+		
+		em.close();
 
-		return (List<Bike>) query.getResultList();
+		return lb;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -59,8 +67,12 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao 
 		EntityManager em = this.getEntityManager();
 
 		Query query = em.createQuery("SELECT b FROM Bike b WHERE b.currentStation IS NULL");
+		
+		List<Bike> lb = query.getResultList();
 
-		return (List<Bike>) query.getResultList();
+		em.close();
+		
+		return lb;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -87,7 +99,11 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao 
 			q.setParameter("to", to);
 		}
 
-		return (List<Bike>) q.getResultList();
+		List<Bike> lb = q.getResultList();
+		
+		em.close();
+		
+		return lb;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -114,6 +130,10 @@ public class BikeDaoHibernate extends BaseDaoHibernate<Bike> implements BikeDao 
 			q.setParameter("to", to);
 		}
 
-		return (List<Bike>) q.getResultList();
+		List<Bike> lb = q.getResultList();
+		
+		em.close();
+		
+		return lb;
 	}
 }

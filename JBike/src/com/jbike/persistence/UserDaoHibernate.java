@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import com.jbike.model.Station;
 import com.jbike.model.User;
 import com.jbike.persistence.interfaces.UserDao;
 
@@ -87,7 +88,11 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 		
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.active = TRUE");
 		
-		return (List<User>) query.getResultList();
+		List<User> lu = query.getResultList();
+		
+		em.close();
+		
+		return lu;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -97,6 +102,10 @@ public class UserDaoHibernate extends BaseDaoHibernate<User> implements UserDao{
 		
 		Query query = em.createQuery("SELECT u FROM User u WHERE u.isAdmin = TRUE");
 		
-		return (List<User>) query.getResultList();
+		List<User> lu = query.getResultList();
+		
+		em.close();
+		
+		return lu;
 	}
 }

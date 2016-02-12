@@ -135,6 +135,7 @@ public class BaseDaoHibernate<T> implements BaseDao<T> {
 			if(etx.isActive()){
 				etx.rollback();
 			}
-		}	
+		}
+	    em.close();
 	}
 }

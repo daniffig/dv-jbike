@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import com.jbike.model.Movement;
 import com.jbike.model.Penalization;
 import com.jbike.model.User;
 import com.jbike.persistence.interfaces.PenalizationDao;
@@ -44,7 +45,11 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 		Query q = em.createQuery("SELECT p FROM Penalization p WHERE p.endDate > :date");
 		q.setParameter("date", new Date());
 
-		return (List<Penalization>) q.getResultList();
+		List<Penalization> lm = q.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -71,7 +76,11 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 			q.setParameter("to", to);
 		}
 
-		return (List<Penalization>) q.getResultList();
+		List<Penalization> lm = q.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -98,7 +107,11 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 			q.setParameter("to", to);
 		}
 
-		return (List<Penalization>) q.getResultList();
+		List<Penalization> lm = q.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -108,7 +121,11 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 		Query q = em.createQuery("SELECT p FROM Penalization p WHERE user = :user ORDER BY end_date DESC");
 		q.setParameter("user", user);
 
-		return (List<Penalization>) q.getResultList();
+		List<Penalization> lm = q.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -119,6 +136,10 @@ public class PenalizationDaoHibernate extends BaseDaoHibernate<Penalization> imp
 		q.setParameter("date", new Date());
 		q.setParameter("user", user);
 
-		return (List<Penalization>) q.getResultList();
+		List<Penalization> lm = q.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 }

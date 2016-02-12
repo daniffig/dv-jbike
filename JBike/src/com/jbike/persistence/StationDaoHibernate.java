@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
+import com.jbike.model.Penalization;
 import com.jbike.model.Station;
 import com.jbike.model.StationState;
 import com.jbike.persistence.interfaces.StationDao;
@@ -49,7 +50,11 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 		Query query = em.createQuery("SELECT s FROM Station s WHERE s.state = :active_state");
 		query.setParameter("active_state", state);
 		
-		return (List<Station>) query.getResultList();
+		List<Station> ls = query.getResultList();
+		
+		em.close();
+		
+		return ls;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,7 +65,11 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 		Query query = em.createQuery("SELECT s FROM Station s WHERE s.state != :active_state");
 		query.setParameter("active_state", StationState.IN_OPERATION);
 		
-		return (List<Station>) query.getResultList();
+		List<Station> ls = query.getResultList();
+		
+		em.close();
+		
+		return ls;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -70,6 +79,10 @@ public class StationDaoHibernate extends BaseDaoHibernate<Station> implements St
 		
 		Query query = em.createQuery("SELECT s FROM Station s WHERE s.totalParkingSpaces > (SELECT COUNT(b.id) FROM Bike b WHERE b.station = s)");
 		
-		return (List<Station>) query.getResultList();
+		List<Station> ls = query.getResultList();
+		
+		em.close();
+		
+		return ls;
 	}
 }

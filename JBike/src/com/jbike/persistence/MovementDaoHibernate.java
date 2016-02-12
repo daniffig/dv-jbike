@@ -42,8 +42,12 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		if (to != null) {
 			q.setParameter("to", to);
 		}
+		
+		List<Movement> lm = q.getResultList();
 
-		return (List<Movement>) q.getResultList();
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -70,7 +74,11 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 			q.setParameter("to", to);
 		}
 
-		return (List<Movement>) q.getResultList();
+		List<Movement> lm = q.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -80,7 +88,11 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 
 		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.satation IS NULL");
 
-		return (List<Movement>) query.getResultList();
+		List<Movement> lm = query.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -91,7 +103,11 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.state = :state");
 		query.setParameter("state", state);
 
-		return (List<Movement>) query.getResultList();
+		List<Movement> lm = query.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -102,7 +118,11 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.sourceStation = :station");
 		query.setParameter("station", station);
 
-		return (List<Movement>) query.getResultList();
+		List<Movement> lm = query.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@Override
@@ -115,7 +135,11 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		query.setParameter("finished", MovementState.FINISHED);
 		query.setParameter("cancelled", MovementState.CANCELLED);
 
-		return (Movement) query.getSingleResult();
+		Movement m = (Movement)query.getSingleResult();
+		
+		em.close();
+		
+		return m;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -126,7 +150,11 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.destinationStation = :station");
 		query.setParameter("station", station);
 
-		return (List<Movement>) query.getResultList();
+		List<Movement> lm = query.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -140,7 +168,11 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		query.setParameter("new", MovementState.NEW);
 		query.setParameter("confirmed", MovementState.CONFIRMED);
 
-		return (List<Movement>) query.getResultList();
+		List<Movement> lm = query.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -152,7 +184,11 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		query.setParameter("user", user);
 		query.setParameter("state", state);
 
-		return (List<Movement>) query.getResultList();
+		List<Movement> lm = query.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -163,6 +199,10 @@ public class MovementDaoHibernate extends BaseDaoHibernate<Movement> implements 
 		Query query = em.createQuery("SELECT m FROM Movement m WHERE m.user = :user");
 		query.setParameter("user", user);
 
-		return (List<Movement>) query.getResultList();
+		List<Movement> lm = query.getResultList();
+		
+		em.close();
+		
+		return lm;
 	}
 }
